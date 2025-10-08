@@ -19,7 +19,8 @@ check_empty() {
 self_update() {
 
 	echo -n -e "[\033[90mINFO\033[0m] CHECKING SCRIPT VERSION ......................... "
-	REMOTE_SCRIPT="https://raw.githubusercontent.com/sebastiendamaye/deephunter/refs/heads/main/qm/scripts/upgrade.sh"
+	#REMOTE_SCRIPT="https://raw.githubusercontent.com/sebastiendamaye/deephunter/refs/heads/main/qm/scripts/upgrade.sh"
+    REMOTE_SCRIPT="https://raw.githubusercontent.com/sebastiendamaye/deephunter_analytics/refs/heads/main/upgrade.sh"
 	LOCAL_HASH=$(sha1sum $0 | awk '{print $1}')
 	REMOTE_HASH=$(curl -s $REMOTE_SCRIPT | sha1sum | awk '{print $1}')
 
