@@ -51,7 +51,7 @@ self_update() {
 				exec "$SCRIPT_PATH" "$@"
 				exit 0
 			elif [[ "$response" == "N" || "$response" == "NO" ]]; then
-				exit 0
+				break
 			else
 				echo "Invalid response. Please enter Y, YES, N, or NO."
 			fi
