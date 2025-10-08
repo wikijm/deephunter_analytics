@@ -20,7 +20,7 @@ self_update() {
 
 	echo -n -e "[\033[90mINFO\033[0m] CHECKING SCRIPT VERSION ......................... "
 	#REMOTE_SCRIPT="https://raw.githubusercontent.com/sebastiendamaye/deephunter/refs/heads/main/qm/scripts/upgrade.sh"
-    REMOTE_SCRIPT="https://raw.githubusercontent.com/sebastiendamaye/deephunter_analytics/refs/heads/main/upgrade.sh"
+	REMOTE_SCRIPT="https://raw.githubusercontent.com/sebastiendamaye/deephunter_analytics/refs/heads/main/upgrade.sh"
 	LOCAL_HASH=$(sha1sum $0 | awk '{print $1}')
 	REMOTE_HASH=$(curl -s $REMOTE_SCRIPT | sha1sum | awk '{print $1}')
 
@@ -44,6 +44,7 @@ self_update() {
 					exit 1
 				fi
 				chmod +x "$tmpfile"
+				dos2unix "$tmpfile"
 				SCRIPT_PATH="$(realpath "$0")"
 				mv "$tmpfile" "$SCRIPT_PATH"
 				echo "Restarting script..."
@@ -113,6 +114,13 @@ if which tar > /dev/null 2>&1; then
 	echo -e "  tar .................................................. [\033[32mfound\033[0m]"
 else
 	echo -e "  tar .................................................. [\033[31mmissing\033[0m]"
+	error=1
+fi
+# Checking that dos2unix is installed
+if which dos2unix > /dev/null 2>&1; then
+	echo -e "  dos2unix ............................................. [\033[32mfound\033[0m]"
+else
+	echo -e "  dos2unix ............................................. [\033[31mmissing\033[0m]"
 	error=1
 fi
 # Checking that user has sudo
