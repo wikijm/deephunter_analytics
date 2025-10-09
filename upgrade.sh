@@ -2,10 +2,6 @@
 # DeepHunter upgrade script
 # This script will upgrade DeepHunter to the latest version (commit or release, depending on your settings)
 
-set -euo pipefail
-trap 'echo "ERROR: Script failed at line $LINENO. Check /tmp/upgrade.log."; exit 1' ERR
-touch /tmp/upgrade.log
-
 ######################################
 # FUNCTIONS
 #
@@ -84,6 +80,7 @@ echo ""
 ######################################
 # PREREQUISITES
 #
+touch /tmp/upgrade.log
 
 error=0
 echo -e "[\033[90mINFO\033[0m] CHECKING PREREQUISITES" | tee -a /tmp/upgrade.log
