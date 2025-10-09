@@ -80,7 +80,9 @@ echo ""
 ######################################
 # PREREQUISITES
 #
-touch /tmp/upgrade.log
+
+# Create an empty log file
+> /tmp/upgrade.log
 
 error=0
 echo -e "[\033[90mINFO\033[0m] CHECKING PREREQUISITES" | tee -a /tmp/upgrade.log
@@ -280,7 +282,7 @@ else
     echo -e "[\033[31mfailed\033[0m]" | tee -a /tmp/upgrade.log
     echo -e "[\033[31mERROR\033[0m] There are likely missing variables in your current settings.py file." | tee -a /tmp/upgrade.log
     # Show the differences between the local and new settings
-    diff <(echo "$LOCAL_KEYS" | sort) <(echo "$NEW_KEYS" | sort) >> /tmp/upgrade.log 2>&1
+    diff <(echo "$LOCAL_KEYS" | sort) <(echo "$NEW_KEYS" | sort) | tee -a /tmp/upgrade.log
     echo -e "[\033[90mINFO\033[0m] Please use a text editor to add the missing element(s). You can for example use 'nano -c $APP_PATH/deephunter/settings.py' to edit it." | tee -a /tmp/upgrade.log
     exit 1
 fi
