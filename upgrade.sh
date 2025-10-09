@@ -47,6 +47,7 @@ self_update() {
 				dos2unix "$tmpfile"
 				SCRIPT_PATH="$(realpath "$0")"
 				mv "$tmpfile" "$SCRIPT_PATH"
+				clear
 				echo "Restarting script..."
 				exec "$SCRIPT_PATH" "$@"
 				exit 0
@@ -229,7 +230,15 @@ cd /tmp
 rm -fR deephunter*
 if [ $UPDATE_ON = "release" ]; then
 	response=$(curl -s "https://api.github.com/repos/sebastiendamaye/deephunter/releases/latest")
-	url=$(echo $response | grep -o '"tarball_url": *"[^"]*"' | sed 's/"tarball_url": "//' | sed 's/"$//')
+	remote_version=$(echo $response | grep -oP '(?<="tag_name": ")[^"]+')
+	local_version=$(cat $APP_PATH/static/VERSION 2>/dev/null)
+	if [ "$remote_version" = "$local_version" ]; then
+		echo -e "[\033[32mup-to-date\033[0m]"
+		echo -e "[\033[90mINFO\033[0m] You are already running the latest version ($local_version). No update required."
+		exit 0
+	fi
+
+	url=$(echo $response | grep -oP '(?<="tarball_url": ")[^"]+')
 	wget -q -O deephunter.tar.gz $url
 	mkdir deephunter
 	tar xzf deephunter.tar.gz -C deephunter --strip-components=1
