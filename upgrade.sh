@@ -317,7 +317,7 @@ echo -n -e "[\033[90mINFO\033[0m] STARTING APP BACKUP ..........................
 rm -fR $TEMP_FOLDER/deephunter >> /tmp/upgrade.log 2>&1
 mkdir -p $TEMP_FOLDER >> /tmp/upgrade.log 2>&1
 cp -R $APP_PATH $TEMP_FOLDER >> /tmp/upgrade.log 2>&1
-echo -e "[\033[32mdone\033[0m]" >> /tmp/upgrade.log
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 # Backup installed plugins
 echo -n -e "[\033[90mINFO\033[0m] BACKUP INSTALLED PLUGINS ........................ " | tee -a /tmp/upgrade.log
@@ -328,7 +328,7 @@ for file in $APP_PATH/plugins/*.py; do
         installed_plugins+=("$(basename "$file")")
     fi
 done
-echo -e "[\033[32mdone\033[0m]" >> /tmp/upgrade.log
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 ######################################
 # UPGRADE
@@ -399,10 +399,10 @@ source $VENV_PATH/bin/activate >> /tmp/upgrade.log 2>&1
 cd $APP_PATH/ >> /tmp/upgrade.log 2>&1
 for app in ${APPS[@]}
 do
-	./manage.py makemigrations $app >> /tmp/upgrade.log 2>&1
+	./manage.py makemigrations $app | tee -a /tmp/upgrade.log
 done
 
-./manage.py migrate >> /tmp/upgrade.log 2>&1
+./manage.py migrate | tee -a /tmp/upgrade.log
 # Leave python virtual env
 deactivate >> /tmp/upgrade.log 2>&1
 echo -e "[\033[90mINFO\033[0m] DB MIGRATIONS COMPLETE" | tee -a /tmp/upgrade.log
@@ -420,6 +420,7 @@ echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 echo -n -e "[\033[90mINFO\033[0m] RUNNING UPGRADE SCRIPTS ......................... " | tee -a /tmp/upgrade.log
 source $VENV_PATH/bin/activate >> /tmp/upgrade.log 2>&1
 
+echo "[DEBUG] Current commit: $CURRENT_COMMIT" >> /tmp/upgrade.log
 git rev-list --reverse "${CURRENT_COMMIT}..HEAD" | while read COMMIT; do
     # For each commit, list added files in that commit
     git diff-tree --no-commit-id --name-status -r "$COMMIT" | while read STATUS FILE_PATH; do
@@ -430,7 +431,8 @@ git rev-list --reverse "${CURRENT_COMMIT}..HEAD" | while read COMMIT; do
             && "$FILE_PATH" != "qm/scripts/upgrade/fr_168.py" ]]; then
             filename="${FILE_PATH##*/}"
             basename="${filename%.*}"
-            python manage.py runscript "upgrade.$basename" >> /tmp/upgrade.log 2>&1
+			echo -e "[\033[90mINFO\033[0m] Running upgrade script: $basename" | tee -a /tmp/upgrade.log
+            python manage.py runscript "upgrade.$basename" | tee -a /tmp/upgrade.log
         fi
     done
 done
