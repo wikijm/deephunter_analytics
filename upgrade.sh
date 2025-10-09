@@ -1,4 +1,10 @@
 #!/bin/bash
+# DeepHunter upgrade script
+# This script will upgrade DeepHunter to the latest version (commit or release, depending on your settings)
+
+set -euo pipefail
+trap 'echo "ERROR: Script failed at line $LINENO. Check /tmp/upgrade.log."; exit 1' ERR
+touch /tmp/upgrade.log
 
 ######################################
 # FUNCTIONS
@@ -11,21 +17,21 @@ extract_keys() {
 # Function that checks if a variable is empty
 check_empty() {
     if [ -z "$2" ]; then
-		echo -e "[\033[31mERROR\033[0m] Unable to extract $1 from your settings file."
+		echo -e "[\033[31mERROR\033[0m] Unable to extract $1 from your settings file." | tee -a /tmp/upgrade.log
 		exit 1
     fi
 }
 
 self_update() {
 
-	echo -n -e "[\033[90mINFO\033[0m] CHECKING SCRIPT VERSION ......................... "
+	echo -n -e "[\033[90mINFO\033[0m] CHECKING SCRIPT VERSION ......................... " | tee -a /tmp/upgrade.log
 	#REMOTE_SCRIPT="https://raw.githubusercontent.com/sebastiendamaye/deephunter/main/qm/scripts/upgrade.sh"
 	REMOTE_SCRIPT="https://raw.githubusercontent.com/sebastiendamaye/deephunter_analytics/main/upgrade.sh"
 	LOCAL_HASH=$(sha1sum $0 | awk '{print $1}')
 	REMOTE_HASH=$(curl -s $REMOTE_SCRIPT | sha1sum | awk '{print $1}')
 
     if [ "$REMOTE_HASH" != "$LOCAL_HASH" ]; then
-		echo -e "[\033[31mupdate available\033[0m]"
+		echo -e "[\033[31mupdate available\033[0m]" | tee -a /tmp/upgrade.log
 
 		# Installation of the update
 		while true; do
@@ -38,17 +44,17 @@ self_update() {
 			# Check the response
 			if [[ "$response" == "Y" || "$response" == "YES" ]]; then
 				tmpfile=$(mktemp)
-				curl -s -o "$tmpfile" "$REMOTE_SCRIPT"
+				curl -s -o "$tmpfile" "$REMOTE_SCRIPT" >> /tmp/upgrade.log 2>&1
 				if [ $? -ne 0 ]; then
-					echo -e "[\033[31mERROR\033[0m] Failed to download new version."
+					echo -e "[\033[31mERROR\033[0m] Failed to download new version." | tee -a /tmp/upgrade.log
 					exit 1
 				fi
-				chmod +x "$tmpfile"
-				dos2unix "$tmpfile"
+				chmod +x "$tmpfile" >> /tmp/upgrade.log 2>&1
+				dos2unix "$tmpfile" >> /tmp/upgrade.log 2>&1
 				SCRIPT_PATH="$(realpath "$0")"
-				mv "$tmpfile" "$SCRIPT_PATH"
+				mv "$tmpfile" "$SCRIPT_PATH" >> /tmp/upgrade.log 2>&1
 				clear
-				echo "Restarting script..."
+				echo "Restarting script..." | tee -a /tmp/upgrade.log
 				exec "$SCRIPT_PATH" "$@"
 				exit 0
 			elif [[ "$response" == "N" || "$response" == "NO" ]]; then
@@ -58,7 +64,7 @@ self_update() {
 			fi
 		done
     else
-		echo -e "[\033[32mupdated\033[0m]"
+		echo -e "[\033[32mup-to-date\033[0m]" | tee -a /tmp/upgrade.log
     fi
 }
 
@@ -80,67 +86,67 @@ echo ""
 #
 
 error=0
-echo -e "[\033[90mINFO\033[0m] CHECKING PREREQUISITES"
+echo -e "[\033[90mINFO\033[0m] CHECKING PREREQUISITES" | tee -a /tmp/upgrade.log
 
 # Checking that sudo is installed
 if which sudo > /dev/null 2>&1; then
-	echo -e "  sudo ................................................. [\033[32mfound\033[0m]"
+	echo -e "  sudo ................................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
 else
-	echo -e "  sudo ................................................. [\033[31mmissing\033[0m]"
+	echo -e "  sudo ................................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
 	error=1
 fi
 # Checking that curl is installed
 if which curl > /dev/null 2>&1; then
-	echo -e "  curl ................................................. [\033[32mfound\033[0m]"
+	echo -e "  curl ................................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
 else
-	echo -e "  curl ................................................. [\033[31mmissing\033[0m]"
+	echo -e "  curl ................................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
 	error=1
 fi
 # Checking that wget is installed
 if which wget > /dev/null 2>&1; then
-	echo -e "  wget ................................................. [\033[32mfound\033[0m]"
+	echo -e "  wget ................................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
 else
-	echo -e "  wget ................................................. [\033[31mmissing\033[0m]"
+	echo -e "  wget ................................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
 	error=1
 fi
 # Checking that git is installed
 if which git > /dev/null 2>&1; then
-	echo -e "  git .................................................. [\033[32mfound\033[0m]"
+	echo -e "  git .................................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
 else
-	echo -e "  git .................................................. [\033[31mmissing\033[0m]"
+	echo -e "  git .................................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
 	error=1
 fi
 # Checking that tar is installed
 if which tar > /dev/null 2>&1; then
-	echo -e "  tar .................................................. [\033[32mfound\033[0m]"
+	echo -e "  tar .................................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
 else
-	echo -e "  tar .................................................. [\033[31mmissing\033[0m]"
+	echo -e "  tar .................................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
 	error=1
 fi
 # Checking that dos2unix is installed
 if which dos2unix > /dev/null 2>&1; then
-	echo -e "  dos2unix ............................................. [\033[32mfound\033[0m]"
+	echo -e "  dos2unix ............................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
 else
-	echo -e "  dos2unix ............................................. [\033[31mmissing\033[0m]"
+	echo -e "  dos2unix ............................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
 	error=1
 fi
 # Checking that user has sudo
 user_groups=$(groups $(whoami))
 if echo "$user_groups" | grep -qw "sudo" || echo "$user_groups" | grep -qw "admin"; then
-	echo -e "  User has sudo access ................................. [\033[32mOK\033[0m]"
+	echo -e "  User has sudo access ................................. [\033[32mOK\033[0m]" | tee -a /tmp/upgrade.log
 else
-	echo -e "  User has sudo access ................................. [\033[31mfailed\033[0m]"
+	echo -e "  User has sudo access ................................. [\033[31mfailed\033[0m]" | tee -a /tmp/upgrade.log
 	error=1
 fi
 
 # Exit on error
 if [ $error = 1 ]; then
-	echo -e "[\033[31mERROR\033[0m] The upgrade script is missing mandatory dependencies. Install these packages first."
+	echo -e "[\033[31mERROR\033[0m] The upgrade script is missing mandatory dependencies. Install these packages first." | tee -a /tmp/upgrade.log
 	exit 1
 fi
 
 ######################################
-# CHECK IF NEW VERSION IS AVAILABLE
+# CHECK IF NEW VERSION OF UPGRADE SCRIPT IS AVAILABLE
 #
 self_update
 
@@ -150,13 +156,13 @@ self_update
 
 # Search for the settings file on disk
 # (assuming it is in the following relative path ./deephunter/deephunter/settings.py)
-echo -n -e "[\033[90mINFO\033[0m] LOOKING FOR THE SETTINGS.PY FILE ................ "
+echo -n -e "[\033[90mINFO\033[0m] LOOKING FOR THE SETTINGS.PY FILE ................ " | tee -a /tmp/upgrade.log
 SETTINGS_PATHS=$(find / -type f -path "*/deephunter/deephunter/*" -name "settings.py" 2>/dev/null)
 if [ -z "${SETTINGS_PATHS}" ]; then
-	echo -e "[\033[31mnot found\033[0m]"
+	echo -e "[\033[31mnot found\033[0m]" | tee -a /tmp/upgrade.log
 	exit 1
 else
-	echo -e "[\033[32mfound\033[0m]"
+	echo -e "[\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
 fi
 
 # Count the number of settings.py files found
@@ -200,6 +206,10 @@ fi
 
 # Extract variables from settings.py
 APP_PATH=$(dirname "$SETTINGS_PATH" | sed 's:/deephunter$::')
+
+# Get the last commit id from the current installation
+CURRENT_COMMIT=$(<$APP_PATH/static/commit_id.txt)
+
 # Remove all comments from settings and save a copy in tmp
 # This is a necessary prerequisite in order to avoid duplicates during extraction
 grep -v '^#' $APP_PATH/deephunter/settings.py > /tmp/settings.py
@@ -225,34 +235,34 @@ APPS=(qm extensions reports connectors repos notifications dashboard config)
 #
 
 # Downloading new version
-echo -n -e "[\033[90mINFO\033[0m] DOWNLOADING NEW VERSION OF DEEPHUNTER ........... "
+echo -n -e "[\033[90mINFO\033[0m] DOWNLOADING NEW VERSION OF DEEPHUNTER ........... " | tee -a /tmp/upgrade.log
 cd /tmp
-rm -fR deephunter*
+rm -fR deephunter* >> /tmp/upgrade.log 2>&1
 if [ $UPDATE_ON = "release" ]; then
 	response=$(curl -s "https://api.github.com/repos/sebastiendamaye/deephunter/releases/latest")
 	remote_version=$(echo $response | grep -oP '(?<="tag_name": ")[^"]+')
 	local_version=$(cat $APP_PATH/static/VERSION 2>/dev/null)
 	if [ "$remote_version" = "$local_version" ]; then
-		echo -e "[\033[32mup-to-date\033[0m]"
-		echo -e "[\033[90mINFO\033[0m] You are already running the latest version ($local_version). No update required."
+		echo -e "[\033[32mup-to-date\033[0m]" | tee -a /tmp/upgrade.log
+		echo -e "[\033[90mINFO\033[0m] You are already running the latest version ($local_version). No update required." | tee -a /tmp/upgrade.log
 		exit 0
 	fi
 
 	url=$(echo $response | grep -oP '(?<="tarball_url": ")[^"]+')
-	wget -q -O deephunter.tar.gz $url
-	mkdir deephunter
-	tar xzf deephunter.tar.gz -C deephunter --strip-components=1
+	wget -q -O deephunter.tar.gz $url >> /tmp/upgrade.log 2>&1
+	mkdir deephunter >> /tmp/upgrade.log 2>&1
+	tar xzf deephunter.tar.gz -C deephunter --strip-components=1 >> /tmp/upgrade.log 2>&1
 else
-	rm -fR d
-	mkdir d
-	cd d
-	git clone -q $GITHUB_URL
-	cd /tmp
-	mv d/deephunter .
-	rm -fR d
+	rm -fR d >> /tmp/upgrade.log 2>&1
+	mkdir d >> /tmp/upgrade.log 2>&1
+	cd d >> /tmp/upgrade.log 2>&1
+	git clone -q $GITHUB_URL >> /tmp/upgrade.log 2>&1
+	cd /tmp >> /tmp/upgrade.log 2>&1
+	mv d/deephunter . >> /tmp/upgrade.log 2>&1
+	rm -fR d >> /tmp/upgrade.log 2>&1
 fi
 
-echo -e "[\033[32mcomplete\033[0m]"
+echo -e "[\033[32mcomplete\033[0m]" | tee -a /tmp/upgrade.log
 
 
 ######################################
@@ -260,7 +270,7 @@ echo -e "[\033[32mcomplete\033[0m]"
 #
 
 # Checking settings.py consistency (presence of all keys)
-echo -n -e "[\033[90mINFO\033[0m] CHECKING SETTINGS FILE CONSISTENCY .............. "
+echo -n -e "[\033[90mINFO\033[0m] CHECKING SETTINGS FILE CONSISTENCY .............. " | tee -a /tmp/upgrade.log
 
 # Extract keys from the local and remote settings.py files
 LOCAL_KEYS=$(extract_keys /tmp/settings.py)
@@ -268,13 +278,13 @@ NEW_KEYS=$(extract_keys "/tmp/deephunter/deephunter/settings.example.py")
 
 # Compare the sets of keys (sorted to handle order) and check consistency
 if diff <(echo "$LOCAL_KEYS" | sort) <(echo "$NEW_KEYS" | sort) > /dev/null; then
-    echo -e "[\033[32mOK\033[0m]"
+    echo -e "[\033[32mOK\033[0m]" | tee -a /tmp/upgrade.log
 else
-    echo -e "[\033[31mfailed\033[0m]"
-    echo -e "[\033[31mERROR\033[0m] There are likely missing variables in your current settings.py file."
+    echo -e "[\033[31mfailed\033[0m]" | tee -a /tmp/upgrade.log
+    echo -e "[\033[31mERROR\033[0m] There are likely missing variables in your current settings.py file." | tee -a /tmp/upgrade.log
     # Show the differences between the local and new settings
-    diff <(echo "$LOCAL_KEYS" | sort) <(echo "$NEW_KEYS" | sort)
-    echo -e "[\033[90mINFO\033[0m] Please use a text editor to add the missing element(s). You can for example use 'nano -c /data/deephunter/deephunter/settings.py' to edit it."
+    diff <(echo "$LOCAL_KEYS" | sort) <(echo "$NEW_KEYS" | sort) >> /tmp/upgrade.log 2>&1
+    echo -e "[\033[90mINFO\033[0m] Please use a text editor to add the missing element(s). You can for example use 'nano -c $APP_PATH/deephunter/settings.py' to edit it." | tee -a /tmp/upgrade.log
     exit 1
 fi
 
@@ -283,34 +293,35 @@ fi
 #
 
 # Stop services
-echo -n -e "[\033[90mINFO\033[0m] STOPPING SERVICES ............................... "
-sudo systemctl stop apache2
-sudo systemctl stop celery
-sudo systemctl stop redis-server
-echo -e "[\033[32mdone\033[0m]"
+echo -n -e "[\033[90mINFO\033[0m] STOPPING SERVICES ............................... " | tee -a /tmp/upgrade.log
+sudo systemctl stop apache2 >> /tmp/upgrade.log 2>&1
+sudo systemctl stop celery >> /tmp/upgrade.log 2>&1
+sudo systemctl stop redis-server >> /tmp/upgrade.log 2>&1
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 # Backup DB (encrypted. Use the same as DB backup in crontab. Backup will be located in the same folder)
-echo -n -e "[\033[90mINFO\033[0m] STARTING DB BACKUP .............................. "
-source $VENV_PATH/bin/activate
-cd $APP_PATH
+echo -n -e "[\033[90mINFO\033[0m] STARTING DB BACKUP .............................. " | tee -a /tmp/upgrade.log
+source $VENV_PATH/bin/activate >> /tmp/upgrade.log 2>&1
+cd $APP_PATH >> /tmp/upgrade.log 2>&1
 # If a GPG recipient is defined and the key is available, encrypt the backup, otherwise do not encrypt
 if gpg --list-keys "$DBBACKUP_GPG_RECIPIENT" >/dev/null 2>&1; then
-	$VENV_PATH/bin/python3 manage.py dbbackup --encrypt
+	$VENV_PATH/bin/python3 manage.py dbbackup --encrypt >> /tmp/upgrade.log 2>&1
 else
-	$VENV_PATH/bin/python3 manage.py dbbackup
+	$VENV_PATH/bin/python3 manage.py dbbackup >> /tmp/upgrade.log 2>&1
 fi
 #leave virtual env
 deactivate
-echo -e "[\033[32mdone\033[0m]"
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 # Backup source
-echo -n -e "[\033[90mINFO\033[0m] STARTING APP BACKUP ............................. "
-rm -fR $TEMP_FOLDER/deephunter
-mkdir -p $TEMP_FOLDER
-cp -R $APP_PATH $TEMP_FOLDER
-echo -e "[\033[32mdone\033[0m]"
+echo -n -e "[\033[90mINFO\033[0m] STARTING APP BACKUP ............................. " | tee -a /tmp/upgrade.log
+rm -fR $TEMP_FOLDER/deephunter >> /tmp/upgrade.log 2>&1
+mkdir -p $TEMP_FOLDER >> /tmp/upgrade.log 2>&1
+cp -R $APP_PATH $TEMP_FOLDER >> /tmp/upgrade.log 2>&1
+echo -e "[\033[32mdone\033[0m]" >> /tmp/upgrade.log
 
 # Backup installed plugins
+echo -n -e "[\033[90mINFO\033[0m] BACKUP INSTALLED PLUGINS ........................ " | tee -a /tmp/upgrade.log
 installed_plugins=()
 # List all .py files in the 'plugins' directory, excluding __init__.py
 for file in $APP_PATH/plugins/*.py; do
@@ -318,24 +329,25 @@ for file in $APP_PATH/plugins/*.py; do
         installed_plugins+=("$(basename "$file")")
     fi
 done
+echo -e "[\033[32mdone\033[0m]" >> /tmp/upgrade.log
 
 ######################################
 # UPGRADE
 #
 
 # Installing pip dependencies in the virtual env
-echo -n -e "[\033[90mINFO\033[0m] INSTALLING PIP DEPENDENCIES ..................... "
-source $VENV_PATH/bin/activate
-pip install -q -q --upgrade pip
-pip install -q -q --upgrade -r /tmp/deephunter/requirements.txt
+echo -n -e "[\033[90mINFO\033[0m] INSTALLING PIP DEPENDENCIES ..................... " | tee -a /tmp/upgrade.log
+source $VENV_PATH/bin/activate >> /tmp/upgrade.log 2>&1
+pip install -q -q --upgrade pip >> /tmp/upgrade.log 2>&1
+pip install -q -q --upgrade -r /tmp/deephunter/requirements.txt >> /tmp/upgrade.log 2>&1
 #leave virtual env
-deactivate
-echo -e "[\033[32mdone\033[0m]"
+deactivate >> /tmp/upgrade.log 2>&1
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 # Installation of the update
 while true; do
 	echo -n -e "[\033[34mCONFIRM\033[0m] "
-	read -p "Proceed with installation of the new version (Y/n)? " response
+	read -p "Proceed with installation of the new version (Y/n)? " response | tee -a /tmp/upgrade.log
 	# If no input is provided (just Enter), set response to 'Y'
 	response=${response:-Y}
 	# Convert the response to uppercase to handle both 'y' and 'Y'
@@ -350,25 +362,25 @@ while true; do
 	fi
 done
 
-echo -n -e "[\033[90mINFO\033[0m] INSTALLING UPDATE ............................... "
+echo -n -e "[\033[90mINFO\033[0m] INSTALLING UPDATE ............................... " | tee -a /tmp/upgrade.log
 # Sudo used here to be able to delete ""./plugins/__pycache__" that is owned by www-data)
-sudo rm -fR $APP_PATH
-cp -R /tmp/deephunter $APP_PATH
-echo -e "[\033[32mdone\033[0m]"
+sudo rm -fR $APP_PATH >> /tmp/upgrade.log 2>&1
+cp -R /tmp/deephunter $APP_PATH >> /tmp/upgrade.log 2>&1
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
-echo -n -e "[\033[90mINFO\033[0m] RESTORING MIGRATIONS FOLDERS AND SETTINGS ....... "
+echo -n -e "[\033[90mINFO\033[0m] RESTORING MIGRATIONS FOLDERS AND SETTINGS ....... " | tee -a /tmp/upgrade.log
 for app in ${APPS[@]}
 do
-	cp -R $TEMP_FOLDER/deephunter/$app/migrations/ $APP_PATH/$app/ 2>/dev/null
+	cp -R $TEMP_FOLDER/deephunter/$app/migrations/ $APP_PATH/$app/ >> /tmp/upgrade.log 2>&1
 done
 # Restore settings
-cp $TEMP_FOLDER/deephunter/deephunter/settings.py $APP_PATH/deephunter/
-echo -e "[\033[32mdone\033[0m]"
+cp $TEMP_FOLDER/deephunter/deephunter/settings.py $APP_PATH/deephunter/ >> /tmp/upgrade.log 2>&1
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 # DB Migrations
 while true; do
 	echo -n -e "[\033[34mCONFIRM\033[0m] "
-	read -p "Proceed with DB migrations (Y/n)? " response
+	read -p "Proceed with DB migrations (Y/n)? " response | tee -a /tmp/upgrade.log
 	# If no input is provided (just Enter), set response to 'Y'
 	response=${response:-Y}
 	# Convert the response to uppercase to handle both 'y' and 'Y'
@@ -383,71 +395,93 @@ while true; do
 	fi
 done
 
-echo -e "[\033[90mINFO\033[0m] PERFORMING DB MIGRATIONS ........................ "
-source $VENV_PATH/bin/activate
-cd $APP_PATH/
+echo -e "[\033[90mINFO\033[0m] PERFORMING DB MIGRATIONS ........................ " | tee -a /tmp/upgrade.log
+source $VENV_PATH/bin/activate >> /tmp/upgrade.log 2>&1
+cd $APP_PATH/ >> /tmp/upgrade.log 2>&1
 for app in ${APPS[@]}
 do
-	./manage.py makemigrations $app
+	./manage.py makemigrations $app >> /tmp/upgrade.log 2>&1
 done
 
-./manage.py migrate
+./manage.py migrate >> /tmp/upgrade.log 2>&1
 # Leave python virtual env
-deactivate
-echo -e "[\033[90mINFO\033[0m] DB MIGRATIONS COMPLETE"
+deactivate >> /tmp/upgrade.log 2>&1
+echo -e "[\033[90mINFO\033[0m] DB MIGRATIONS COMPLETE" | tee -a /tmp/upgrade.log
 
 # Restore installed plugins
-echo -n -e "[\033[90mINFO\033[0m] RESTORING INSTALLED PLUGINS ..................... "
+echo -n -e "[\033[90mINFO\033[0m] RESTORING INSTALLED PLUGINS ..................... " | tee -a /tmp/upgrade.log
 # Loop through the array and print the file names
 for plugin in "${installed_plugins[@]}"; do
     # recreate the symlinks
-    ln -s $APP_PATH/plugins/catalog/$plugin $APP_PATH/plugins/$plugin
+    ln -s $APP_PATH/plugins/catalog/$plugin $APP_PATH/plugins/$plugin >> /tmp/upgrade.log 2>&1
 done
-echo -e "[\033[32mdone\033[0m]"
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
+
+# Run all migrations scripts since last commit
+echo -n -e "[\033[90mINFO\033[0m] RUNNING UPGRADE SCRIPTS ......................... " | tee -a /tmp/upgrade.log
+source $VENV_PATH/bin/activate >> /tmp/upgrade.log 2>&1
+
+git rev-list --reverse "${CURRENT_COMMIT}..HEAD" | while read COMMIT; do
+    # For each commit, list added files in that commit
+    git diff-tree --no-commit-id --name-status -r "$COMMIT" | while read STATUS FILE_PATH; do
+        # Only consider added Python files in the target directory
+        # Exclude blacklisted files (fr_160.py and fr_168.py) that have not been added since v2.4, they were just moved.
+        if [[ "$STATUS" == "A" && "$FILE_PATH" == qm/scripts/upgrade/*.py 
+            && "$FILE_PATH" != "qm/scripts/upgrade/fr_160.py" 
+            && "$FILE_PATH" != "qm/scripts/upgrade/fr_168.py" ]]; then
+            filename="${FILE_PATH##*/}"
+            basename="${filename%.*}"
+            python manage.py runscript "upgrade.$basename" >> /tmp/upgrade.log 2>&1
+        fi
+    done
+done
+deactivate >> /tmp/upgrade.log 2>&1
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 # Restore permissions
-echo -n -e "[\033[90mINFO\033[0m] RESTORING PERMISSIONS ........................... "
-chmod -R 775 $APP_PATH
-touch $APP_PATH/static/mitre.json
-chmod 666 $APP_PATH/static/mitre.json
-chmod 664 $APP_PATH/static/VERSION*
-chmod 664 $APP_PATH/static/commit_id.txt
-chown -R $USER_GROUP $VENV_PATH
-chmod -R 775 $VENV_PATH
-sudo chown :$SERVER_USER $APP_PATH/deephunter/wsgi.py
-sudo chown -R :$SERVER_USER $APP_PATH/plugins/
-echo -e "[\033[32mdone\033[0m]"
+echo -n -e "[\033[90mINFO\033[0m] RESTORING PERMISSIONS ........................... " | tee -a /tmp/upgrade.log
+chmod -R 775 $APP_PATH >> /tmp/upgrade.log 2>&1
+touch $APP_PATH/static/mitre.json >> /tmp/upgrade.log 2>&1
+chmod 666 $APP_PATH/static/mitre.json >> /tmp/upgrade.log 2>&1
+chmod 664 $APP_PATH/static/VERSION* >> /tmp/upgrade.log 2>&1
+chmod 664 $APP_PATH/static/commit_id.txt >> /tmp/upgrade.log 2>&1
+chown -R $USER_GROUP $VENV_PATH >> /tmp/upgrade.log 2>&1
+chmod -R 775 $VENV_PATH >> /tmp/upgrade.log 2>&1
+sudo chown :$SERVER_USER $APP_PATH/deephunter/wsgi.py >> /tmp/upgrade.log 2>&1
+sudo chown -R :$SERVER_USER $APP_PATH/plugins/ >> /tmp/upgrade.log 2>&1
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 # Restart apache2
-echo -n -e "[\033[90mINFO\033[0m] RESTARTING SERVICES ............................. "
-sudo systemctl start apache2
-sudo systemctl restart redis-server
-sudo systemctl restart celery
-sudo systemctl restart cron
-echo -e "[\033[32mdone\033[0m]"
+echo -n -e "[\033[90mINFO\033[0m] RESTARTING SERVICES ............................. " | tee -a /tmp/upgrade.log
+sudo systemctl start apache2 >> /tmp/upgrade.log 2>&1
+sudo systemctl restart redis-server >> /tmp/upgrade.log 2>&1
+sudo systemctl restart celery >> /tmp/upgrade.log 2>&1
+sudo systemctl restart cron >> /tmp/upgrade.log 2>&1
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 # cleaning /tmp
-echo -n -e "[\033[90mINFO\033[0m] CLEANING /TMP DIR ............................... "
-rm -fR /tmp/deephunter* /tmp/settings.py
-echo -e "[\033[32mdone\033[0m]"
+echo -n -e "[\033[90mINFO\033[0m] CLEANING /TMP DIR ............................... " | tee -a /tmp/upgrade.log
+rm -fR /tmp/deephunter* /tmp/settings.py >> /tmp/upgrade.log 2>&1
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 # Search for debug = true in the codebase
+echo "Search for debug = true in the codebase" >> /tmp/upgrade.log
 matches=$(find "$APP_PATH" -type f -name '*.py' -exec grep -EniI 'debug[[:space:]]*=[[:space:]]*true' {} + 2>/dev/null)
 # Check if matches were found
 if [[ -n "$matches" ]]; then
 	echo ""
-	echo "****************************************************************************************"
-    echo "WARNING: Found 'debug = true' in the following files:"
+	echo "****************************************************************************************" | tee -a /tmp/upgrade.log
+    echo "WARNING: Found 'debug = true' in the following files:" | tee -a /tmp/upgrade.log
     echo ""
-    printf "%-50s %-6s %s\n" "FILE" "LINE" "MATCH"
-    printf "%-50s %-6s %s\n" "----" "----" "-----"
+    printf "%-50s %-6s %s\n" "FILE" "LINE" "MATCH" | tee -a /tmp/upgrade.log
+    printf "%-50s %-6s %s\n" "----" "----" "-----" | tee -a /tmp/upgrade.log
     while IFS= read -r line; do
         file=$(echo "$line" | cut -d: -f1)
         lineno=$(echo "$line" | cut -d: -f2)
         content=$(echo "$line" | cut -d: -f3-)
-        printf "%-50s %-6s %s\n" "$file" "$lineno" "$content"
+        printf "%-50s %-6s %s\n" "$file" "$lineno" "$content" | tee -a /tmp/upgrade.log
     done <<< "$matches"
-	echo "****************************************************************************************"
+	echo "****************************************************************************************" | tee -a /tmp/upgrade.log
 	echo ""
 fi
 
@@ -458,4 +492,4 @@ echo "* If the update went well, you should manually remove any content in this 
 echo "****************************************************************************************"
 echo ""
 
-echo -e "[\033[90mINFO\033[0m] UPGRADE COMPLETE"
+echo -e "[\033[90mINFO\033[0m] UPGRADE COMPLETE" | tee -a /tmp/upgrade.log
