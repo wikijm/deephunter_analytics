@@ -2,7 +2,7 @@
 # DeepHunter upgrade script
 # This script will upgrade DeepHunter to the latest version (commit or release, depending on your settings)
 set -euo pipefail
-trap 'echo "ERROR: Script failed at line $LINENO. Check /tmp/upgrade.log."; exit 1' ERR
+trap 'echo "ERROR: Script failed at line $LINENO. Check /tmp/upgrade.log."; sed -n "$LINENO p" /tmp/upgrade.log; exit 1' ERR
 
 ######################################
 # FUNCTIONS
@@ -251,7 +251,7 @@ else
     echo -e "[\033[31mfailed\033[0m]" | tee -a /tmp/upgrade.log
     echo -e "[\033[31mERROR\033[0m] There are likely missing variables in your current settings.py file." | tee -a /tmp/upgrade.log
     # Show the differences between the local and new settings
-    diff <(echo "$LOCAL_KEYS" | sort) <(echo "$NEW_KEYS" | sort) | tee -a /tmp/upgrade.log
+    diff <(echo "$LOCAL_KEYS" | sort) <(echo "$NEW_KEYS" | sort) | grep '^[<>]' || true | tee -a /tmp/upgrade.log
     echo -e "[\033[90mINFO\033[0m] Please use a text editor to add the missing element(s). You can for example use 'nano -c $APP_PATH/deephunter/settings.py' to edit it." | tee -a /tmp/upgrade.log
     exit 1
 fi
