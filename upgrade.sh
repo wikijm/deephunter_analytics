@@ -23,8 +23,9 @@ check_empty() {
 self_update() {
 
 	echo -n -e "[\033[90mINFO\033[0m] CHECKING SCRIPT VERSION ......................... " | tee -a /tmp/upgrade.log
-	#REMOTE_SCRIPT="https://raw.githubusercontent.com/sebastiendamaye/deephunter/main/qm/scripts/upgrade.sh"
+	# REMOTE_SCRIPT="https://raw.githubusercontent.com/sebastiendamaye/deephunter/main/qm/scripts/upgrade.sh"
 	REMOTE_SCRIPT="https://raw.githubusercontent.com/sebastiendamaye/deephunter_analytics/main/upgrade.sh"
+
 	LOCAL_HASH=$(sha1sum $0 | awk '{print $1}')
 	REMOTE_HASH=$(curl -s $REMOTE_SCRIPT | sha1sum | awk '{print $1}')
 
@@ -365,18 +366,18 @@ while true; do
 	fi
 done
 
-echo -e "[\033[90mINFO\033[0m] PERFORMING DB MIGRATIONS ........................ " | tee -a /tmp/upgrade.log
+echo -n -e "[\033[90mINFO\033[0m] PERFORMING DB MIGRATIONS ........................ " | tee -a /tmp/upgrade.log
 source $VENV_PATH/bin/activate >> /tmp/upgrade.log 2>&1
 cd $APP_PATH/ >> /tmp/upgrade.log 2>&1
 for app in ${APPS[@]}
 do
-	./manage.py makemigrations $app | tee -a /tmp/upgrade.log
+	./manage.py makemigrations $app >> /tmp/upgrade.log 2>&1
 done
 
-./manage.py migrate | tee -a /tmp/upgrade.log
+./manage.py migrate >> /tmp/upgrade.log 2>&1
 # Leave python virtual env
 deactivate >> /tmp/upgrade.log 2>&1
-echo -e "[\033[90mINFO\033[0m] DB MIGRATIONS COMPLETE" | tee -a /tmp/upgrade.log
+echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 # Restore installed plugins
 echo -n -e "[\033[90mINFO\033[0m] RESTORING INSTALLED PLUGINS ..................... " | tee -a /tmp/upgrade.log
@@ -403,12 +404,12 @@ git rev-list --reverse "${CURRENT_COMMIT}..HEAD" | while read COMMIT; do
             filename="${FILE_PATH##*/}"
             basename="${filename%.*}"
 			echo -e "[\033[90mINFO\033[0m] Running upgrade script: $basename" | tee -a /tmp/upgrade.log
-            python manage.py runscript "upgrade.$basename" | tee -a /tmp/upgrade.log
+            python manage.py runscript "upgrade.$basename" >> /tmp/upgrade.log 2>&1
         fi
     done
 done
 deactivate >> /tmp/upgrade.log 2>&1
-echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
+echo -e "[\033[90mINFO\033[0m] Upgrade scripts complete" | tee -a /tmp/upgrade.log
 
 # Restore permissions
 echo -n -e "[\033[90mINFO\033[0m] RESTORING PERMISSIONS ........................... " | tee -a /tmp/upgrade.log
@@ -461,6 +462,7 @@ echo ""
 echo "****************************************************************************************"
 echo "* Your DATA_TEMP folder has not been removed and keeps a copy of your old installation *"
 echo "* If the update went well, you should manually remove any content in this directory.   *"
+echo "* You may also want to remove the /tmp/upgrade.log file.                               *"
 echo "****************************************************************************************"
 echo ""
 
