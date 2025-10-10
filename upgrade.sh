@@ -87,7 +87,7 @@ echo ""
 > /tmp/upgrade.log
 
 # Checking prerequisites
-echo -n -e "[\033[90mINFO\033[0m] CHECKING PREREQUISITES ........... " | tee -a /tmp/upgrade.log
+echo -n -e "[\033[90mINFO\033[0m] CHECKING PREREQUISITES .......................... " | tee -a /tmp/upgrade.log
 
 missing_tools=()
 for tool in sudo curl wget git tar dos2unix; do
@@ -101,16 +101,15 @@ if (( ${#missing_tools[@]} > 0 )); then
 	echo -e "[\033[31mERROR\033[0m]" | tee -a /tmp/upgrade.log
 	echo "Please install the missing tools: ${missing_tools[*]}" | tee -a /tmp/upgrade.log
     exit 1
-else
-	echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 fi
 
 # Checking that user has sudo
 user_groups=$(groups $(whoami))
 if echo "$user_groups" | grep -qw "sudo" || echo "$user_groups" | grep -qw "admin"; then
-	echo -e "  User has sudo access ................................. [\033[32mOK\033[0m]" | tee -a /tmp/upgrade.log
+	echo -e "[\033[32mOK\033[0m]" | tee -a /tmp/upgrade.log
 else
-	echo -e "  User has sudo access ................................. [\033[31mfailed\033[0m]" | tee -a /tmp/upgrade.log
+	echo -e "[\033[31mERROR\033[0m]" | tee -a /tmp/upgrade.log
+	echo -e "Please grant user sudo privileges." | tee -a /tmp/upgrade.log
 	exit 1
 fi
 
