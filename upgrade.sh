@@ -1,6 +1,8 @@
 #!/bin/bash
 # DeepHunter upgrade script
 # This script will upgrade DeepHunter to the latest version (commit or release, depending on your settings)
+set -euo pipefail
+trap 'echo "ERROR: Script failed at line $LINENO. Check /tmp/upgrade.log."; exit 1' ERR
 
 ######################################
 # FUNCTIONS
@@ -84,63 +86,31 @@ echo ""
 # Create an empty log file
 > /tmp/upgrade.log
 
-error=0
-echo -e "[\033[90mINFO\033[0m] CHECKING PREREQUISITES" | tee -a /tmp/upgrade.log
+# Checking prerequisites
+echo -n -e "[\033[90mINFO\033[0m] CHECKING PREREQUISITES ........... " | tee -a /tmp/upgrade.log
 
-# Checking that sudo is installed
-if which sudo > /dev/null 2>&1; then
-	echo -e "  sudo ................................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
+missing_tools=()
+for tool in sudo curl wget git tar dos2unix; do
+    if ! command -v "$tool" >/dev/null 2>&1; then
+        missing_tools+=("$tool")
+    fi
+done
+
+if (( ${#missing_tools[@]} > 0 )); then
+    echo
+	echo -e "[\033[31mERROR\033[0m]" | tee -a /tmp/upgrade.log
+	echo "Please install the missing tools: ${missing_tools[*]}" | tee -a /tmp/upgrade.log
+    exit 1
 else
-	echo -e "  sudo ................................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
-	error=1
+	echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 fi
-# Checking that curl is installed
-if which curl > /dev/null 2>&1; then
-	echo -e "  curl ................................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
-else
-	echo -e "  curl ................................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
-	error=1
-fi
-# Checking that wget is installed
-if which wget > /dev/null 2>&1; then
-	echo -e "  wget ................................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
-else
-	echo -e "  wget ................................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
-	error=1
-fi
-# Checking that git is installed
-if which git > /dev/null 2>&1; then
-	echo -e "  git .................................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
-else
-	echo -e "  git .................................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
-	error=1
-fi
-# Checking that tar is installed
-if which tar > /dev/null 2>&1; then
-	echo -e "  tar .................................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
-else
-	echo -e "  tar .................................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
-	error=1
-fi
-# Checking that dos2unix is installed
-if which dos2unix > /dev/null 2>&1; then
-	echo -e "  dos2unix ............................................. [\033[32mfound\033[0m]" | tee -a /tmp/upgrade.log
-else
-	echo -e "  dos2unix ............................................. [\033[31mmissing\033[0m]" | tee -a /tmp/upgrade.log
-	error=1
-fi
+
 # Checking that user has sudo
 user_groups=$(groups $(whoami))
 if echo "$user_groups" | grep -qw "sudo" || echo "$user_groups" | grep -qw "admin"; then
 	echo -e "  User has sudo access ................................. [\033[32mOK\033[0m]" | tee -a /tmp/upgrade.log
 else
 	echo -e "  User has sudo access ................................. [\033[31mfailed\033[0m]" | tee -a /tmp/upgrade.log
-	error=1
-fi
-
-# Exit on error
-if [ $error = 1 ]; then
-	echo -e "[\033[31mERROR\033[0m] The upgrade script is missing mandatory dependencies. Install these packages first." | tee -a /tmp/upgrade.log
 	exit 1
 fi
 
@@ -156,7 +126,7 @@ self_update
 # Search for the settings file on disk
 # (assuming it is in the following relative path ./deephunter/deephunter/settings.py)
 echo -n -e "[\033[90mINFO\033[0m] LOOKING FOR THE SETTINGS.PY FILE ................ " | tee -a /tmp/upgrade.log
-SETTINGS_PATHS=$(find / -type f -path "*/deephunter/deephunter/*" -name "settings.py" 2>/dev/null)
+SETTINGS_PATHS=$(find / -type f -path "*/deephunter/deephunter/*" -name "settings.py" 2>/dev/null || true)
 if [ -z "${SETTINGS_PATHS}" ]; then
 	echo -e "[\033[31mnot found\033[0m]" | tee -a /tmp/upgrade.log
 	exit 1
@@ -417,7 +387,7 @@ done
 echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 
 # Run all migrations scripts since last commit
-echo -n -e "[\033[90mINFO\033[0m] RUNNING UPGRADE SCRIPTS ......................... " | tee -a /tmp/upgrade.log
+echo -e "[\033[90mINFO\033[0m] RUNNING UPGRADE SCRIPTS ......................... " | tee -a /tmp/upgrade.log
 source $VENV_PATH/bin/activate >> /tmp/upgrade.log 2>&1
 
 echo "[DEBUG] Current commit: $CURRENT_COMMIT" >> /tmp/upgrade.log
