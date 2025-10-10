@@ -339,7 +339,9 @@ echo -e "[\033[32mdone\033[0m]" | tee -a /tmp/upgrade.log
 echo -n -e "[\033[90mINFO\033[0m] RESTORING MIGRATIONS FOLDERS AND SETTINGS ....... " | tee -a /tmp/upgrade.log
 for app in ${APPS[@]}
 do
-	cp -R $TEMP_FOLDER/deephunter/$app/migrations/ $APP_PATH/$app/ >> /tmp/upgrade.log 2>&1
+	if [ -d $TEMP_FOLDER/deephunter/$app/migrations/ ]; then
+		cp -R $TEMP_FOLDER/deephunter/$app/migrations/ $APP_PATH/$app/ >> /tmp/upgrade.log 2>&1
+	fi
 done
 # Restore settings
 cp $TEMP_FOLDER/deephunter/deephunter/settings.py $APP_PATH/deephunter/ >> /tmp/upgrade.log 2>&1
