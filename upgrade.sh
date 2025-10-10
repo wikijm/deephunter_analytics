@@ -181,19 +181,19 @@ CURRENT_COMMIT=$(<$APP_PATH/static/commit_id.txt)
 # Remove all comments from settings and save a copy in tmp
 # This is a necessary prerequisite in order to avoid duplicates during extraction
 grep -v '^#' $APP_PATH/deephunter/settings.py > /tmp/settings.py
-TEMP_FOLDER=$(grep -oP 'TEMP_FOLDER\s?=\s?"\K[^"]+' /tmp/settings.py)
+TEMP_FOLDER=$(grep -oP 'TEMP_FOLDER\s?=\s?"\K[^"]+' /tmp/settings.py || true)
 check_empty "TEMP_FOLDER" "$TEMP_FOLDER"
-VENV_PATH=$(grep -oP 'VENV_PATH\s?=\s?"\K[^"]+' /tmp/settings.py)
+VENV_PATH=$(grep -oP 'VENV_PATH\s?=\s?"\K[^"]+' /tmp/settings.py || true)
 check_empty "VENV_PATH" "$VENV_PATH"
-UPDATE_ON=$(grep -oP 'UPDATE_ON\s?=\s?"\K[^"]+' /tmp/settings.py)
+UPDATE_ON=$(grep -oP 'UPDATE_ON\s?=\s?"\K[^"]+' /tmp/settings.py || true)
 check_empty "UPDATE_ON" "$UPDATE_ON"
-USER_GROUP=$(grep -oP 'USER_GROUP\s?=\s?"\K[^"]+' /tmp/settings.py)
+USER_GROUP=$(grep -oP 'USER_GROUP\s?=\s?"\K[^"]+' /tmp/settings.py || true)
 check_empty "USER_GROUP" "$USER_GROUP"
-SERVER_USER=$(grep -oP 'SERVER_USER\s?=\s?"\K[^"]+' /tmp/settings.py)
+SERVER_USER=$(grep -oP 'SERVER_USER\s?=\s?"\K[^"]+' /tmp/settings.py || true)
 check_empty "SERVER_USER" "$SERVER_USER"
-GITHUB_URL=$(grep -oP 'GITHUB_URL\s?=\s?"\K[^"]+' /tmp/settings.py)
+GITHUB_URL=$(grep -oP 'GITHUB_URL\s?=\s?"\K[^"]+' /tmp/settings.py || true)
 check_empty "GITHUB_URL" "$GITHUB_URL"
-DBBACKUP_GPG_RECIPIENT=$(grep -oP "DBBACKUP_GPG_RECIPIENT\s?=\s?'\K[^']+" /tmp/settings.py)
+DBBACKUP_GPG_RECIPIENT=$(grep -oP "DBBACKUP_GPG_RECIPIENT\s?=\s?'\K[^']+" /tmp/settings.py || true)
 # List of django apps for migrations
 APPS=(qm extensions reports connectors repos notifications dashboard config)
 
