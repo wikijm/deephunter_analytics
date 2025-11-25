@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "name": "Evasion - Block outbound connection to EDR Cloud platform",
+    "description": "Block outbound connection to SentinelOne Cloud Management platform",
+    "notes": "",
+    "confidence": 2,
+    "relevance": 3,
+    "category": "detect",
+    "connector": "sentinelone",
+    "query": "cmdScript.content contains 'New-NetFirewallRule' && cmdScript.content contains '18.196.241.73' && cmdScript.content contains 'Block' OR (cmdScript.content contains 'Add-DnsClientNrptRule' AND cmdScript.content contains 'sentinelone.net') OR (registry.keyPath matches 'MACHINE\\\\SYSTEM\\\\ControlSet001\\\\Services\\\\Dnscache\\\\Parameters\\\\DnsPolicyConfig' registry.value='.sentinelone.net')",
+    "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.process.parent.cmdline, tgt.process.cmdline",
+    "emulation_validation": "While hunting for EDRSAndblast and EDRSilencer, I came across this article : https://cloudbrothers.info/en/edr-silencers-exploring-methods-block-edr-communication-part-1/ It turns out that, as a Local Admin, it's very easy to make the S1 agent silent. All you need to do is issue the following Powershell commands: Add-DnsClientNrptRule -Namespace '.sentinelone.net' -NameServers 127.0.0.1 -Comment 'SentinelOne silenced by Name Resolution Policy Table' && Clear-DnsClientCache",
+    "references": "https://www.atomicredteam.io/atomic-red-team/atomics/T1562.006#atomic-test-14---block-cybersecurity-communication-by-leveraging-windows-name-resolution-policy-table",
+    "mitre_techniques": [
+        "T1562.006"
+    ],
+    "threats": [],
+    "actors": [],
+    "target_os": [
+        "windows"
+    ],
+    "vulnerabilities": []
+}
