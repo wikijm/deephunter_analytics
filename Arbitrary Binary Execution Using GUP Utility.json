@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "name": "Arbitrary Binary Execution Using GUP Utility",
+  "description": "Detects execution of the Notepad++ updater (gup) to launch other commands or executables",
+  "notes": "",
+  "confidence": "2",
+  "relevance": "3",
+  "category": "detect",
+  "connector": "sentinelone",
+  "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\gup.exe\" and tgt.process.image.path contains \"\\explorer.exe\") and (not ((tgt.process.image.path contains \"\\explorer.exe\" and tgt.process.cmdline contains \"\\Notepad++\\notepad++.exe\") or src.process.image.path contains \"\\Notepad++\\updater\\\" or not (tgt.process.cmdline matches \"\\.*\")))))",
+  "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+  "references": ""
+}
