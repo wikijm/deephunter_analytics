@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects the execution of different compiled Windows binaries of the impacket toolset (based on names or part of their names - could lead to false positives)",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1557"
+        ],
+        "name": "HackTool - Impacket Tools Execution",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\\\goldenPac\" or tgt.process.image.path contains \"\\\\karmaSMB\" or tgt.process.image.path contains \"\\\\kintercept\" or tgt.process.image.path contains \"\\\\ntlmrelayx\" or tgt.process.image.path contains \"\\\\rpcdump\" or tgt.process.image.path contains \"\\\\samrdump\" or tgt.process.image.path contains \"\\\\secretsdump\" or tgt.process.image.path contains \"\\\\smbexec\" or tgt.process.image.path contains \"\\\\smbrelayx\" or tgt.process.image.path contains \"\\\\wmiexec\" or tgt.process.image.path contains \"\\\\wmipersist\") or (tgt.process.image.path contains \"\\\\atexec_windows.exe\" or tgt.process.image.path contains \"\\\\dcomexec_windows.exe\" or tgt.process.image.path contains \"\\\\dpapi_windows.exe\" or tgt.process.image.path contains \"\\\\findDelegation_windows.exe\" or tgt.process.image.path contains \"\\\\GetADUsers_windows.exe\" or tgt.process.image.path contains \"\\\\GetNPUsers_windows.exe\" or tgt.process.image.path contains \"\\\\getPac_windows.exe\" or tgt.process.image.path contains \"\\\\getST_windows.exe\" or tgt.process.image.path contains \"\\\\getTGT_windows.exe\" or tgt.process.image.path contains \"\\\\GetUserSPNs_windows.exe\" or tgt.process.image.path contains \"\\\\ifmap_windows.exe\" or tgt.process.image.path contains \"\\\\mimikatz_windows.exe\" or tgt.process.image.path contains \"\\\\netview_windows.exe\" or tgt.process.image.path contains \"\\\\nmapAnswerMachine_windows.exe\" or tgt.process.image.path contains \"\\\\opdump_windows.exe\" or tgt.process.image.path contains \"\\\\psexec_windows.exe\" or tgt.process.image.path contains \"\\\\rdp_check_windows.exe\" or tgt.process.image.path contains \"\\\\sambaPipe_windows.exe\" or tgt.process.image.path contains \"\\\\smbclient_windows.exe\" or tgt.process.image.path contains \"\\\\smbserver_windows.exe\" or tgt.process.image.path contains \"\\\\sniff_windows.exe\" or tgt.process.image.path contains \"\\\\sniffer_windows.exe\" or tgt.process.image.path contains \"\\\\split_windows.exe\" or tgt.process.image.path contains \"\\\\ticketer_windows.exe\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2411
+}

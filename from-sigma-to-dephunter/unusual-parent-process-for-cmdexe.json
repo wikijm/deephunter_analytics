@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects suspicious parent process for cmd.exe",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1059"
+        ],
+        "name": "Unusual Parent Process For Cmd.EXE",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (tgt.process.image.path contains \"\\\\cmd.exe\" and (src.process.image.path contains \"\\\\csrss.exe\" or src.process.image.path contains \"\\\\ctfmon.exe\" or src.process.image.path contains \"\\\\dllhost.exe\" or src.process.image.path contains \"\\\\epad.exe\" or src.process.image.path contains \"\\\\FlashPlayerUpdateService.exe\" or src.process.image.path contains \"\\\\GoogleUpdate.exe\" or src.process.image.path contains \"\\\\jucheck.exe\" or src.process.image.path contains \"\\\\jusched.exe\" or src.process.image.path contains \"\\\\LogonUI.exe\" or src.process.image.path contains \"\\\\lsass.exe\" or src.process.image.path contains \"\\\\regsvr32.exe\" or src.process.image.path contains \"\\\\SearchIndexer.exe\" or src.process.image.path contains \"\\\\SearchProtocolHost.exe\" or src.process.image.path contains \"\\\\SIHClient.exe\" or src.process.image.path contains \"\\\\sihost.exe\" or src.process.image.path contains \"\\\\slui.exe\" or src.process.image.path contains \"\\\\spoolsv.exe\" or src.process.image.path contains \"\\\\sppsvc.exe\" or src.process.image.path contains \"\\\\taskhostw.exe\" or src.process.image.path contains \"\\\\unsecapp.exe\" or src.process.image.path contains \"\\\\WerFault.exe\" or src.process.image.path contains \"\\\\wermgr.exe\" or src.process.image.path contains \"\\\\wlanext.exe\" or src.process.image.path contains \"\\\\WUDFHost.exe\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2144
+}

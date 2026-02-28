@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects execution of network scanning and reconnaisance tools. These tools can be used for the enumeration of local or remote network services for example.",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1046"
+        ],
+        "name": "Linux Network Service Scanning Tools Execution",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (((tgt.process.image.path contains \"/nc\" or tgt.process.image.path contains \"/ncat\" or tgt.process.image.path contains \"/netcat\" or tgt.process.image.path contains \"/socat\") and (not (tgt.process.cmdline contains \" --listen \" or tgt.process.cmdline contains \" -l \"))) or (tgt.process.image.path contains \"/autorecon\" or tgt.process.image.path contains \"/hping\" or tgt.process.image.path contains \"/hping2\" or tgt.process.image.path contains \"/hping3\" or tgt.process.image.path contains \"/naabu\" or tgt.process.image.path contains \"/nmap\" or tgt.process.image.path contains \"/nping\" or tgt.process.image.path contains \"/telnet\" or tgt.process.image.path contains \"/zenmap\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2730
+}

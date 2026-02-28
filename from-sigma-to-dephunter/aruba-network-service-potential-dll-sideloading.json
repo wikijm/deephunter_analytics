@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects potential DLL sideloading activity via the Aruba Networks Virtual Intranet Access \"arubanetsvc.exe\" process using DLL Search Order Hijacking",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1574"
+        ],
+        "name": "Aruba Network Service Potential DLL Sideloading",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\\\arubanetsvc.exe\" and (module.path contains \"\\\\wtsapi32.dll\" or module.path contains \"\\\\msvcr100.dll\" or module.path contains \"\\\\msvcp100.dll\" or module.path contains \"\\\\dbghelp.dll\" or module.path contains \"\\\\dbgcore.dll\" or module.path contains \"\\\\wininet.dll\" or module.path contains \"\\\\iphlpapi.dll\" or module.path contains \"\\\\version.dll\" or module.path contains \"\\\\cryptsp.dll\" or module.path contains \"\\\\cryptbase.dll\" or module.path contains \"\\\\wldp.dll\" or module.path contains \"\\\\profapi.dll\" or module.path contains \"\\\\sspicli.dll\" or module.path contains \"\\\\winsta.dll\" or module.path contains \"\\\\dpapi.dll\")) and (not (module.path contains \"C:\\\\Windows\\\\System32\\\\\" or module.path contains \"C:\\\\Windows\\\\SysWOW64\\\\\" or module.path contains \"C:\\\\Windows\\\\WinSxS\\\\\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 1476
+}

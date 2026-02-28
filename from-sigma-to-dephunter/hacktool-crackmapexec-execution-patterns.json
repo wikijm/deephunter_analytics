@@ -1,0 +1,39 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects various execution patterns of the CrackMapExec pentesting framework",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1047",
+            "t1053",
+            "t1059",
+            "t1059"
+        ],
+        "name": "HackTool - CrackMapExec Execution Patterns",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (tgt.process.cmdline=\"*cmd.exe /Q /c * 1> \\\\\\\\*\\\\*\\\\* 2>&1*\" or tgt.process.cmdline=\"*cmd.exe /C * > \\\\\\\\*\\\\*\\\\* 2>&1*\" or tgt.process.cmdline=\"*cmd.exe /C * > *\\\\Temp\\\\* 2>&1*\" or tgt.process.cmdline contains \"powershell.exe -exec bypass -noni -nop -w 1 -C \\\"\" or tgt.process.cmdline contains \"powershell.exe -noni -nop -w 1 -enc \"))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2088
+}

@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "This rule detects execution of PowerShell scripts located in the \"C:\\Users\\Public\" folder",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1059"
+        ],
+        "name": "Execution of Powershell Script in Public Folder",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\\\powershell.exe\" or tgt.process.image.path contains \"\\\\pwsh.exe\") and (tgt.process.cmdline contains \"-f C:\\\\Users\\\\Public\" or tgt.process.cmdline contains \"-f \\\"C:\\\\Users\\\\Public\" or tgt.process.cmdline contains \"-f %Public%\" or tgt.process.cmdline contains \"-fi C:\\\\Users\\\\Public\" or tgt.process.cmdline contains \"-fi \\\"C:\\\\Users\\\\Public\" or tgt.process.cmdline contains \"-fi %Public%\" or tgt.process.cmdline contains \"-fil C:\\\\Users\\\\Public\" or tgt.process.cmdline contains \"-fil \\\"C:\\\\Users\\\\Public\" or tgt.process.cmdline contains \"-fil %Public%\" or tgt.process.cmdline contains \"-file C:\\\\Users\\\\Public\" or tgt.process.cmdline contains \"-file \\\"C:\\\\Users\\\\Public\" or tgt.process.cmdline contains \"-file %Public%\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2381
+}

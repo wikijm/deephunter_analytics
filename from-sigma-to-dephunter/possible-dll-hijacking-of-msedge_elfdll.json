@@ -1,0 +1,34 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects possible DLL hijacking of msedge_elf.dll by looking for suspicious image loads, loading this DLL from unexpected locations.",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [],
+        "name": "Possible DLL Hijacking of msedge_elf.dll",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (module.path contains \"\\msedge_elf.dll\" and (not (module.path in (\"c:\\program files\\Microsoft\\Edge\\Application\\*\\*\",\"c:\\program files (x86)\\Microsoft\\Edge\\Application\\*\\*\",\"c:\\program files\\Microsoft\\EdgeCore\\*\\*\",\"c:\\program files (x86)\\Microsoft\\EdgeCore\\*\\*\",\"c:\\program files\\Microsoft\\EdgeWebView\\*\\*\",\"c:\\program files (x86)\\Microsoft\\EdgeWebView\\*\\*\")))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 1901
+}

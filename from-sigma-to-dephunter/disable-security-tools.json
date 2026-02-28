@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects disabling security tools",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1562"
+        ],
+        "name": "Disable Security Tools",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"osx\" and (((tgt.process.image.path=\"/bin/launchctl\" and tgt.process.cmdline contains \"unload\") and (tgt.process.cmdline contains \"com.objective-see.lulu.plist\" or tgt.process.cmdline contains \"com.objective-see.blockblock.plist\" or tgt.process.cmdline contains \"com.google.santad.plist\" or tgt.process.cmdline contains \"com.carbonblack.defense.daemon.plist\" or tgt.process.cmdline contains \"com.carbonblack.daemon.plist\" or tgt.process.cmdline contains \"at.obdev.littlesnitchd.plist\" or tgt.process.cmdline contains \"com.tenablesecurity.nessusagent.plist\" or tgt.process.cmdline contains \"com.opendns.osx.RoamingClientConfigUpdater.plist\" or tgt.process.cmdline contains \"com.crowdstrike.falcond.plist\" or tgt.process.cmdline contains \"com.crowdstrike.userdaemon.plist\" or tgt.process.cmdline contains \"osquery\" or tgt.process.cmdline contains \"filebeat\" or tgt.process.cmdline contains \"auditbeat\" or tgt.process.cmdline contains \"packetbeat\" or tgt.process.cmdline contains \"td-agent\")) or (tgt.process.image.path=\"/usr/sbin/spctl\" and tgt.process.cmdline contains \"disable\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2663
+}

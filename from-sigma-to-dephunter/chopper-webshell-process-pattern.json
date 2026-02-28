@@ -1,0 +1,39 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects patterns found in process executions cause by China Chopper like tiny (ASPX) webshells",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1505",
+            "t1018",
+            "t1033",
+            "t1087"
+        ],
+        "name": "Chopper Webshell Process Pattern",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\\\w3wp.exe\" or src.process.image.path contains \"\\\\w3wp.exe\") and (tgt.process.cmdline contains \"&ipconfig&echo\" or tgt.process.cmdline contains \"&quser&echo\" or tgt.process.cmdline contains \"&whoami&echo\" or tgt.process.cmdline contains \"&c:&echo\" or tgt.process.cmdline contains \"&cd&echo\" or tgt.process.cmdline contains \"&dir&echo\" or tgt.process.cmdline contains \"&echo [E]\" or tgt.process.cmdline contains \"&echo [S]\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2585
+}

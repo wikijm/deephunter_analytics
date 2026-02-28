@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects a program executing from a web server root folder. Use this rule to hunt for potential interesting activity such as webshell or backdoors\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1505"
+        ],
+        "name": "Execution From Webserver Root Folder",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\\\wwwroot\\\\\" or tgt.process.image.path contains \"\\\\wmpub\\\\\" or tgt.process.image.path contains \"\\\\htdocs\\\\\") and (not ((tgt.process.image.path contains \"bin\\\\\" or tgt.process.image.path contains \"\\\\Tools\\\\\" or tgt.process.image.path contains \"\\\\SMSComponent\\\\\") and src.process.image.path contains \"\\\\services.exe\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 3372
+}

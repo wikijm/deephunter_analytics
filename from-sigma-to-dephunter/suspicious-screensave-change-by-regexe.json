@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Adversaries may establish persistence by executing malicious content triggered by user inactivity.\nScreensavers are programs that execute after a configurable time of user inactivity and consist of Portable Executable (PE) files with a .scr file extension\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1546"
+        ],
+        "name": "Suspicious ScreenSave Change by Reg.exe",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\\\reg.exe\" and (tgt.process.cmdline contains \"HKEY_CURRENT_USER\\\\Control Panel\\\\Desktop\" or tgt.process.cmdline contains \"HKCU\\\\Control Panel\\\\Desktop\")) and ((tgt.process.cmdline contains \"/v ScreenSaveActive\" and tgt.process.cmdline contains \"/t REG_SZ\" and tgt.process.cmdline contains \"/d 1\" and tgt.process.cmdline contains \"/f\") or (tgt.process.cmdline contains \"/v ScreenSaveTimeout\" and tgt.process.cmdline contains \"/t REG_SZ\" and tgt.process.cmdline contains \"/d \" and tgt.process.cmdline contains \"/f\") or (tgt.process.cmdline contains \"/v ScreenSaverIsSecure\" and tgt.process.cmdline contains \"/t REG_SZ\" and tgt.process.cmdline contains \"/d 0\" and tgt.process.cmdline contains \"/f\") or (tgt.process.cmdline contains \"/v SCRNSAVE.EXE\" and tgt.process.cmdline contains \"/t REG_SZ\" and tgt.process.cmdline contains \"/d \" and tgt.process.cmdline contains \".scr\" and tgt.process.cmdline contains \"/f\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2200
+}

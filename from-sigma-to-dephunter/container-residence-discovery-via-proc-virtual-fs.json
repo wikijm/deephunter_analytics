@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects potential container discovery via listing of certain kernel features in the \"/proc\" virtual filesystem",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1082"
+        ],
+        "name": "Container Residence Discovery Via Proc Virtual FS",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and ((tgt.process.image.path contains \"awk\" or tgt.process.image.path contains \"/cat\" or tgt.process.image.path contains \"grep\" or tgt.process.image.path contains \"/head\" or tgt.process.image.path contains \"/less\" or tgt.process.image.path contains \"/more\" or tgt.process.image.path contains \"/nl\" or tgt.process.image.path contains \"/tail\") and (tgt.process.cmdline contains \"/proc/2/\" or (tgt.process.cmdline contains \"/proc/\" and (tgt.process.cmdline contains \"/cgroup\" or tgt.process.cmdline contains \"/sched\")))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2806
+}

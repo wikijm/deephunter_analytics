@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects deletion of Windows Volume Shadow Copies with PowerShell code and Get-WMIObject. This technique is used by numerous ransomware families such as Sodinokibi/REvil",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1490"
+        ],
+        "name": "Deletion of Volume Shadow Copies via WMI with PowerShell",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.cmdline contains \"Get-WmiObject\" or tgt.process.cmdline contains \"gwmi\" or tgt.process.cmdline contains \"Get-CimInstance\" or tgt.process.cmdline contains \"gcim\") and tgt.process.cmdline contains \"Win32_ShadowCopy\" and (tgt.process.cmdline contains \".Delete()\" or tgt.process.cmdline contains \"Remove-WmiObject\" or tgt.process.cmdline contains \"rwmi\" or tgt.process.cmdline contains \"Remove-CimInstance\" or tgt.process.cmdline contains \"rcim\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2152
+}

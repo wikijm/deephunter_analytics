@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects potential network activity of Atera RMM tool\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1219"
+        ],
+        "name": "Potential Atera RMM Tool Network Activity",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \"pubsub.atera.com\" or url.address contains \"pubsub.pubnub.com\" or url.address contains \"agentreporting.atera.com\" or url.address contains \"getalphacontrol.com\" or url.address contains \"app.atera.com\" or url.address contains \"agenthb.atera.com\" or url.address contains \"packagesstore.blob.core.windows.net\" or url.address contains \"ps.pndsn.com\" or url.address contains \"agent-api.atera.com\" or url.address contains \"cacerts.thawte.com\" or url.address contains \"agentreportingstore.blob.core.windows.net\" or url.address contains \"atera-agent-heartbeat.servicebus.windows.net\" or url.address contains \"ps.atera.com\" or url.address contains \"atera.pubnubapi.com\" or url.address contains \"appcdn.atera.com\") or (event.dns.request contains \"pubsub.atera.com\" or event.dns.request contains \"pubsub.pubnub.com\" or event.dns.request contains \"agentreporting.atera.com\" or event.dns.request contains \"getalphacontrol.com\" or event.dns.request contains \"app.atera.com\" or event.dns.request contains \"agenthb.atera.com\" or event.dns.request contains \"packagesstore.blob.core.windows.net\" or event.dns.request contains \"ps.pndsn.com\" or event.dns.request contains \"agent-api.atera.com\" or event.dns.request contains \"cacerts.thawte.com\" or event.dns.request contains \"agentreportingstore.blob.core.windows.net\" or event.dns.request contains \"atera-agent-heartbeat.servicebus.windows.net\" or event.dns.request contains \"ps.atera.com\" or event.dns.request contains \"atera.pubnubapi.com\" or event.dns.request contains \"appcdn.atera.com\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 3151
+}

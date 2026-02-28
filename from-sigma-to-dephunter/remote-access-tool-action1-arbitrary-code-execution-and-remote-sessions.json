@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects the execution of Action1 in order to execute arbitrary code or establish a remote session.\n\nAction1 is a powerful Remote Monitoring and Management tool that enables users to execute commands, scripts, and binaries.\nThrough the web interface of action1, the administrator must create a new policy or an app to establish remote execution and then points that the agent is installed.\n\nHunting Opportunity 1- Weed Out The Noise\n\nWhen threat actors execute a script, a command, or a binary through these new policies and apps, the names of these become visible in the command line during the execution process. Below is an example of the command line that contains the deployment of a binary through  a policy with name \"test_app_1\":\n\nParentCommandLine: \"C:\\WINDOWS\\Action1\\action1_agent.exe schedule:Deploy_App__test_app_1_1681327673425 runaction:0\"\n\nAfter establishing a baseline, we can split the command to extract the policy name and group all the policy names and inspect the results with a list of frequency occurrences.\n\nHunting Opportunity 2 - Remote Sessions On Out Of Office Hours\n\nIf you have admins within your environment using remote sessions to administer endpoints, you can create a threat-hunting query and modify the time of the initiated sessions looking for abnormal activity.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1219"
+        ],
+        "name": "Remote Access Tool - Action1 Arbitrary Code Execution and Remote Sessions",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\\\action1_agent.exe\" and tgt.process.image.path contains \"\\\\Windows\\\\Action1\\\\package_downloads\\\\\") or ((src.process.image.path contains \"\\\\cmd.exe\" or src.process.image.path contains \"\\\\powershell.exe\") and (src.process.cmdline contains \"\\\\Action1\\\\scripts\\\\Run_Command_\" or src.process.cmdline contains \"\\\\Action1\\\\scripts\\\\Run_PowerShell_\")) or tgt.process.image.path contains \"\\\\agent1_remote.exe\"))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 3371
+}

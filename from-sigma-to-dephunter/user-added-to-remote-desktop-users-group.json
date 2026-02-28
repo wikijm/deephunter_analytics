@@ -1,0 +1,38 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects addition of users to the local Remote Desktop Users group via \"Net\" or \"Add-LocalGroupMember\".",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1133",
+            "t1136",
+            "t1021"
+        ],
+        "name": "User Added to Remote Desktop Users Group",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((tgt.process.cmdline contains \"localgroup \" and tgt.process.cmdline contains \" /add\") or (tgt.process.cmdline contains \"Add-LocalGroupMember \" and tgt.process.cmdline contains \" -Group \")) and (tgt.process.cmdline contains \"Remote Desktop Users\" or tgt.process.cmdline contains \"Utilisateurs du Bureau \u00e0 distance\" or tgt.process.cmdline contains \"Usuarios de escritorio remoto\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2400
+}

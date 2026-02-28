@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects different hacktools used for relay attacks on Windows for privilege escalation",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1557"
+        ],
+        "name": "Potential SMB Relay Attack Tool Execution",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((tgt.process.image.path contains \"PetitPotam\" or tgt.process.image.path contains \"RottenPotato\" or tgt.process.image.path contains \"HotPotato\" or tgt.process.image.path contains \"JuicyPotato\" or tgt.process.image.path contains \"\\\\just_dce_\" or tgt.process.image.path contains \"Juicy Potato\" or tgt.process.image.path contains \"\\\\temp\\\\rot.exe\" or tgt.process.image.path contains \"\\\\Potato.exe\" or tgt.process.image.path contains \"\\\\SpoolSample.exe\" or tgt.process.image.path contains \"\\\\Responder.exe\" or tgt.process.image.path contains \"\\\\smbrelayx\" or tgt.process.image.path contains \"\\\\ntlmrelayx\" or tgt.process.image.path contains \"\\\\LocalPotato\") or (tgt.process.cmdline contains \"Invoke-Tater\" or tgt.process.cmdline contains \" smbrelay\" or tgt.process.cmdline contains \" ntlmrelay\" or tgt.process.cmdline contains \"cme smb \" or tgt.process.cmdline contains \" /ntlm:NTLMhash \" or tgt.process.cmdline contains \"Invoke-PetitPotam\" or tgt.process.cmdline=\"*.exe -t * -p *\") or (tgt.process.cmdline contains \".exe -c \\\"{\" and tgt.process.cmdline contains \"}\\\" -z\")) and (not (tgt.process.image.path contains \"HotPotatoes6\" or tgt.process.image.path contains \"HotPotatoes7\" or tgt.process.image.path contains \"HotPotatoes \"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2234
+}

@@ -1,0 +1,38 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects the creation of a scheduled task using schtasks.exe, potentially in combination with curl for downloading payloads and PowerShell for executing them.\nThis facilitates executing malicious payloads or connecting with C&C server persistently without dropping the malware sample on the host.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1053",
+            "t1218",
+            "t1105"
+        ],
+        "name": "Scheduled Task Creation with Curl and PowerShell Execution Combo",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\\\schtasks.exe\" and (tgt.process.cmdline contains \" -create \" or tgt.process.cmdline contains \" /create \" or tgt.process.cmdline contains \" \u2013create \" or tgt.process.cmdline contains \" \u2014create \" or tgt.process.cmdline contains \" \u2015create \")) and (tgt.process.cmdline contains \"curl \" and tgt.process.cmdline contains \"http\" and tgt.process.cmdline contains \"-o\") and tgt.process.cmdline contains \"powershell\"))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2209
+}

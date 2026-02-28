@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects the execution of \"forfiles\" from a non-default location, in order to potentially spawn a custom \"cmd.exe\" from the current working directory.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1036"
+        ],
+        "name": "Forfiles.EXE Child Process Masquerading",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((src.process.cmdline contains \".exe\" or src.process.cmdline contains \".exe\\\"\") and tgt.process.image.path contains \"\\\\cmd.exe\" and tgt.process.cmdline contains \"/c echo \\\"\") and (not ((src.process.image.path contains \":\\\\Windows\\\\System32\\\\\" or src.process.image.path contains \":\\\\Windows\\\\SysWOW64\\\\\") and src.process.image.path contains \"\\\\forfiles.exe\" and (tgt.process.image.path contains \":\\\\Windows\\\\System32\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\SysWOW64\\\\\") and tgt.process.image.path contains \"\\\\cmd.exe\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2116
+}

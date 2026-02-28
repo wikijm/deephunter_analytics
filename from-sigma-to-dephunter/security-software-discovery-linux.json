@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects usage of system utilities (only grep and egrep for now) to discover security software discovery",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1518"
+        ],
+        "name": "Security Software Discovery - Linux",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and ((tgt.process.image.path contains \"/grep\" or tgt.process.image.path contains \"/egrep\") and (tgt.process.cmdline contains \"nessusd\" or tgt.process.cmdline contains \"td-agent\" or tgt.process.cmdline contains \"packetbeat\" or tgt.process.cmdline contains \"filebeat\" or tgt.process.cmdline contains \"auditbeat\" or tgt.process.cmdline contains \"osqueryd\" or tgt.process.cmdline contains \"cbagentd\" or tgt.process.cmdline contains \"falcond\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2798
+}

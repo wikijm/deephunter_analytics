@@ -1,0 +1,37 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects TacticalRMM agent installations where the --api, --auth, and related flags are used on the command line.\nThese parameters configure the agent to connect to a specific RMM server with authentication, client ID, and site ID.\nThis technique could indicate a threat actor attempting to register the agent with an attacker-controlled RMM infrastructure silently.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1219",
+            "t1105"
+        ],
+        "name": "Remote Access Tool - TacticalRMM Agent Registration to Potentially Attacker-Controlled Server",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (tgt.process.image.path contains \"\\\\TacticalAgent\\\\tacticalrmm.exe\" and (tgt.process.cmdline contains \"--api\" and tgt.process.cmdline contains \"--auth\" and tgt.process.cmdline contains \"--client-id\" and tgt.process.cmdline contains \"--site-id\" and tgt.process.cmdline contains \"--agent-type\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2492
+}

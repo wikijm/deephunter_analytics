@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects a file or folder's permissions being modified or tampered with.",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1222"
+        ],
+        "name": "File or Folder Permissions Modifications",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((((tgt.process.image.path contains \"\\\\cacls.exe\" or tgt.process.image.path contains \"\\\\icacls.exe\" or tgt.process.image.path contains \"\\\\net.exe\" or tgt.process.image.path contains \"\\\\net1.exe\") and (tgt.process.cmdline contains \"/grant\" or tgt.process.cmdline contains \"/setowner\" or tgt.process.cmdline contains \"/inheritance:r\")) or (tgt.process.image.path contains \"\\\\attrib.exe\" and tgt.process.cmdline contains \"-r\") or tgt.process.image.path contains \"\\\\takeown.exe\") and (not (tgt.process.cmdline contains \"ICACLS C:\\\\ProgramData\\\\dynatrace\\\\gateway\\\\config\\\\connectivity.history /reset\" or (tgt.process.cmdline contains \"ICACLS C:\\\\ProgramData\\\\dynatrace\\\\gateway\\\\config\\\\config.properties /grant :r \" and tgt.process.cmdline contains \"S-1-5-19:F\") or (tgt.process.cmdline contains \"\\\\AppData\\\\Local\\\\Programs\\\\Microsoft VS Code\" or tgt.process.cmdline contains \":\\\\Program Files\\\\Microsoft VS Code\") or (tgt.process.cmdline contains \":\\\\Program Files (x86)\\\\Avira\" or tgt.process.cmdline contains \":\\\\Program Files\\\\Avira\")))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 3375
+}

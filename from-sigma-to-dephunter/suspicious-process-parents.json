@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects suspicious parent processes that should not have any children or should only have a single possible child program",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1036"
+        ],
+        "name": "Suspicious Process Parents",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\\\minesweeper.exe\" or src.process.image.path contains \"\\\\winver.exe\" or src.process.image.path contains \"\\\\bitsadmin.exe\") or ((src.process.image.path contains \"\\\\csrss.exe\" or src.process.image.path contains \"\\\\certutil.exe\" or src.process.image.path contains \"\\\\eventvwr.exe\" or src.process.image.path contains \"\\\\calc.exe\" or src.process.image.path contains \"\\\\notepad.exe\") and (not ((tgt.process.image.path contains \"\\\\WerFault.exe\" or tgt.process.image.path contains \"\\\\wermgr.exe\" or tgt.process.image.path contains \"\\\\conhost.exe\" or tgt.process.image.path contains \"\\\\mmc.exe\" or tgt.process.image.path contains \"\\\\win32calc.exe\" or tgt.process.image.path contains \"\\\\notepad.exe\") or not (tgt.process.image.path matches \"\\.*\"))))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2577
+}

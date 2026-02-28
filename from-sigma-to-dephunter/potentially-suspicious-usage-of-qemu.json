@@ -1,0 +1,37 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects potentially suspicious execution of the Qemu utility in a Windows environment.\nThreat actors have leveraged this utility and this technique for achieving network access as reported by Kaspersky.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1090",
+            "t1572"
+        ],
+        "name": "Potentially Suspicious Usage Of Qemu",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((tgt.process.cmdline contains \"-m 1M\" or tgt.process.cmdline contains \"-m 2M\" or tgt.process.cmdline contains \"-m 3M\") and (tgt.process.cmdline contains \"restrict=off\" and tgt.process.cmdline contains \"-netdev \" and tgt.process.cmdline contains \"connect=\" and tgt.process.cmdline contains \"-nographic\")) and (not (tgt.process.cmdline contains \" -cdrom \" or tgt.process.cmdline contains \" type=virt \" or tgt.process.cmdline contains \" -blockdev \"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2506
+}

@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects the creation of scheduled tasks by user accounts via the \"schtasks\" utility.",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1053"
+        ],
+        "name": "Scheduled Task Creation Via Schtasks.EXE",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\\\schtasks.exe\" and tgt.process.cmdline contains \" /create \") and (not (tgt.process.user contains \"AUTHORI\" or tgt.process.user contains \"AUTORI\")) and (not ((src.process.image.path in (\"C:\\\\Program Files\\\\Microsoft Office\\\\root\\\\integration\\\\integrator.exe\",\"C:\\\\Program Files (x86)\\\\Microsoft Office\\\\root\\\\integration\\\\integrator.exe\")) and (tgt.process.image.path in (\"C:\\\\Windows\\\\System32\\\\schtasks.exe\",\"C:\\\\Windows\\\\SysWOW64\\\\schtasks.exe\")) and tgt.process.cmdline contains \"Microsoft\\\\Office\\\\Office Performance Monitor\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2531
+}

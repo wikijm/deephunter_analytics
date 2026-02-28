@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detect use of the Windows 8.3 short name. Which could be used as a method to avoid command-line detection",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1564"
+        ],
+        "name": "Use NTFS Short Name in Command Line",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.cmdline contains \"~1.exe\" or tgt.process.cmdline contains \"~1.bat\" or tgt.process.cmdline contains \"~1.msi\" or tgt.process.cmdline contains \"~1.vbe\" or tgt.process.cmdline contains \"~1.vbs\" or tgt.process.cmdline contains \"~1.dll\" or tgt.process.cmdline contains \"~1.ps1\" or tgt.process.cmdline contains \"~1.js\" or tgt.process.cmdline contains \"~1.hta\" or tgt.process.cmdline contains \"~2.exe\" or tgt.process.cmdline contains \"~2.bat\" or tgt.process.cmdline contains \"~2.msi\" or tgt.process.cmdline contains \"~2.vbe\" or tgt.process.cmdline contains \"~2.vbs\" or tgt.process.cmdline contains \"~2.dll\" or tgt.process.cmdline contains \"~2.ps1\" or tgt.process.cmdline contains \"~2.js\" or tgt.process.cmdline contains \"~2.hta\") and (not ((src.process.image.path contains \"\\\\WebEx\\\\WebexHost.exe\" or src.process.image.path contains \"\\\\thor\\\\thor64.exe\") or tgt.process.cmdline contains \"C:\\\\xampp\\\\vcredist\\\\VCREDI~1.EXE\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2093
+}

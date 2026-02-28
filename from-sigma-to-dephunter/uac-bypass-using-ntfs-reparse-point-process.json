@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects the pattern of UAC Bypass using NTFS reparse point and wusa.exe DLL hijacking (UACMe 36)",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1548"
+        ],
+        "name": "UAC Bypass Using NTFS Reparse Point - Process",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.cmdline contains \"\\\"C:\\\\Windows\\\\system32\\\\wusa.exe\\\"  /quiet C:\\\\Users\\\\\" and tgt.process.cmdline contains \"\\\\AppData\\\\Local\\\\Temp\\\\update.msu\" and (tgt.process.integrityLevel in (\"High\",\"System\",\"S-1-16-16384\",\"S-1-16-12288\"))) or (src.process.cmdline=\"\\\"C:\\\\Windows\\\\system32\\\\dism.exe\\\" /online /quiet /norestart /add-package /packagepath:\\\"C:\\\\Windows\\\\system32\\\\pe386\\\" /ignorecheck\" and (tgt.process.integrityLevel in (\"High\",\"System\")) and (tgt.process.cmdline contains \"C:\\\\Users\\\\\" and tgt.process.cmdline contains \"\\\\AppData\\\\Local\\\\Temp\\\\\" and tgt.process.cmdline contains \"\\\\dismhost.exe {\") and tgt.process.image.path contains \"\\\\DismHost.exe\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2124
+}

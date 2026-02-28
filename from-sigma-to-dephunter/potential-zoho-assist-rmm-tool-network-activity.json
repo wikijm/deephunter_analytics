@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects potential network activity of Zoho Assist RMM tool",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1219"
+        ],
+        "name": "Potential Zoho Assist RMM Tool Network Activity",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \".zoho.com.au\" or url.address contains \".zohoassist.jp\" or url.address contains \"assist.zoho.com\" or url.address contains \"zoho.com/assist/\" or url.address contains \".zoho.in\" or url.address contains \"downloads.zohodl.com.cn\" or url.address contains \".zohoassist.com\" or url.address contains \"downloads.zohocdn.com\" or url.address contains \"gateway.zohoassist.com\" or url.address contains \".zohoassist.com.cn\" or url.address contains \".zoho.com.cn\" or url.address contains \".zoho.com\" or url.address contains \".zoho.eu\") or (event.dns.request contains \".zoho.com.au\" or event.dns.request contains \".zohoassist.jp\" or event.dns.request contains \"assist.zoho.com\" or event.dns.request contains \"zoho.com/assist/\" or event.dns.request contains \".zoho.in\" or event.dns.request contains \"downloads.zohodl.com.cn\" or event.dns.request contains \".zohoassist.com\" or event.dns.request contains \"downloads.zohocdn.com\" or event.dns.request contains \"gateway.zohoassist.com\" or event.dns.request contains \".zohoassist.com.cn\" or event.dns.request contains \".zoho.com.cn\" or event.dns.request contains \".zoho.com\" or event.dns.request contains \".zoho.eu\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 3262
+}

@@ -1,0 +1,37 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects execution of TruffleHog, a tool used to search for secrets in different platforms like Git, Jira, Slack, SharePoint, etc. that could be used maliciously.\nWhile it is a legitimate tool, intended for use in CI pipelines and security assessments,\nIt was observed in the Shai-Hulud malware campaign targeting npm packages to steal sensitive information.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1083",
+            "t1552"
+        ],
+        "name": "PUA - TruffleHog Execution - Linux",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (tgt.process.image.path contains \"/trufflehog\" or ((tgt.process.cmdline contains \" docker --image \" or tgt.process.cmdline contains \" Git \" or tgt.process.cmdline contains \" GitHub \" or tgt.process.cmdline contains \" Jira \" or tgt.process.cmdline contains \" Slack \" or tgt.process.cmdline contains \" Confluence \" or tgt.process.cmdline contains \" SharePoint \" or tgt.process.cmdline contains \" s3 \" or tgt.process.cmdline contains \" gcs \") and tgt.process.cmdline contains \" --results=verified\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2785
+}

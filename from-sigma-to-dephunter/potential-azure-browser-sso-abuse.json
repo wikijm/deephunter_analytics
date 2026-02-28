@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects abusing Azure Browser SSO by requesting OAuth 2.0 refresh tokens for an Azure-AD-authenticated Windows user (i.e. the machine is joined to Azure AD and a user logs in with their Azure AD account) wanting to perform SSO authentication in the browser.\nAn attacker can use this to authenticate to Azure AD in a browser as that user.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1574"
+        ],
+        "name": "Potential Azure Browser SSO Abuse",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path=\"C:\\\\Windows\\\\System32\\\\MicrosoftAccountTokenProvider.dll\" and (not ((src.process.image.path contains \"C:\\\\Windows\\\\System32\\\\\" or src.process.image.path contains \"C:\\\\Windows\\\\SysWOW64\\\\\") and src.process.image.path contains \"\\\\BackgroundTaskHost.exe\")) and (not (((src.process.image.path contains \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\\" or src.process.image.path contains \"C:\\\\Program Files (x86)\\\\Microsoft Visual Studio\\\\\") and src.process.image.path contains \"\\\\IDE\\\\devenv.exe\") or (src.process.image.path in (\"C:\\\\Program Files (x86)\\\\Internet Explorer\\\\iexplore.exe\",\"C:\\\\Program Files\\\\Internet Explorer\\\\iexplore.exe\")) or (src.process.image.path contains \"C:\\\\Program Files (x86)\\\\Microsoft\\\\EdgeWebView\\\\Application\\\\\" or src.process.image.path contains \"\\\\WindowsApps\\\\MicrosoftEdge.exe\" or (src.process.image.path in (\"C:\\\\Program Files (x86)\\\\Microsoft\\\\Edge\\\\Application\\\\msedge.exe\",\"C:\\\\Program Files\\\\Microsoft\\\\Edge\\\\Application\\\\msedge.exe\"))) or ((src.process.image.path contains \"C:\\\\Program Files (x86)\\\\Microsoft\\\\EdgeCore\\\\\" or src.process.image.path contains \"C:\\\\Program Files\\\\Microsoft\\\\EdgeCore\\\\\") and (src.process.image.path contains \"\\\\msedge.exe\" or src.process.image.path contains \"\\\\msedgewebview2.exe\")) or src.process.image.path contains \"\\\\AppData\\\\Local\\\\Microsoft\\\\OneDrive\\\\OneDrive.exe\" or not (src.process.image.path matches \"\\.*\")))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 1510
+}

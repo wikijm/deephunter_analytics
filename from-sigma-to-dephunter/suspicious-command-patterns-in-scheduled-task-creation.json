@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects scheduled task creation using \"schtasks\" that contain potentially suspicious or uncommon commands",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1053"
+        ],
+        "name": "Suspicious Command Patterns In Scheduled Task Creation",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\\\schtasks.exe\" and tgt.process.cmdline contains \"/Create \") and (((tgt.process.cmdline contains \"/sc minute \" or tgt.process.cmdline contains \"/ru system \") and (tgt.process.cmdline contains \"cmd /c\" or tgt.process.cmdline contains \"cmd /k\" or tgt.process.cmdline contains \"cmd /r\" or tgt.process.cmdline contains \"cmd.exe /c \" or tgt.process.cmdline contains \"cmd.exe /k \" or tgt.process.cmdline contains \"cmd.exe /r \")) or (tgt.process.cmdline contains \" -decode \" or tgt.process.cmdline contains \" -enc \" or tgt.process.cmdline contains \" -w hidden \" or tgt.process.cmdline contains \" bypass \" or tgt.process.cmdline contains \" IEX\" or tgt.process.cmdline contains \".DownloadData\" or tgt.process.cmdline contains \".DownloadFile\" or tgt.process.cmdline contains \".DownloadString\" or tgt.process.cmdline contains \"/c start /min \" or tgt.process.cmdline contains \"FromBase64String\" or tgt.process.cmdline contains \"mshta http\" or tgt.process.cmdline contains \"mshta.exe http\") or ((tgt.process.cmdline contains \":\\\\ProgramData\\\\\" or tgt.process.cmdline contains \":\\\\Temp\\\\\" or tgt.process.cmdline contains \":\\\\Tmp\\\\\" or tgt.process.cmdline contains \":\\\\Users\\\\Public\\\\\" or tgt.process.cmdline contains \":\\\\Windows\\\\Temp\\\\\" or tgt.process.cmdline contains \"\\\\AppData\\\\\" or tgt.process.cmdline contains \"%AppData%\" or tgt.process.cmdline contains \"%Temp%\" or tgt.process.cmdline contains \"%tmp%\") and (tgt.process.cmdline contains \"cscript\" or tgt.process.cmdline contains \"curl\" or tgt.process.cmdline contains \"wscript\")))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2458
+}

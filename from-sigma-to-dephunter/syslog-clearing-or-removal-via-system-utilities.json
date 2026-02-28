@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects specific commands commonly used to remove or empty the syslog. Which is a technique often used by attacker as a method to hide their tracks\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1070"
+        ],
+        "name": "Syslog Clearing or Removal Via System Utilities",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and ((tgt.process.cmdline contains \"/var/log/syslog\" and ((tgt.process.image.path contains \"/rm\" and (tgt.process.cmdline contains \" -r \" or tgt.process.cmdline contains \" -f \" or tgt.process.cmdline contains \" -rf \" or tgt.process.cmdline contains \"/var/log/syslog\")) or tgt.process.image.path contains \"/unlink\" or tgt.process.image.path contains \"/mv\" or (tgt.process.image.path contains \"/truncate\" and (tgt.process.cmdline contains \"0 \" and tgt.process.cmdline contains \"/var/log/syslog\") and (tgt.process.cmdline contains \"-s \" or tgt.process.cmdline contains \"-c \" or tgt.process.cmdline contains \"--size\")) or (tgt.process.image.path contains \"/ln\" and (tgt.process.cmdline contains \"/dev/null \" and tgt.process.cmdline contains \"/var/log/syslog\") and (tgt.process.cmdline contains \"-sf \" or tgt.process.cmdline contains \"-sfn \" or tgt.process.cmdline contains \"-sfT \")) or (tgt.process.image.path contains \"/cp\" and tgt.process.cmdline contains \"/dev/null\") or (tgt.process.image.path contains \"/shred\" and tgt.process.cmdline contains \"-u \"))) or ((tgt.process.cmdline contains \" > /var/log/syslog\" or tgt.process.cmdline contains \" >/var/log/syslog\" or tgt.process.cmdline contains \" >| /var/log/syslog\" or tgt.process.cmdline contains \": > /var/log/syslog\" or tgt.process.cmdline contains \":> /var/log/syslog\" or tgt.process.cmdline contains \":>/var/log/syslog\" or tgt.process.cmdline contains \">|/var/log/syslog\") or (tgt.process.cmdline contains \"journalctl --vacuum\" or tgt.process.cmdline contains \"journalctl --rotate\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2783
+}

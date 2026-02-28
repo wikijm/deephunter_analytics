@@ -1,0 +1,37 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects possible malicious execution of JXA in-memory via OSAScript",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1059",
+            "t1059"
+        ],
+        "name": "JXA In-memory Execution Via OSAScript",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"osx\" and ((tgt.process.cmdline contains \"osascript\" and tgt.process.cmdline contains \" -e \" and tgt.process.cmdline contains \"eval\" and tgt.process.cmdline contains \"NSData.dataWithContentsOfURL\") and ((tgt.process.cmdline contains \" -l \" and tgt.process.cmdline contains \"JavaScript\") or tgt.process.cmdline contains \".js\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2708
+}

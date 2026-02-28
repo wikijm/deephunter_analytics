@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects the execution of WMIC with the \"format\" flag to potentially load XSL files.\nAdversaries abuse this functionality to execute arbitrary files while potentially bypassing application whitelisting defenses.\nExtensible Stylesheet Language (XSL) files are commonly used to describe the processing and rendering of data within XML files.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1220"
+        ],
+        "name": "XSL Script Execution Via WMIC.EXE",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\\\wmic.exe\" and (tgt.process.cmdline contains \"-format\" or tgt.process.cmdline contains \"/format\" or tgt.process.cmdline contains \"\u2013format\" or tgt.process.cmdline contains \"\u2014format\" or tgt.process.cmdline contains \"\u2015format\")) and (not (tgt.process.cmdline contains \"Format:List\" or tgt.process.cmdline contains \"Format:htable\" or tgt.process.cmdline contains \"Format:hform\" or tgt.process.cmdline contains \"Format:table\" or tgt.process.cmdline contains \"Format:mof\" or tgt.process.cmdline contains \"Format:value\" or tgt.process.cmdline contains \"Format:rawxml\" or tgt.process.cmdline contains \"Format:xml\" or tgt.process.cmdline contains \"Format:csv\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2117
+}

@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects potential files activity of Kaseya (VSA) RMM tool",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1219"
+        ],
+        "name": "Potential Kaseya (VSA) RMM Tool File Activity",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.category=\"file\" and (endpoint.os=\"windows\" and (tgt.file.path contains \"%localappdata%\\\\Kaseya\\\\Log\\\\KaseyaLiveConnect\\*\" or tgt.file.path contains \"~/Library/Logs/com.kaseya/KaseyaLiveConnect/\" or tgt.file.path contains \"C:\\\\ProgramData\\\\Kaseya\\\\Log\\\\Endpoint\\*\" or tgt.file.path=\"*C:\\\\Program Files*\\\\Kaseya\\*\\\\agentmon.log\" or tgt.file.path contains \"/var/log/system.log\" or tgt.file.path=\"* ~/opt/kaseya/*/logs*\" or tgt.file.path contains \"C:\\\\Users\\*\\\\AppData\\\\Local\\\\Temp\\\\KASetup.log\" or tgt.file.path contains \"C:\\\\Windows\\\\Temp\\\\KASetup.log\" or tgt.file.path contains \"C:\\\\ProgramData\\\\Kaseya\\\\Log\\\\KaseyaEdgeServices\\*\" or tgt.file.path contains \"C:\\\\Kaseya\\\\api\\\\v1.0\\\\logs\\\\\" or tgt.file.path contains \"C:\\\\Kaseya\\\\api\\\\v1.5\\\\endpoint\\\\logs\" or tgt.file.path contains \"C:\\\\Kaseya\\\\api\\\\v1.5\\\\endpoints\\\\logs\" or tgt.file.path contains \"C:\\\\Windows\\\\System32\\\\config\\\\systemprofile\\\\AppData\\\\Local\\\\Kaseya\\\\Log\\\\MakeSelfSignedCert.exe\\\\\" or tgt.file.path contains \"C:\\\\Kaseya\\\\WebPages\\\\install\\\\makecert.txt\" or tgt.file.path=\"*C:\\\\ProgramData\\\\Kaseya\\\\Log\\\\Endpoint\\\\Instance_*\\\\KaseyaEndpoint*\" or tgt.file.path=\"*C:\\\\ProgramData\\\\Kaseya\\\\Log\\\\Endpoint\\\\Instance_*\\\\Session_*\"))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2946
+}

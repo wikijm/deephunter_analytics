@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects potential process patterns related to Cobalt Strike beacon activity",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1059"
+        ],
+        "name": "Potential CobaltStrike Process Patterns",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.cmdline contains \"cmd.exe /C whoami\" and src.process.image.path contains \"C:\\\\Temp\\\\\") or ((src.process.image.path contains \"\\\\runonce.exe\" or src.process.image.path contains \"\\\\dllhost.exe\") and (tgt.process.cmdline contains \"cmd.exe /c echo\" and tgt.process.cmdline contains \"> \\\\\\\\.\\\\pipe\")) or ((src.process.cmdline contains \"cmd.exe /C echo\" and src.process.cmdline contains \" > \\\\\\\\.\\\\pipe\") and tgt.process.cmdline contains \"conhost.exe 0xffffffff -ForceV1\") or (src.process.cmdline contains \"/C whoami\" and tgt.process.cmdline contains \"conhost.exe 0xffffffff -ForceV1\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2106
+}

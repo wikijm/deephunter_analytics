@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects uncommon \"userinit.exe\" child processes, which could be a sign of uncommon shells or login scripts used for persistence.",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1037"
+        ],
+        "name": "Uncommon Userinit Child Process",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\\\userinit.exe\" and (not tgt.process.image.path contains \":\\\\WINDOWS\\\\explorer.exe\") and (not ((tgt.process.cmdline contains \"netlogon.bat\" or tgt.process.cmdline contains \"UsrLogon.cmd\") or tgt.process.cmdline=\"PowerShell.exe\" or (tgt.process.image.path contains \":\\\\Windows\\\\System32\\\\proquota.exe\" or tgt.process.image.path contains \":\\\\Windows\\\\SysWOW64\\\\proquota.exe\") or (tgt.process.image.path contains \":\\\\Program Files (x86)\\\\Citrix\\\\HDX\\\\bin\\\\cmstart.exe\" or tgt.process.image.path contains \":\\\\Program Files (x86)\\\\Citrix\\\\HDX\\\\bin\\\\icast.exe\" or tgt.process.image.path contains \":\\\\Program Files (x86)\\\\Citrix\\\\System32\\\\icast.exe\" or tgt.process.image.path contains \":\\\\Program Files\\\\Citrix\\\\HDX\\\\bin\\\\cmstart.exe\" or tgt.process.image.path contains \":\\\\Program Files\\\\Citrix\\\\HDX\\\\bin\\\\icast.exe\" or tgt.process.image.path contains \":\\\\Program Files\\\\Citrix\\\\System32\\\\icast.exe\") or not (tgt.process.image.path matches \"\\.*\")))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2176
+}

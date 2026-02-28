@@ -1,0 +1,37 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects suspicious child process creation by the Notepad++ updater process (gup.exe).\nThis could indicate potential exploitation of the updater component to deliver unwanted malware.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1195",
+            "t1557"
+        ],
+        "name": "Suspicious Child Process of Notepad++ Updater - GUP.Exe",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\\\gup.exe\" and ((tgt.process.image.path contains \"\\\\cmd.exe\" or tgt.process.image.path contains \"\\\\powershell.exe\" or tgt.process.image.path contains \"\\\\pwsh.exe\" or tgt.process.image.path contains \"\\\\cscript.exe\" or tgt.process.image.path contains \"\\\\wscript.exe\" or tgt.process.image.path contains \"\\\\mshta.exe\") or (tgt.process.cmdline contains \"bitsadmin\" or tgt.process.cmdline contains \"certutil\" or tgt.process.cmdline contains \"curl\" or tgt.process.cmdline contains \"finger\" or tgt.process.cmdline contains \"forfiles\" or tgt.process.cmdline contains \"regsvr32\" or tgt.process.cmdline contains \"rundll32\" or tgt.process.cmdline contains \"wget\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2603
+}

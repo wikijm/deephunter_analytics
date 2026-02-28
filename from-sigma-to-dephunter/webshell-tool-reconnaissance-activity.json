@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects processes spawned from web servers (PHP, Tomcat, IIS, etc.) that perform reconnaissance looking for the existence of popular scripting tools (perl, python, wget) on the system via the help commands\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1505"
+        ],
+        "name": "Webshell Tool Reconnaissance Activity",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((src.process.image.path contains \"\\\\caddy.exe\" or src.process.image.path contains \"\\\\httpd.exe\" or src.process.image.path contains \"\\\\nginx.exe\" or src.process.image.path contains \"\\\\php-cgi.exe\" or src.process.image.path contains \"\\\\w3wp.exe\" or src.process.image.path contains \"\\\\ws_tomcatservice.exe\") or ((src.process.image.path contains \"\\\\java.exe\" or src.process.image.path contains \"\\\\javaw.exe\") and (src.process.image.path contains \"-tomcat-\" or src.process.image.path contains \"\\\\tomcat\")) or ((src.process.image.path contains \"\\\\java.exe\" or src.process.image.path contains \"\\\\javaw.exe\") and (tgt.process.cmdline contains \"CATALINA_HOME\" or tgt.process.cmdline contains \"catalina.jar\"))) and (tgt.process.cmdline contains \"perl --help\" or tgt.process.cmdline contains \"perl -h\" or tgt.process.cmdline contains \"python --help\" or tgt.process.cmdline contains \"python -h\" or tgt.process.cmdline contains \"python3 --help\" or tgt.process.cmdline contains \"python3 -h\" or tgt.process.cmdline contains \"wget --help\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2398
+}

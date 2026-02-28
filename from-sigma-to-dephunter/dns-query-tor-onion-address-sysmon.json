@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects DNS queries to an \".onion\" address related to Tor routing networks",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1090"
+        ],
+        "name": "DNS Query Tor .Onion Address - Sysmon",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.category=\"dns\" and (endpoint.os=\"windows\" and (event.dns.request contains \".hiddenservice.net\" or event.dns.request contains \".onion.ca\" or event.dns.request contains \".onion.cab\" or event.dns.request contains \".onion.casa\" or event.dns.request contains \".onion.city\" or event.dns.request contains \".onion.direct\" or event.dns.request contains \".onion.dog\" or event.dns.request contains \".onion.glass\" or event.dns.request contains \".onion.gq\" or event.dns.request contains \".onion.ink\" or event.dns.request contains \".onion.it\" or event.dns.request contains \".onion.link\" or event.dns.request contains \".onion.lt\" or event.dns.request contains \".onion.lu\" or event.dns.request contains \".onion.nu\" or event.dns.request contains \".onion.pet\" or event.dns.request contains \".onion.plus\" or event.dns.request contains \".onion.rip\" or event.dns.request contains \".onion.sh\" or event.dns.request contains \".onion.to\" or event.dns.request contains \".onion.top\" or event.dns.request contains \".onion\" or event.dns.request contains \".s1.tor-gateways.de\" or event.dns.request contains \".s2.tor-gateways.de\" or event.dns.request contains \".s3.tor-gateways.de\" or event.dns.request contains \".s4.tor-gateways.de\" or event.dns.request contains \".s5.tor-gateways.de\" or event.dns.request contains \".t2w.pw\" or event.dns.request contains \".tor2web.ae.org\" or event.dns.request contains \".tor2web.blutmagie.de\" or event.dns.request contains \".tor2web.com\" or event.dns.request contains \".tor2web.fi\" or event.dns.request contains \".tor2web.io\" or event.dns.request contains \".tor2web.org\" or event.dns.request contains \".tor2web.xyz\" or event.dns.request contains \".torlink.co\"))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 3340
+}

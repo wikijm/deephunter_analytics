@@ -1,0 +1,37 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects suspicious use of command-line tools such as curl or wget to download remote\ncontent - particularly scripts - into temporary directories (e.g., /dev/shm, /tmp), followed by\nimmediate execution, indicating potential malicious activity. This pattern is commonly used\nby malicious scripts, stagers, or downloaders in fileless or multi-stage Linux attacks.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1059",
+            "t1203"
+        ],
+        "name": "Suspicious Download and Execute Pattern via Curl/Wget",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and ((tgt.process.cmdline contains \"/curl\" or tgt.process.cmdline contains \"/wget\") and (tgt.process.cmdline contains \"/tmp/\" or tgt.process.cmdline contains \"/dev/shm/\") and tgt.process.cmdline contains \"sh -c\"))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2832
+}

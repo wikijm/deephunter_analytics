@@ -1,0 +1,37 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects the execution of the Restic backup tool, which can be used for data exfiltration.\nThreat actors may leverage Restic to back up and exfiltrate sensitive data to remote storage locations, including cloud services.\nIf not legitimately used in the enterprise environment, its presence may indicate malicious activity.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1048",
+            "t1567"
+        ],
+        "name": "PUA - Restic Backup Tool Execution",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((tgt.process.cmdline contains \"--password-file\" and tgt.process.cmdline contains \"init\" and tgt.process.cmdline contains \" -r \") or (tgt.process.cmdline contains \"--use-fs-snapshot\" and tgt.process.cmdline contains \"backup\" and tgt.process.cmdline contains \" -r \")) or ((tgt.process.cmdline contains \"sftp:\" or tgt.process.cmdline contains \"rest:http\" or tgt.process.cmdline contains \"s3:s3.\" or tgt.process.cmdline contains \"s3.http\" or tgt.process.cmdline contains \"azure:\" or tgt.process.cmdline contains \" gs:\" or tgt.process.cmdline contains \"rclone:\" or tgt.process.cmdline contains \"swift:\" or tgt.process.cmdline contains \" b2:\") and (tgt.process.cmdline contains \" init \" and tgt.process.cmdline contains \" -r \"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2555
+}

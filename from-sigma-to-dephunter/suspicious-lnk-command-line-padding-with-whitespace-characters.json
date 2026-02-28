@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects exploitation of LNK file command-line length discrepancy, where attackers hide malicious commands beyond the 260-character UI limit while the actual command-line argument field supports 4096 characters using whitespace padding (e.g., 0x20, 0x09-0x0D).\nAdversaries insert non-printable whitespace characters (e.g., Line Feed \\x0A, Carriage Return \\x0D) to pad the visible section of the LNK file, pushing malicious commands past the UI-visible boundary.\nThe hidden payload, executed at runtime but invisible in Windows Explorer properties, enables stealthy execution and evasion\u2014commonly used for social engineering attacks.\nThis rule flags suspicious use of such padding observed in real-world attacks.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1204"
+        ],
+        "name": "Suspicious LNK Command-Line Padding with Whitespace Characters",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\\\explorer.exe\" or src.process.cmdline contains \".lnk\") and ((tgt.process.cmdline contains \"                 \" or tgt.process.cmdline contains \"\\\\u0009\" or tgt.process.cmdline contains \"\\\\u000A\" or tgt.process.cmdline contains \"\\\\u0011\" or tgt.process.cmdline contains \"\\\\u0012\" or tgt.process.cmdline contains \"\\\\u0013\" or tgt.process.cmdline contains \"\\\\u000B\" or tgt.process.cmdline contains \"\\\\u000C\" or tgt.process.cmdline contains \"\\\\u000D\") or tgt.process.cmdline matches \"\\\\n\\\\n\\\\n\\\\n\\\\n\\\\n\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2425
+}

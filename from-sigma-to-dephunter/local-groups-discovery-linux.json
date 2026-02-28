@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects enumeration of local system groups. Adversaries may attempt to find local system groups and permission settings",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1069"
+        ],
+        "name": "Local Groups Discovery - Linux",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (tgt.process.image.path contains \"/groups\" or ((tgt.process.image.path contains \"/cat\" or tgt.process.image.path contains \"/ed\" or tgt.process.image.path contains \"/head\" or tgt.process.image.path contains \"/less\" or tgt.process.image.path contains \"/more\" or tgt.process.image.path contains \"/nano\" or tgt.process.image.path contains \"/tail\" or tgt.process.image.path contains \"/vi\" or tgt.process.image.path contains \"/vim\") and tgt.process.cmdline contains \"/etc/group\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2835
+}

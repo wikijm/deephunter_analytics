@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects image load events of system control panel items (.cpl) from uncommon or non-system locations which might be the result of sideloading.",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1036"
+        ],
+        "name": "System Control Panel Item Loaded From Uncommon Location",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and ((module.path contains \"\\\\hdwwiz.cpl\" or module.path contains \"\\\\appwiz.cpl\") and (not (module.path contains \":\\\\Windows\\\\System32\\\\\" or module.path contains \":\\\\Windows\\\\SysWOW64\\\\\" or module.path contains \":\\\\Windows\\\\WinSxS\\\\\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 1466
+}

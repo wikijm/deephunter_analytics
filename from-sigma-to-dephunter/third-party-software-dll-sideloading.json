@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects DLL sideloading of DLLs that are part of third party software (zoom, discord....etc)",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1574"
+        ],
+        "name": "Third Party Software DLL Sideloading",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and ((module.path contains \"\\\\commfunc.dll\" and (not (module.path contains \"\\\\AppData\\\\local\\\\Google\\\\Chrome\\\\Application\\\\\" or (module.path contains \"C:\\\\Program Files\\\\Lenovo\\\\Communications Utility\\\\\" or module.path contains \"C:\\\\Program Files (x86)\\\\Lenovo\\\\Communications Utility\\\\\")))) or (module.path contains \"\\\\tosbtkbd.dll\" and (not (module.path contains \"C:\\\\Program Files\\\\Toshiba\\\\Bluetooth Toshiba Stack\\\\\" or module.path contains \"C:\\\\Program Files (x86)\\\\Toshiba\\\\Bluetooth Toshiba Stack\\\\\")))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 1448
+}

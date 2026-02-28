@@ -1,0 +1,34 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects suspicious processes spawned from a Java host process which could indicate a sign of exploitation (e.g. log4j)",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [],
+        "name": "Suspicious Processes Spawned by Java.EXE",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\\\java.exe\" and (tgt.process.image.path contains \"\\\\AppVLP.exe\" or tgt.process.image.path contains \"\\\\bitsadmin.exe\" or tgt.process.image.path contains \"\\\\certutil.exe\" or tgt.process.image.path contains \"\\\\cscript.exe\" or tgt.process.image.path contains \"\\\\curl.exe\" or tgt.process.image.path contains \"\\\\forfiles.exe\" or tgt.process.image.path contains \"\\\\hh.exe\" or tgt.process.image.path contains \"\\\\mftrace.exe\" or tgt.process.image.path contains \"\\\\mshta.exe\" or tgt.process.image.path contains \"\\\\net.exe\" or tgt.process.image.path contains \"\\\\net1.exe\" or tgt.process.image.path contains \"\\\\query.exe\" or tgt.process.image.path contains \"\\\\reg.exe\" or tgt.process.image.path contains \"\\\\regsvr32.exe\" or tgt.process.image.path contains \"\\\\rundll32.exe\" or tgt.process.image.path contains \"\\\\schtasks.exe\" or tgt.process.image.path contains \"\\\\scrcons.exe\" or tgt.process.image.path contains \"\\\\scriptrunner.exe\" or tgt.process.image.path contains \"\\\\sh.exe\" or tgt.process.image.path contains \"\\\\systeminfo.exe\" or tgt.process.image.path contains \"\\\\whoami.exe\" or tgt.process.image.path contains \"\\\\wmic.exe\" or tgt.process.image.path contains \"\\\\wscript.exe\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2419
+}

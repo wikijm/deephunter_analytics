@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects attackers using tooling with bad opsec defaults.\nE.g. spawning a sacrificial process to inject a capability into the process without taking into account how the process is normally run.\nOne trivial example of this is using rundll32.exe without arguments as a sacrificial process (default in CS, now highlighted by c2lint), running WerFault without arguments (Kraken - credit am0nsec), and other examples.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1218"
+        ],
+        "name": "Bad Opsec Defaults Sacrificial Processes With Improper Arguments",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((tgt.process.image.path contains \"\\\\WerFault.exe\" and tgt.process.cmdline contains \"WerFault.exe\") or (tgt.process.image.path contains \"\\\\rundll32.exe\" and tgt.process.cmdline contains \"rundll32.exe\") or (tgt.process.image.path contains \"\\\\regsvcs.exe\" and tgt.process.cmdline contains \"regsvcs.exe\") or (tgt.process.image.path contains \"\\\\regasm.exe\" and tgt.process.cmdline contains \"regasm.exe\") or (tgt.process.image.path contains \"\\\\regsvr32.exe\" and tgt.process.cmdline contains \"regsvr32.exe\")) and (not ((src.process.image.path contains \"\\\\AppData\\\\Local\\\\Microsoft\\\\EdgeUpdate\\\\Install\\\\{\" and tgt.process.image.path contains \"\\\\rundll32.exe\" and tgt.process.cmdline contains \"rundll32.exe\") or ((src.process.image.path contains \"\\\\AppData\\\\Local\\\\BraveSoftware\\\\Brave-Browser\\\\Application\\\\\" or src.process.image.path contains \"\\\\AppData\\\\Local\\\\Google\\\\Chrome\\\\Application\\\\\") and src.process.image.path contains \"\\\\Installer\\\\setup.exe\" and src.process.cmdline contains \"--uninstall \" and tgt.process.image.path contains \"\\\\rundll32.exe\" and tgt.process.cmdline contains \"rundll32.exe\")))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2618
+}

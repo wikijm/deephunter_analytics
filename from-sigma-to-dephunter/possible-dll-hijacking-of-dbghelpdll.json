@@ -1,0 +1,34 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects possible DLL hijacking of dbghelp.dll by looking for suspicious image loads, loading this DLL from unexpected locations.",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [],
+        "name": "Possible DLL Hijacking of dbghelp.dll",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (module.path contains \"\\dbghelp.dll\" and (not (module.path=\"c:\\program files\\windows kits\\10\\debuggers\\arm\\*\" or module.path=\"c:\\program files (x86)\\windows kits\\10\\debuggers\\arm\\*\" or module.path=\"c:\\program files\\windows kits\\10\\debuggers\\arm\\srcsrv\\*\" or module.path=\"c:\\program files (x86)\\windows kits\\10\\debuggers\\arm\\srcsrv\\*\" or module.path=\"c:\\program files\\windows kits\\10\\debuggers\\arm64\\*\" or module.path=\"c:\\program files (x86)\\windows kits\\10\\debuggers\\arm64\\*\" or module.path=\"c:\\program files\\windows kits\\10\\debuggers\\arm64\\srcsrv\\*\" or module.path=\"c:\\program files (x86)\\windows kits\\10\\debuggers\\arm64\\srcsrv\\*\" or module.path=\"c:\\program files\\windows kits\\10\\debuggers\\x64\\*\" or module.path=\"c:\\program files (x86)\\windows kits\\10\\debuggers\\x64\\*\" or module.path=\"c:\\program files\\windows kits\\10\\debuggers\\x64\\srcsrv\\*\" or module.path=\"c:\\program files (x86)\\windows kits\\10\\debuggers\\x64\\srcsrv\\*\" or module.path=\"c:\\program files\\windows kits\\10\\debuggers\\x86\\*\" or module.path=\"c:\\program files (x86)\\windows kits\\10\\debuggers\\x86\\*\" or module.path=\"c:\\program files\\windows kits\\10\\debuggers\\x86\\srcsrv\\*\" or module.path=\"c:\\program files (x86)\\windows kits\\10\\debuggers\\x86\\srcsrv\\*\" or module.path=\"c:\\program files\\cisco systems\\cisco jabber\\*\" or module.path=\"c:\\program files (x86)\\cisco systems\\cisco jabber\\*\" or module.path=\"c:\\program files\\microsoft office\\root\\office*\\*\" or module.path=\"c:\\program files (x86)\\microsoft office\\root\\office*\\*\" or module.path=\"c:\\program files\\microsoft office\\root\\vfs\\programfilesx86\\microsoft analysis services\\as oledb\\140\\*\" or module.path=\"c:\\program files (x86)\\microsoft office\\root\\vfs\\programfilesx86\\microsoft analysis services\\as oledb\\140\\*\" or module.path=\"c:\\windows\\system32\\*\" or module.path=\"c:\\windows\\syswow64\\*\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2005
+}

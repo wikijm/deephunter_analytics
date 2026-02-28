@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects suspicious sub processes of web server processes",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1505"
+        ],
+        "name": "Linux Webshell Indicators",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (((src.process.image.path contains \"/httpd\" or src.process.image.path contains \"/lighttpd\" or src.process.image.path contains \"/nginx\" or src.process.image.path contains \"/apache2\" or src.process.image.path contains \"/node\" or src.process.image.path contains \"/caddy\") or (src.process.cmdline contains \"/bin/java\" and src.process.cmdline contains \"tomcat\") or (src.process.cmdline contains \"/bin/java\" and src.process.cmdline contains \"websphere\")) and (tgt.process.image.path contains \"/whoami\" or tgt.process.image.path contains \"/ifconfig\" or tgt.process.image.path contains \"/ip\" or tgt.process.image.path contains \"/bin/uname\" or tgt.process.image.path contains \"/bin/cat\" or tgt.process.image.path contains \"/bin/crontab\" or tgt.process.image.path contains \"/hostname\" or tgt.process.image.path contains \"/iptables\" or tgt.process.image.path contains \"/netstat\" or tgt.process.image.path contains \"/pwd\" or tgt.process.image.path contains \"/route\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2739
+}

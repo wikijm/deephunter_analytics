@@ -1,0 +1,34 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects possible DLL hijacking of qt5network.dll by looking for suspicious image loads, loading this DLL from unexpected locations.",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [],
+        "name": "Possible DLL Hijacking of qt5network.dll",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\qt5network.dll\" and (not (module.path contains \"c:\\\\program files\\\\LSoft Technologies\\\\Active@ Data Studio\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\LSoft Technologies\\\\Active@ Data Studio\\\\\" or module.path contains \"c:\\\\program files\\\\LSoft Technologies\\\\Active@ File Recovery\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\LSoft Technologies\\\\Active@ File Recovery\\\\\" or module.path contains \"c:\\\\program files\\\\LSoft Technologies\\\\Active@ Disk Editor\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\LSoft Technologies\\\\Active@ Disk Editor\\\\\" or module.path contains \"c:\\\\program files\\\\LSoft Technologies\\\\Active@ Password Changer\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\LSoft Technologies\\\\Active@ Password Changer\\\\\" or module.path contains \"c:\\\\program files\\\\LSoft Technologies\\\\Active@ ISO Manager\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\LSoft Technologies\\\\Active@ ISO Manager\\\\\" or module.path contains \"c:\\\\program files\\\\LSoft Technologies\\\\Active@ UNERASER\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\LSoft Technologies\\\\Active@ UNERASER\\\\\" or module.path contains \"c:\\\\program files\\\\LSoft Technologies\\\\Active@ KillDisk 25\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\LSoft Technologies\\\\Active@ KillDisk 25\\\\\" or module.path contains \"c:\\\\program files\\\\LSoft Technologies\\\\Active@ UNDELETE\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\LSoft Technologies\\\\Active@ UNDELETE\\\\\" or module.path contains \"c:\\\\program files\\\\LSoft Technologies\\\\Active@ Disk Monitor\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\LSoft Technologies\\\\Active@ Disk Monitor\\\\\" or module.path contains \"c:\\\\program files\\\\LSoft Technologies\\\\Active@ Partition Manager\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\LSoft Technologies\\\\Active@ Partition Manager\\\\\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 1035
+}

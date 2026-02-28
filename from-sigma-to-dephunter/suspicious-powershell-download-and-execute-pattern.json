@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects suspicious PowerShell download patterns that are often used in malicious scripts, stagers or downloaders (make sure that your backend applies the strings case-insensitive)",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1059"
+        ],
+        "name": "Suspicious PowerShell Download and Execute Pattern",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (tgt.process.cmdline contains \"IEX ((New-Object Net.WebClient).DownloadString\" or tgt.process.cmdline contains \"IEX (New-Object Net.WebClient).DownloadString\" or tgt.process.cmdline contains \"IEX((New-Object Net.WebClient).DownloadString\" or tgt.process.cmdline contains \"IEX(New-Object Net.WebClient).DownloadString\" or tgt.process.cmdline contains \" -command (New-Object System.Net.WebClient).DownloadFile(\" or tgt.process.cmdline contains \" -c (New-Object System.Net.WebClient).DownloadFile(\"))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2237
+}

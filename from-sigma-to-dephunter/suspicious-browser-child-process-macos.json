@@ -1,0 +1,38 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects suspicious child processes spawned from browsers. This could be a result of a potential web browser exploitation.",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1189",
+            "t1203",
+            "t1059"
+        ],
+        "name": "Suspicious Browser Child Process - MacOS",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"osx\" and (((src.process.image.path contains \"com.apple.WebKit.WebContent\" or src.process.image.path contains \"firefox\" or src.process.image.path contains \"Google Chrome Helper\" or src.process.image.path contains \"Google Chrome\" or src.process.image.path contains \"Microsoft Edge\" or src.process.image.path contains \"Opera\" or src.process.image.path contains \"Safari\" or src.process.image.path contains \"Tor Browser\") and (tgt.process.image.path contains \"/bash\" or tgt.process.image.path contains \"/curl\" or tgt.process.image.path contains \"/dash\" or tgt.process.image.path contains \"/ksh\" or tgt.process.image.path contains \"/osascript\" or tgt.process.image.path contains \"/perl\" or tgt.process.image.path contains \"/php\" or tgt.process.image.path contains \"/pwsh\" or tgt.process.image.path contains \"/python\" or tgt.process.image.path contains \"/sh\" or tgt.process.image.path contains \"/tcsh\" or tgt.process.image.path contains \"/wget\" or tgt.process.image.path contains \"/zsh\")) and (not (tgt.process.cmdline contains \"--defaults-torrc\" or tgt.process.cmdline=\"*/Library/Application Support/Microsoft/MAU*/Microsoft AutoUpdate.app/Contents/MacOS/msupdate*\" or ((src.process.image.path contains \"Google Chrome Helper\" or src.process.image.path contains \"Google Chrome\") and (tgt.process.cmdline=\"*/Volumes/Google Chrome/Google Chrome.app/Contents/Frameworks/*/Resources/install.sh*\" or tgt.process.cmdline=\"*/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/*/Resources/keystone_promote_preflight.sh*\" or tgt.process.cmdline=\"*/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/*/Resources/keystone_promote_postflight.sh*\")) or (src.process.image.path contains \"Microsoft Edge\" and (tgt.process.cmdline contains \"IOPlatformExpertDevice\" or tgt.process.cmdline contains \"hw.model\")) or ((src.process.image.path contains \"Google Chrome Helper\" or src.process.image.path contains \"Google Chrome\") and (tgt.process.cmdline contains \"/Users/\" and tgt.process.cmdline contains \"/Library/Application Support/Google/Chrome/recovery/\" and tgt.process.cmdline contains \"/ChromeRecovery\")))) and (not (not (tgt.process.cmdline matches \"\\.*\") or tgt.process.cmdline=\"\"))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2703
+}

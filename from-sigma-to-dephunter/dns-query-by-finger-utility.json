@@ -1,0 +1,37 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects DNS queries made by the finger utility, which can be abused by threat actors to retrieve remote commands for execution on Windows devices.\nIn one ClickFix malware campaign, adversaries leveraged the finger protocol to fetch commands from a remote server.\nSince the finger utility is not commonly used in modern Windows environments, its presence already raises suspicion.\nInvestigating such DNS queries can also help identify potential malicious infrastructure used by threat actors for command and control (C2) communication.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1071",
+            "t1059"
+        ],
+        "name": "DNS Query by Finger Utility",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.category=\"dns\" and (endpoint.os=\"windows\" and src.process.image.path contains \"\\\\finger.exe\")",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 3354
+}

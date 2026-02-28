@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects suspicious process run from unusual locations",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1036"
+        ],
+        "name": "Suspicious Process Start Locations",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \":\\\\RECYCLER\\\\\" or tgt.process.image.path contains \":\\\\SystemVolumeInformation\\\\\") or (tgt.process.image.path contains \"C:\\\\Windows\\\\Tasks\\\\\" or tgt.process.image.path contains \"C:\\\\Windows\\\\debug\\\\\" or tgt.process.image.path contains \"C:\\\\Windows\\\\fonts\\\\\" or tgt.process.image.path contains \"C:\\\\Windows\\\\help\\\\\" or tgt.process.image.path contains \"C:\\\\Windows\\\\drivers\\\\\" or tgt.process.image.path contains \"C:\\\\Windows\\\\addins\\\\\" or tgt.process.image.path contains \"C:\\\\Windows\\\\cursors\\\\\" or tgt.process.image.path contains \"C:\\\\Windows\\\\system32\\\\tasks\\\\\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2165
+}

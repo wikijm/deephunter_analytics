@@ -1,0 +1,37 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects suspicious ways to download files from Microsoft domains that are used to store attachments in Emails or OneNote documents",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1105",
+            "t1608"
+        ],
+        "name": "Suspicious Download from Office Domain",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((tgt.process.image.path contains \"\\\\curl.exe\" or tgt.process.image.path contains \"\\\\wget.exe\") or (tgt.process.cmdline contains \"Invoke-WebRequest\" or tgt.process.cmdline contains \"iwr \" or tgt.process.cmdline contains \"curl \" or tgt.process.cmdline contains \"wget \" or tgt.process.cmdline contains \"Start-BitsTransfer\" or tgt.process.cmdline contains \".DownloadFile(\" or tgt.process.cmdline contains \".DownloadString(\")) and (tgt.process.cmdline contains \"https://attachment.outlook.live.net/owa/\" or tgt.process.cmdline contains \"https://onenoteonlinesync.onenote.com/onenoteonlinesync/\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2332
+}

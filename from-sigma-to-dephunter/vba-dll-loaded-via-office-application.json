@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects VB DLL's loaded by an office application. Which could indicate the presence of VBA Macros.",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1204"
+        ],
+        "name": "VBA DLL Loaded Via Office Application",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\\\excel.exe\" or src.process.image.path contains \"\\\\mspub.exe\" or src.process.image.path contains \"\\\\onenote.exe\" or src.process.image.path contains \"\\\\onenoteim.exe\" or src.process.image.path contains \"\\\\outlook.exe\" or src.process.image.path contains \"\\\\powerpnt.exe\" or src.process.image.path contains \"\\\\winword.exe\") and (module.path contains \"\\\\VBE7.DLL\" or module.path contains \"\\\\VBEUI.DLL\" or module.path contains \"\\\\VBE7INTL.DLL\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 1447
+}

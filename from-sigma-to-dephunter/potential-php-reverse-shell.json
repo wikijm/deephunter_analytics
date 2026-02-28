@@ -1,0 +1,34 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects usage of the PHP CLI with the \"-r\" flag which allows it to run inline PHP code. The rule looks for calls to the \"fsockopen\" function which allows the creation of sockets.\nAttackers often leverage this in combination with functions such as \"exec\" or \"fopen\" to initiate a reverse shell connection.\n",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [],
+        "name": "Potential PHP Reverse Shell",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (tgt.process.image.path contains \"/php\" and (tgt.process.cmdline contains \" -r \" and tgt.process.cmdline contains \"fsockopen\") and (tgt.process.cmdline contains \"ash\" or tgt.process.cmdline contains \"bash\" or tgt.process.cmdline contains \"bsh\" or tgt.process.cmdline contains \"csh\" or tgt.process.cmdline contains \"ksh\" or tgt.process.cmdline contains \"pdksh\" or tgt.process.cmdline contains \"sh\" or tgt.process.cmdline contains \"tcsh\" or tgt.process.cmdline contains \"zsh\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2824
+}

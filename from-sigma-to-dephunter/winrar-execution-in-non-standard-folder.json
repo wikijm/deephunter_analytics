@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects a suspicious WinRAR execution in a folder which is not the default installation folder",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1560"
+        ],
+        "name": "WinRAR Execution in Non-Standard Folder",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((tgt.process.image.path contains \"\\\\rar.exe\" or tgt.process.image.path contains \"\\\\winrar.exe\") or (tgt.process.displayName in (\"Command line RAR\",\"WinRAR\"))) and (not (tgt.process.image.path contains \"\\\\UnRAR.exe\" or (tgt.process.image.path contains \":\\\\Program Files (x86)\\\\WinRAR\\\\\" or tgt.process.image.path contains \":\\\\Program Files\\\\WinRAR\\\\\"))) and (not tgt.process.image.path contains \":\\\\Windows\\\\Temp\\\\\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2180
+}

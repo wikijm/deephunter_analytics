@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects the usage and installation of a backdoor that uses an option to register a malicious debugger for built-in tools that are accessible in the login screen",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1546"
+        ],
+        "name": "Sticky Key Like Backdoor Execution",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\\\winlogon.exe\" and (tgt.process.image.path contains \"\\\\cmd.exe\" or tgt.process.image.path contains \"\\\\cscript.exe\" or tgt.process.image.path contains \"\\\\mshta.exe\" or tgt.process.image.path contains \"\\\\powershell.exe\" or tgt.process.image.path contains \"\\\\pwsh.exe\" or tgt.process.image.path contains \"\\\\regsvr32.exe\" or tgt.process.image.path contains \"\\\\rundll32.exe\" or tgt.process.image.path contains \"\\\\wscript.exe\" or tgt.process.image.path contains \"\\\\wt.exe\") and (tgt.process.cmdline contains \"sethc.exe\" or tgt.process.cmdline contains \"utilman.exe\" or tgt.process.cmdline contains \"osk.exe\" or tgt.process.cmdline contains \"Magnify.exe\" or tgt.process.cmdline contains \"Narrator.exe\" or tgt.process.cmdline contains \"DisplaySwitch.exe\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2566
+}

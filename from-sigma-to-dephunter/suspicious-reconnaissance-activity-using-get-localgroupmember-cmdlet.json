@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects suspicious reconnaissance command line activity on Windows systems using the PowerShell Get-LocalGroupMember Cmdlet",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1087"
+        ],
+        "name": "Suspicious Reconnaissance Activity Using Get-LocalGroupMember Cmdlet",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (tgt.process.cmdline contains \"Get-LocalGroupMember \" and (tgt.process.cmdline contains \"domain admins\" or tgt.process.cmdline contains \" administrator\" or tgt.process.cmdline contains \" administrateur\" or tgt.process.cmdline contains \"enterprise admins\" or tgt.process.cmdline contains \"Exchange Trusted Subsystem\" or tgt.process.cmdline contains \"Remote Desktop Users\" or tgt.process.cmdline contains \"Utilisateurs du Bureau \u00e0 distance\" or tgt.process.cmdline contains \"Usuarios de escritorio remoto\")))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 2188
+}

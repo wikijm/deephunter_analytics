@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects DNS server discovery via LDAP query requests from uncommon applications",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1482"
+        ],
+        "name": "DNS Server Discovery Via LDAP Query",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.category=\"dns\" and (endpoint.os=\"windows\" and (event.dns.request contains \"_ldap.\" and (not ((src.process.image.path contains \":\\\\Program Files\\\\\" or src.process.image.path contains \":\\\\Program Files (x86)\\\\\" or src.process.image.path contains \":\\\\Windows\\\\\") or (src.process.image.path contains \":\\\\ProgramData\\\\Microsoft\\\\Windows Defender\\\\Platform\\\\\" and src.process.image.path contains \"\\\\MsMpEng.exe\") or src.process.image.path=\"<unknown process>\" or not (src.process.image.path matches \"\\.*\"))) and (not (src.process.image.path contains \"C:\\\\WindowsAzure\\\\GuestAgent\" or (src.process.image.path contains \"\\\\chrome.exe\" or src.process.image.path contains \"\\\\firefox.exe\" or src.process.image.path contains \"\\\\opera.exe\")))))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 3348
+}
