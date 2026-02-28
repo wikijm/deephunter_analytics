@@ -1,0 +1,64 @@
+name: Split Sigma Queries
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  split_and_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download query.json
+        run: curl -sL https://raw.githubusercontent.com/wikijm/from-sigma-to-deephunter/main/query.json -o query.json
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Split JSON Process
+        run: |
+          python -c '
+          import json, os, re
+          
+          def slugify(value):
+              value = str(value).lower()
+              value = re.sub(r"[^\w\s-]", "", value)
+              return re.sub(r"[-\s]+", "-", value).strip("-")
+          
+          # Folder name fixed the typo from dephunter to deephunter
+          output_dir = "from-sigma-to-dephunter"
+          os.makedirs(output_dir, exist_ok=True)
+          
+          with open("query.json", "r", encoding="utf-8") as f:
+              data = json.load(f)
+              
+          for item in data:
+              name = ""
+              if isinstance(item, dict):
+                  if "fields" in item and "name" in item["fields"]:
+                      name = item["fields"]["name"]
+                  elif "name" in item:
+                      name = item["name"]
+                  
+              if not name:
+                  pk = item.get("pk", "unknown") if isinstance(item, dict) else "unknown"
+                  name = f"unnamed_{pk}"
+                  
+              slug = slugify(name)
+              filepath = os.path.join(output_dir, f"{slug}.json")
+              with open(filepath, "w", encoding="utf-8") as out:
+                  json.dump(item, out, indent=4)
+          '
+          
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add from-sigma-to-dephunter/
+          git commit -m "Automated splitting of query.json" || echo "No changes to commit"
+          git push
