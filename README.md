@@ -1,4 +1,4 @@
-# deephunter_analytics
+# deephunter-threat-analytics
 
 Repo with threat hunting analytics for DeepHunter
 
