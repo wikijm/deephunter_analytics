@@ -9,13 +9,14 @@
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
+            "t1574",
             "t1574"
         ],
         "name": "Potential DLL Sideloading Via ClassicExplorer32.dll",
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\ClassicExplorer32.dll\" and (not module.path contains \"C:\\\\Program Files\\\\Classic Shell\\\\\")))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (module.path contains \"\\ClassicExplorer32.dll\" and (not module.path contains \"C:\\Program Files\\Classic Shell\\\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2137
+    "pk": 3199
 }

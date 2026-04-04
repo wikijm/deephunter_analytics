@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\\\VMwareXferlogs.exe\" and module.path contains \"\\\\glib-2.0.dll\") and (not module.path contains \"C:\\\\Program Files\\\\VMware\\\\\")))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\VMwareXferlogs.exe\" and module.path contains \"\\glib-2.0.dll\") and (not module.path contains \"C:\\Program Files\\VMware\\\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2128
+    "pk": 3206
 }

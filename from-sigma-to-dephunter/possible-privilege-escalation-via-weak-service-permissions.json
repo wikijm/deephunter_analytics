@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detection of sc.exe utility spawning by user with Medium integrity level to change service ImagePath or FailureCommand",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1574"
         ],
         "name": "Possible Privilege Escalation via Weak Service Permissions",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\\\sc.exe\" and (tgt.process.integrityLevel in (\"Medium\",\"S-1-16-8192\"))) and ((tgt.process.cmdline contains \"config\" and tgt.process.cmdline contains \"binPath\") or (tgt.process.cmdline contains \"failure\" and tgt.process.cmdline contains \"command\"))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\sc.exe\" and (tgt.process.integrityLevel in (\"Medium\",\"S-1-16-8192\"))) and ((tgt.process.cmdline contains \"config\" and tgt.process.cmdline contains \"binPath\") or (tgt.process.cmdline contains \"failure\" and tgt.process.cmdline contains \"command\"))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1598
+    "pk": 1139
 }

@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects the presence of unicode characters which are homoglyphs, or identical in appearance, to ASCII letter characters.\nThis is used as an obfuscation and masquerading techniques. Only \"perfect\" homoglyphs are included; these are characters that\nare indistinguishable from ASCII characters and thus may make excellent candidates for homoglyph attack characters.\n",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -13,12 +13,12 @@
             "t1036"
         ],
         "name": "Potential Homoglyph Attack Using Lookalike Characters",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
         "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.cmdline contains \"\u0410\" or tgt.process.cmdline contains \"\u0412\" or tgt.process.cmdline contains \"\u0415\" or tgt.process.cmdline contains \"\u041a\" or tgt.process.cmdline contains \"\u041c\" or tgt.process.cmdline contains \"\u041d\" or tgt.process.cmdline contains \"\u041e\" or tgt.process.cmdline contains \"\u0420\" or tgt.process.cmdline contains \"\u0421\" or tgt.process.cmdline contains \"\u0422\" or tgt.process.cmdline contains \"\u0425\" or tgt.process.cmdline contains \"\u0405\" or tgt.process.cmdline contains \"\u0406\" or tgt.process.cmdline contains \"\u0408\" or tgt.process.cmdline contains \"\u04ae\" or tgt.process.cmdline contains \"\u04c0\" or tgt.process.cmdline contains \"\u050c\" or tgt.process.cmdline contains \"\u051a\" or tgt.process.cmdline contains \"\u051c\" or tgt.process.cmdline contains \"\u0391\" or tgt.process.cmdline contains \"\u0392\" or tgt.process.cmdline contains \"\u0395\" or tgt.process.cmdline contains \"\u0396\" or tgt.process.cmdline contains \"\u0397\" or tgt.process.cmdline contains \"\u0399\" or tgt.process.cmdline contains \"\u039a\" or tgt.process.cmdline contains \"\u039c\" or tgt.process.cmdline contains \"\u039d\" or tgt.process.cmdline contains \"\u039f\" or tgt.process.cmdline contains \"\u03a1\" or tgt.process.cmdline contains \"\u03a4\" or tgt.process.cmdline contains \"\u03a5\" or tgt.process.cmdline contains \"\u03a7\") or (tgt.process.cmdline contains \"\u0430\" or tgt.process.cmdline contains \"\u0435\" or tgt.process.cmdline contains \"\u043e\" or tgt.process.cmdline contains \"\u0440\" or tgt.process.cmdline contains \"\u0441\" or tgt.process.cmdline contains \"\u0445\" or tgt.process.cmdline contains \"\u0455\" or tgt.process.cmdline contains \"\u0456\" or tgt.process.cmdline contains \"\u04cf\" or tgt.process.cmdline contains \"\u0458\" or tgt.process.cmdline contains \"\u04bb\" or tgt.process.cmdline contains \"\u0501\" or tgt.process.cmdline contains \"\u051b\" or tgt.process.cmdline contains \"\u051d\" or tgt.process.cmdline contains \"\u03bf\")))",
-        "references": "",
-        "relevance": 1,
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -28,10 +28,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1573
+    "pk": 1244
 }

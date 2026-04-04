@@ -5,7 +5,7 @@
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
         "confidence": 1,
-        "description": "Detects the image load of \"Python Core\" by a non-Python process. This might be indicative of a execution of executable that has been bundled from Python code.\nVarious tools like Py2Exe, PyInstaller, and cx_Freeze are used to bundle Python code into standalone executables.\nThreat actors often use these tools to bundle malicious Python scripts into executables, sometimes to obfuscate the code or to bypass security measures.\n",
+        "description": "Detects the image load of \"Python Core\" by a non-Python process. This might be indicative of a Python script bundled with Py2Exe.",
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (Description=\"Python Core\" and (not (src.process.image.path contains \"Python\" or (src.process.image.path contains \"C:\\\\Program Files\\\\\" or src.process.image.path contains \"C:\\\\Program Files (x86)\\\\\" or src.process.image.path contains \"C:\\\\ProgramData\\\\Anaconda3\\\\\"))) and (not not (src.process.image.path matches \"\\.*\"))))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (Description=\"Python Core\" and (not (src.process.image.path contains \"Python\" or (src.process.image.path contains \"C:\\Program Files\\\" or src.process.image.path contains \"C:\\Program Files (x86)\\\" or src.process.image.path contains \"C:\\ProgramData\\Anaconda3\\\"))) and (not not (src.process.image.path matches \"\\.*\"))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2154
+    "pk": 3190
 }

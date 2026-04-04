@@ -5,7 +5,7 @@
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
         "confidence": 1,
-        "description": "Detects potential registry activity of Action1 RMM tool\n",
+        "description": "Detects potential registry activity of Action1 RMM tool",
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.category=\"registry\" and (endpoint.os=\"windows\" and (registry.keyPath contains \"HKLM\\\\System\\\\CurrentControlSet\\\\Services\\\\A1Agent\" or registry.keyPath contains \"HKLM\\\\SOFTWARE\\\\WOW6432Node\\\\Microsoft\\\\Windows\\\\Windows Error Reporting\\\\LocalDumps\\\\action1_agent.exe\" or registry.keyPath contains \"HKLM\\\\SOFTWARE\\\\WOW6432Node\\\\Action1\"))",
+        "query": "event.category=\"Registry\" and (endpoint.os=\"windows\" and (registry.keyPath contains \"HKLM\\System\\CurrentControlSet\\Services\\A1Agent\" or registry.keyPath contains \"HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\Windows Error Reporting\\LocalDumps\\action1_agent.exe\" or registry.keyPath contains \"HKLM\\SOFTWARE\\WOW6432Node\\Action1\"))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 3099
+    "pk": 2179
 }

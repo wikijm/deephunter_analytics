@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and module.path contains \"\\\\AppData\\\\Local\\\\Temp\\\\ba9ea7344a4a5f591d6e5dc32a13494b\\\\\")",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and module.path contains \"\\AppData\\Local\\Temp\\ba9ea7344a4a5f591d6e5dc32a13494b\\\")",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2119
+    "pk": 3196
 }

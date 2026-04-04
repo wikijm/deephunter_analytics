@@ -4,18 +4,18 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects suspicious PowerShell invocation command parameters",
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [],
         "name": "Suspicious PowerShell Invocations - Specific - ProcessCreation",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((tgt.process.cmdline contains \"-nop\" and tgt.process.cmdline contains \" -w \" and tgt.process.cmdline contains \"hidden\" and tgt.process.cmdline contains \" -c \" and tgt.process.cmdline contains \"[Convert]::FromBase64String\") or (tgt.process.cmdline contains \" -w \" and tgt.process.cmdline contains \"hidden\" and tgt.process.cmdline contains \"-noni\" and tgt.process.cmdline contains \"-nop\" and tgt.process.cmdline contains \" -c \" and tgt.process.cmdline contains \"iex\" and tgt.process.cmdline contains \"New-Object\") or (tgt.process.cmdline contains \" -w \" and tgt.process.cmdline contains \"hidden\" and tgt.process.cmdline contains \"-ep\" and tgt.process.cmdline contains \"bypass\" and tgt.process.cmdline contains \"-Enc\") or (tgt.process.cmdline contains \"powershell\" and tgt.process.cmdline contains \"reg\" and tgt.process.cmdline contains \"add\" and tgt.process.cmdline contains \"\\\\software\\\\\") or (tgt.process.cmdline contains \"bypass\" and tgt.process.cmdline contains \"-noprofile\" and tgt.process.cmdline contains \"-windowstyle\" and tgt.process.cmdline contains \"hidden\" and tgt.process.cmdline contains \"new-object\" and tgt.process.cmdline contains \"system.net.webclient\" and tgt.process.cmdline contains \".download\") or (tgt.process.cmdline contains \"iex\" and tgt.process.cmdline contains \"New-Object\" and tgt.process.cmdline contains \"Net.WebClient\" and tgt.process.cmdline contains \".Download\")) and (not (tgt.process.cmdline contains \"(New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1\" or tgt.process.cmdline contains \"Write-ChocolateyWarning\"))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((tgt.process.cmdline contains \"-nop\" and tgt.process.cmdline contains \" -w \" and tgt.process.cmdline contains \"hidden\" and tgt.process.cmdline contains \" -c \" and tgt.process.cmdline contains \"[Convert]::FromBase64String\") or (tgt.process.cmdline contains \" -w \" and tgt.process.cmdline contains \"hidden\" and tgt.process.cmdline contains \"-noni\" and tgt.process.cmdline contains \"-nop\" and tgt.process.cmdline contains \" -c \" and tgt.process.cmdline contains \"iex\" and tgt.process.cmdline contains \"New-Object\") or (tgt.process.cmdline contains \" -w \" and tgt.process.cmdline contains \"hidden\" and tgt.process.cmdline contains \"-ep\" and tgt.process.cmdline contains \"bypass\" and tgt.process.cmdline contains \"-Enc\") or (tgt.process.cmdline contains \"powershell\" and tgt.process.cmdline contains \"reg\" and tgt.process.cmdline contains \"add\" and tgt.process.cmdline contains \"\\software\\\") or (tgt.process.cmdline contains \"bypass\" and tgt.process.cmdline contains \"-noprofile\" and tgt.process.cmdline contains \"-windowstyle\" and tgt.process.cmdline contains \"hidden\" and tgt.process.cmdline contains \"new-object\" and tgt.process.cmdline contains \"system.net.webclient\" and tgt.process.cmdline contains \".download\") or (tgt.process.cmdline contains \"iex\" and tgt.process.cmdline contains \"New-Object\" and tgt.process.cmdline contains \"Net.WebClient\" and tgt.process.cmdline contains \".Download\")) and (not (tgt.process.cmdline contains \"(New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1\" or tgt.process.cmdline contains \"Write-ChocolateyWarning\"))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -25,10 +25,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1977
+    "pk": 882
 }

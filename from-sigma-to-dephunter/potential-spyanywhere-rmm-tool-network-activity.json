@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \".spytech-web.com\" or url.address contains \"spyanywhere.com\") or (event.dns.request contains \".spytech-web.com\" or event.dns.request contains \"spyanywhere.com\")))",
+        "query": "(event.category in (\"DNS\",\"Url\",\"IP\")) and (endpoint.os=\"windows\" and ((url.address contains \".spytech-web.com\" or url.address contains \"spyanywhere.com\") or (event.dns.request contains \".spytech-web.com\" or event.dns.request contains \"spyanywhere.com\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 3338
+    "pk": 1798
 }

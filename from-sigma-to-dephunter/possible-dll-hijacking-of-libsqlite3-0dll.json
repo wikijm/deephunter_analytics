@@ -13,7 +13,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\libsqlite3-0.dll\" and (not (module.path contains \"c:\\\\program files\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\\"))))",
+        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\libsqlite3-0.dll\" and (not (module.path in (\"c:\\\\program files\\*\",\"c:\\\\program files (x86)\\*\")))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -30,5 +30,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1413
+    "pk": 48
 }

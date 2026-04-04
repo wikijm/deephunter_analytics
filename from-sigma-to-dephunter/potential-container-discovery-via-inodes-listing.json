@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (tgt.process.image.path contains \"/ls\" and (tgt.process.cmdline contains \" /\" or tgt.process.cmdline contains \" / \") and tgt.process.cmdline matches \"(?:\\\\s-[^-\\\\s]{0,20}i|\\\\s--inode\\\\s)\" and tgt.process.cmdline matches \"(?:\\\\s-[^-\\\\s]{0,20}d|\\\\s--directory\\\\s)\"))",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (tgt.process.image.path contains \"/ls\" and (tgt.process.cmdline=\"* -*i*\" and tgt.process.cmdline=\"* -*d*\") and tgt.process.cmdline contains \" /\"))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2849
+    "pk": 24
 }

@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \".parallels.com\" or url.address contains \"parallels.com/products/ras/try\") or (event.dns.request contains \".parallels.com\" or event.dns.request contains \"parallels.com/products/ras/try\")))",
+        "query": "(event.category in (\"DNS\",\"Url\",\"IP\")) and (endpoint.os=\"windows\" and ((url.address contains \".parallels.com\" or url.address contains \"parallels.com/products/ras/try\") or (event.dns.request contains \".parallels.com\" or event.dns.request contains \"parallels.com/products/ras/try\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 3018
+    "pk": 1909
 }

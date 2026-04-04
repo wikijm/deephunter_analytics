@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (tgt.process.image.path contains \"/tmp/\" and (not tgt.process.image.path contains \"/usr/bin/nextcloud\")))",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and tgt.process.image.path contains \"/tmp/\")",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2783
+    "pk": 49
 }

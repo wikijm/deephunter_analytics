@@ -13,7 +13,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\d3dcompiler_47.dll\" and (not (not (module.path matches \"\\.*\") or not (module.path matches \"\\.*\") or not (module.path matches \"\\.*\")))))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (module.path contains \"\\d3dcompiler_47.dll\" and (not (not (module.path matches \"\\.*\") or not (module.path matches \"\\.*\") or not (module.path matches \"\\.*\")))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -30,5 +30,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 581
+    "pk": 2452
 }

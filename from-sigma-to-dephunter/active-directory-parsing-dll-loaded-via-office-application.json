@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\\\excel.exe\" or src.process.image.path contains \"\\\\mspub.exe\" or src.process.image.path contains \"\\\\onenote.exe\" or src.process.image.path contains \"\\\\onenoteim.exe\" or src.process.image.path contains \"\\\\outlook.exe\" or src.process.image.path contains \"\\\\powerpnt.exe\" or src.process.image.path contains \"\\\\winword.exe\") and module.path contains \"\\\\dsparse.dll\"))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\excel.exe\" or src.process.image.path contains \"\\mspub.exe\" or src.process.image.path contains \"\\onenote.exe\" or src.process.image.path contains \"\\onenoteim.exe\" or src.process.image.path contains \"\\outlook.exe\" or src.process.image.path contains \"\\powerpnt.exe\" or src.process.image.path contains \"\\winword.exe\") and module.path contains \"\\dsparse.dll\"))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2130
+    "pk": 3253
 }

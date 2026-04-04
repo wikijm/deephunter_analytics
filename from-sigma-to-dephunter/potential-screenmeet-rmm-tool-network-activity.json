@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \".screenmeet.com\" or url.address contains \".scrn.mt\") or (event.dns.request contains \".screenmeet.com\" or event.dns.request contains \".scrn.mt\")))",
+        "query": "(event.category in (\"DNS\",\"Url\",\"IP\")) and (endpoint.os=\"windows\" and ((url.address contains \".screenmeet.com\" or url.address contains \".scrn.mt\") or (event.dns.request contains \".screenmeet.com\" or event.dns.request contains \".scrn.mt\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 3195
+    "pk": 2194
 }

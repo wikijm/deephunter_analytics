@@ -4,20 +4,20 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
-        "description": "Detects the use of short name paths (8.3 format) in command lines, which can be used to obfuscate paths or access restricted locations.\nWindows creates short 8.3 filenames (like PROGRA~1) for compatibility with MS-DOS-based or 16-bit Windows programs.\nWhen investigating, examine:\n- Commands using short paths to access sensitive directories or files\n- Web servers on Windows (especially Apache) where short filenames could bypass security controls\n- Correlation with other suspicious behaviors\n- baseline of short name usage in your environment and look for deviations\n",
+        "confidence": 2,
+        "description": "Detect use of the Windows 8.3 short name. Which could be used as a method to avoid command-line detection",
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
             "t1564"
         ],
         "name": "Use Short Name Path in Command Line",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.cmdline contains \"~1\\\\\" or tgt.process.cmdline contains \"~2\\\\\") and (not ((src.process.image.path in (\"C:\\\\Windows\\\\System32\\\\Dism.exe\",\"C:\\\\Windows\\\\System32\\\\cleanmgr.exe\")) or (src.process.image.path contains \"\\\\winget.exe\" or src.process.image.path contains \"\\\\AppData\\\\Local\\\\Temp\\\\WinGet\\\\\") or (src.process.image.path contains \"C:\\\\Windows\\\\Microsoft.NET\\\\Framework64\\\\v\" and src.process.image.path contains \"\\\\csc.exe\") or ((tgt.process.image.path contains \"\\\\AppData\\\\\" and tgt.process.image.path contains \"\\\\Temp\\\\\") or tgt.process.cmdline contains \"\\\\AppData\\\\Local\\\\Temp\\\\\"))) and (not (src.process.image.path=\"C:\\\\Program Files\\\\GPSoftware\\\\Directory Opus\\\\dopus.exe\" or (src.process.image.path contains \"\\\\aurora-agent-64.exe\" or src.process.image.path contains \"\\\\aurora-agent.exe\") or src.process.image.path contains \"\\\\thor\\\\thor64.exe\" or (tgt.process.cmdline contains \"C:\\\\Program Files\\\\Git\\\\post-install.bat\" or tgt.process.cmdline contains \"C:\\\\Program Files\\\\Git\\\\cmd\\\\scalar.exe\") or (src.process.image.path contains \"\\\\WebEx\\\\webexhost.exe\" or tgt.process.cmdline contains \"\\\\appdata\\\\local\\\\webex\\\\webex64\\\\meetings\\\\wbxreport.exe\") or src.process.image.path contains \"\\\\veeam.backup.shell.exe\" or src.process.image.path contains \"\\\\Everything\\\\Everything.exe\"))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.cmdline contains \"~1\\\" or tgt.process.cmdline contains \"~2\\\") and (not ((src.process.image.path in (\"C:\\Windows\\System32\\Dism.exe\",\"C:\\Windows\\System32\\cleanmgr.exe\",\"C:\\Program Files\\GPSoftware\\Directory Opus\\dopus.exe\")) or (src.process.image.path contains \"\\WebEx\\WebexHost.exe\" or src.process.image.path contains \"\\thor\\thor64.exe\" or src.process.image.path contains \"\\veam.backup.shell.exe\" or src.process.image.path contains \"\\winget.exe\" or src.process.image.path contains \"\\Everything\\Everything.exe\") or src.process.image.path contains \"\\AppData\\Local\\Temp\\WinGet\\\" or (tgt.process.cmdline contains \"\\appdata\\local\\webex\\webex64\\meetings\\wbxreport.exe\" or tgt.process.cmdline contains \"C:\\Program Files\\Git\\post-install.bat\" or tgt.process.cmdline contains \"C:\\Program Files\\Git\\cmd\\scalar.exe\")))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2222
+    "pk": 896
 }

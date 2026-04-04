@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects suspicious Windows Error Reporting manager (wermgr.exe) child process",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -13,12 +13,12 @@
             "t1036"
         ],
         "name": "Suspicious Child Process Of Wermgr.EXE",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\\\wermgr.exe\" and (tgt.process.image.path contains \"\\\\cmd.exe\" or tgt.process.image.path contains \"\\\\cscript.exe\" or tgt.process.image.path contains \"\\\\ipconfig.exe\" or tgt.process.image.path contains \"\\\\mshta.exe\" or tgt.process.image.path contains \"\\\\net.exe\" or tgt.process.image.path contains \"\\\\net1.exe\" or tgt.process.image.path contains \"\\\\netstat.exe\" or tgt.process.image.path contains \"\\\\nslookup.exe\" or tgt.process.image.path contains \"\\\\powershell_ise.exe\" or tgt.process.image.path contains \"\\\\powershell.exe\" or tgt.process.image.path contains \"\\\\pwsh.exe\" or tgt.process.image.path contains \"\\\\regsvr32.exe\" or tgt.process.image.path contains \"\\\\rundll32.exe\" or tgt.process.image.path contains \"\\\\systeminfo.exe\" or tgt.process.image.path contains \"\\\\whoami.exe\" or tgt.process.image.path contains \"\\\\wscript.exe\")) and (not (tgt.process.image.path contains \"\\\\rundll32.exe\" and (tgt.process.cmdline contains \"C:\\\\Windows\\\\system32\\\\WerConCpl.dll\" and tgt.process.cmdline contains \"LaunchErcApp \") and (tgt.process.cmdline contains \"-queuereporting\" or tgt.process.cmdline contains \"-responsepester\")))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\wermgr.exe\" and (tgt.process.image.path contains \"\\cmd.exe\" or tgt.process.image.path contains \"\\cscript.exe\" or tgt.process.image.path contains \"\\ipconfig.exe\" or tgt.process.image.path contains \"\\mshta.exe\" or tgt.process.image.path contains \"\\net.exe\" or tgt.process.image.path contains \"\\net1.exe\" or tgt.process.image.path contains \"\\netstat.exe\" or tgt.process.image.path contains \"\\nslookup.exe\" or tgt.process.image.path contains \"\\powershell_ise.exe\" or tgt.process.image.path contains \"\\powershell.exe\" or tgt.process.image.path contains \"\\pwsh.exe\" or tgt.process.image.path contains \"\\regsvr32.exe\" or tgt.process.image.path contains \"\\rundll32.exe\" or tgt.process.image.path contains \"\\systeminfo.exe\" or tgt.process.image.path contains \"\\whoami.exe\" or tgt.process.image.path contains \"\\wscript.exe\")) and (not (tgt.process.image.path contains \"\\rundll32.exe\" and (tgt.process.cmdline contains \"C:\\Windows\\system32\\WerConCpl.dll\" and tgt.process.cmdline contains \"LaunchErcApp \") and (tgt.process.cmdline contains \"-queuereporting\" or tgt.process.cmdline contains \"-responsepester\")))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -28,10 +28,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1719
+    "pk": 1038
 }

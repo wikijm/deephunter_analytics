@@ -9,13 +9,14 @@
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
+            "t1574",
             "t1574"
         ],
         "name": "Potential DLL Sideloading Via JsSchHlp",
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\JSESPR.dll\" and (not module.path contains \"C:\\\\Program Files\\\\Common Files\\\\Justsystem\\\\JsSchHlp\\\\\")))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (module.path contains \"\\JSESPR.dll\" and (not module.path contains \"C:\\Program Files\\Common Files\\Justsystem\\JsSchHlp\\\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2110
+    "pk": 3201
 }

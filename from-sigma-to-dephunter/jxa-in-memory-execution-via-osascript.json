@@ -16,7 +16,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"osx\" and ((tgt.process.cmdline contains \"osascript\" and tgt.process.cmdline contains \" -e \" and tgt.process.cmdline contains \"eval\" and tgt.process.cmdline contains \"NSData.dataWithContentsOfURL\") and ((tgt.process.cmdline contains \" -l \" and tgt.process.cmdline contains \"JavaScript\") or tgt.process.cmdline contains \".js\")))",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"osx\" and ((tgt.process.cmdline contains \"osascript\" and tgt.process.cmdline contains \" -e \" and tgt.process.cmdline contains \"eval\" and tgt.process.cmdline contains \"NSData.dataWithContentsOfURL\") and ((tgt.process.cmdline contains \" -l \" and tgt.process.cmdline contains \"JavaScript\") or tgt.process.cmdline contains \".js\"))) | columns tgt.process.cmdline",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -33,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 17
+    "pk": 618
 }

@@ -13,7 +13,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\miracastview.dll\" and (not module.path contains \"c:\\\\windows\\\\Miracast\\\\\")))",
+        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\miracastview.dll\" and (not module.path=\"c:\\\\windows\\\\Miracast\\*\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -30,5 +30,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1030
+    "pk": 13
 }

@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (tgt.process.image.path contains \"/groups\" or ((tgt.process.image.path contains \"/cat\" or tgt.process.image.path contains \"/ed\" or tgt.process.image.path contains \"/head\" or tgt.process.image.path contains \"/less\" or tgt.process.image.path contains \"/more\" or tgt.process.image.path contains \"/nano\" or tgt.process.image.path contains \"/tail\" or tgt.process.image.path contains \"/vi\" or tgt.process.image.path contains \"/vim\") and tgt.process.cmdline contains \"/etc/group\")))",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (tgt.process.image.path contains \"/groups\" or ((tgt.process.image.path contains \"/cat\" or tgt.process.image.path contains \"/head\" or tgt.process.image.path contains \"/tail\" or tgt.process.image.path contains \"/more\") and tgt.process.cmdline contains \"/etc/group\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2775
+    "pk": 98
 }

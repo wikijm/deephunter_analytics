@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \".action1.com\" or url.address contains \"a1-backend-packages.s3.amazonaws.com\") or (event.dns.request contains \".action1.com\" or event.dns.request contains \"a1-backend-packages.s3.amazonaws.com\")))",
+        "query": "(event.category in (\"DNS\",\"Url\",\"IP\")) and (endpoint.os=\"windows\" and ((url.address contains \".action1.com\" or url.address contains \"a1-backend-packages.s3.amazonaws.com\") or (event.dns.request contains \".action1.com\" or event.dns.request contains \"a1-backend-packages.s3.amazonaws.com\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 3076
+    "pk": 2156
 }

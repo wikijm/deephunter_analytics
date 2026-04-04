@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \".anyviewer.com\" or url.address contains \".aomeisoftware.com\") or (event.dns.request contains \".anyviewer.com\" or event.dns.request contains \".aomeisoftware.com\")))",
+        "query": "(event.category in (\"DNS\",\"Url\",\"IP\")) and (endpoint.os=\"windows\" and ((url.address contains \".anyviewer.com\" or url.address contains \".aomeisoftware.com\") or (event.dns.request contains \".anyviewer.com\" or event.dns.request contains \".aomeisoftware.com\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2914
+    "pk": 1836
 }

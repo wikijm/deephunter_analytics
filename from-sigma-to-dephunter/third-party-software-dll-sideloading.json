@@ -9,13 +9,14 @@
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
+            "t1574",
             "t1574"
         ],
         "name": "Third Party Software DLL Sideloading",
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and ((module.path contains \"\\\\commfunc.dll\" and (not (module.path contains \"\\\\AppData\\\\local\\\\Google\\\\Chrome\\\\Application\\\\\" or (module.path contains \"C:\\\\Program Files\\\\Lenovo\\\\Communications Utility\\\\\" or module.path contains \"C:\\\\Program Files (x86)\\\\Lenovo\\\\Communications Utility\\\\\")))) or (module.path contains \"\\\\tosbtkbd.dll\" and (not (module.path contains \"C:\\\\Program Files\\\\Toshiba\\\\Bluetooth Toshiba Stack\\\\\" or module.path contains \"C:\\\\Program Files (x86)\\\\Toshiba\\\\Bluetooth Toshiba Stack\\\\\")))))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and ((module.path contains \"\\commfunc.dll\" and (not (module.path contains \"\\AppData\\local\\Google\\Chrome\\Application\\\" or (module.path contains \"C:\\Program Files\\Lenovo\\Communications Utility\\\" or module.path contains \"C:\\Program Files (x86)\\Lenovo\\Communications Utility\\\")))) or (module.path contains \"\\tosbtkbd.dll\" and (not (module.path contains \"C:\\Program Files\\Toshiba\\Bluetooth Toshiba Stack\\\" or module.path contains \"C:\\Program Files (x86)\\Toshiba\\Bluetooth Toshiba Stack\\\")))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2173
+    "pk": 3223
 }

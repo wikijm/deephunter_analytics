@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"osx\" and (tgt.process.cmdline contains \"osacompile\" and tgt.process.cmdline contains \" -x \" and tgt.process.cmdline contains \" -e \"))",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"osx\" and (tgt.process.cmdline contains \"osacompile\" and tgt.process.cmdline contains \" -x \" and tgt.process.cmdline contains \" -e \")) | columns tgt.process.cmdline",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 25
+    "pk": 610
 }

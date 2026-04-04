@@ -13,7 +13,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\tutil32.dll\" and (not (module.path contains \"c:\\\\program files\\\\PDE\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\PDE\\\\\"))))",
+        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\tutil32.dll\" and (not (module.path in (\"c:\\\\program files\\\\PDE\\*\",\"c:\\\\program files (x86)\\\\PDE\\*\")))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -30,5 +30,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1443
+    "pk": 133
 }

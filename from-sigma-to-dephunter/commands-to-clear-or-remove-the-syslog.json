@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "actors": [],
+        "anomaly_threshold_count": 2,
+        "anomaly_threshold_endpoints": 2,
+        "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
+        "confidence": 1,
+        "description": "Detects specific commands commonly used to remove or empty the syslog. Which is often used by attacker as a method to hide their tracks",
+        "dynamic_query": false,
+        "emulation_validation": "",
+        "mitre_techniques": [
+            "t1070"
+        ],
+        "name": "Commands to Clear or Remove the Syslog",
+        "notes": "",
+        "pub_date": "",
+        "pub_status": "DIST",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (tgt.process.cmdline contains \"rm /var/log/syslog\" or tgt.process.cmdline contains \"rm -r /var/log/syslog\" or tgt.process.cmdline contains \"rm -f /var/log/syslog\" or tgt.process.cmdline contains \"rm -rf /var/log/syslog\" or tgt.process.cmdline contains \"unlink /var/log/syslog\" or tgt.process.cmdline contains \"unlink -r /var/log/syslog\" or tgt.process.cmdline contains \"unlink -f /var/log/syslog\" or tgt.process.cmdline contains \"unlink -rf /var/log/syslog\" or tgt.process.cmdline contains \"mv /var/log/syslog\" or tgt.process.cmdline contains \" >/var/log/syslog\" or tgt.process.cmdline contains \" > /var/log/syslog\"))",
+        "references": "",
+        "relevance": 1,
+        "run_daily": true,
+        "star_rule": false,
+        "tags": [
+            "From SIGMA"
+        ],
+        "target_os": [
+            1
+        ],
+        "threats": [],
+        "update_date": "",
+        "vulnerabilities": [],
+        "weighted_relevance": 1.5
+    },
+    "model": "qm.query",
+    "pk": 14
+}

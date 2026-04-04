@@ -8,10 +8,7 @@
         "description": "Detects execution of the \"esxcli\" command with the \"system\" and \"permission\" flags in order to assign admin permissions to an account.",
         "dynamic_query": false,
         "emulation_validation": "",
-        "mitre_techniques": [
-            "t1059",
-            "t1098"
-        ],
+        "mitre_techniques": [],
         "name": "ESXi Admin Permission Assigned To Account Via ESXCLI",
         "notes": "",
         "pub_date": "",
@@ -33,5 +30,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2832
+    "pk": 25
 }

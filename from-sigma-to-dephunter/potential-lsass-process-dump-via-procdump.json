@@ -4,8 +4,8 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
-        "description": "Detects potential credential harvesting attempts through LSASS memory dumps using ProcDump.\nThis rule identifies suspicious command-line patterns that combine memory dump flags (-ma, -mm, -mp) with LSASS-related process markers.\nLSASS (Local Security Authority Subsystem Service) contains sensitive authentication data including plaintext passwords, NTLM hashes, and Kerberos tickets in memory.\nAttackers commonly dump LSASS memory to extract credentials for lateral movement and privilege escalation.\n",
+        "confidence": 2,
+        "description": "Detects suspicious uses of the SysInternals Procdump utility by using a special command line parameter in combination with the lsass.exe process.\nThis way we are also able to catch cases in which the attacker has renamed the procdump executable.\n",
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
@@ -13,12 +13,12 @@
             "t1003"
         ],
         "name": "Potential LSASS Process Dump Via Procdump",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.cmdline contains \" -ma \" or tgt.process.cmdline contains \" /ma \" or tgt.process.cmdline contains \" \u2013ma \" or tgt.process.cmdline contains \" \u2014ma \" or tgt.process.cmdline contains \" \u2015ma \" or tgt.process.cmdline contains \" -mm \" or tgt.process.cmdline contains \" /mm \" or tgt.process.cmdline contains \" \u2013mm \" or tgt.process.cmdline contains \" \u2014mm \" or tgt.process.cmdline contains \" \u2015mm \" or tgt.process.cmdline contains \" -mp \" or tgt.process.cmdline contains \" /mp \" or tgt.process.cmdline contains \" \u2013mp \" or tgt.process.cmdline contains \" \u2014mp \" or tgt.process.cmdline contains \" \u2015mp \") and (tgt.process.cmdline contains \" ls\" or tgt.process.cmdline contains \" keyiso\" or tgt.process.cmdline contains \" samss\")))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.cmdline contains \" -ma \" or tgt.process.cmdline contains \" /ma \" or tgt.process.cmdline contains \" \u2013ma \" or tgt.process.cmdline contains \" \u2014ma \" or tgt.process.cmdline contains \" \u2015ma \") and tgt.process.cmdline contains \" ls\"))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -28,10 +28,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2023
+    "pk": 1019
 }

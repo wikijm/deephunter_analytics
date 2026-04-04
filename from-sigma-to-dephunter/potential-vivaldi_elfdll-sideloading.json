@@ -9,13 +9,14 @@
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
+            "t1574",
             "t1574"
         ],
         "name": "Potential Vivaldi_elf.DLL Sideloading",
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\vivaldi_elf.dll\" and (not (src.process.image.path contains \"\\\\Vivaldi\\\\Application\\\\vivaldi.exe\" and module.path contains \"\\\\Vivaldi\\\\Application\\\\\"))))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (module.path contains \"\\vivaldi_elf.dll\" and (not (src.process.image.path contains \"\\Vivaldi\\Application\\vivaldi.exe\" and module.path contains \"\\Vivaldi\\Application\\\"))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2140
+    "pk": 3236
 }

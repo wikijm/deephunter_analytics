@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\\\rundll32.exe\" and module.path contains \"\\\\\\\\\"))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\rundll32.exe\" and module.path contains \"\\\\\"))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2136
+    "pk": 3189
 }

@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \".rmm.datto.com\" or url.address contains \"cc.centrastage.net\" or url.address contains \"datto.com/au/products/rmm/\") or (event.dns.request contains \".rmm.datto.com\" or event.dns.request contains \"cc.centrastage.net\" or event.dns.request contains \"datto.com/au/products/rmm/\")))",
+        "query": "(event.category in (\"DNS\",\"Url\",\"IP\")) and (endpoint.os=\"windows\" and ((url.address contains \".rmm.datto.com\" or url.address contains \"cc.centrastage.net\" or url.address contains \"datto.com/au/products/rmm/\") or (event.dns.request contains \".rmm.datto.com\" or event.dns.request contains \"cc.centrastage.net\" or event.dns.request contains \"datto.com/au/products/rmm/\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 3027
+    "pk": 1903
 }

@@ -13,7 +13,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\duilib_u.dll\" and (not (module.path contains \"c:\\\\program files\\\\AnyViewer\\\\\" or module.path contains \"c:\\\\program files (x86)\\\\AnyViewer\\\\\"))))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (module.path contains \"\\duilib_u.dll\" and (not (module.path in (\"c:\\program files\\AnyViewer\\*\",\"c:\\program files (x86)\\AnyViewer\\*\")))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -30,5 +30,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1469
+    "pk": 3142
 }

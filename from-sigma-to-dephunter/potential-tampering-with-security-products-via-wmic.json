@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects uninstallation or termination of security products using the WMIC utility",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1562"
         ],
         "name": "Potential Tampering With Security Products Via WMIC",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
         "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((tgt.process.cmdline contains \"wmic\" and tgt.process.cmdline contains \"product where \" and tgt.process.cmdline contains \"call\" and tgt.process.cmdline contains \"uninstall\" and tgt.process.cmdline contains \"/nointeractive\") or ((tgt.process.cmdline contains \"wmic\" and tgt.process.cmdline contains \"caption like \") and (tgt.process.cmdline contains \"call delete\" or tgt.process.cmdline contains \"call terminate\")) or (tgt.process.cmdline contains \"process \" and tgt.process.cmdline contains \"where \" and tgt.process.cmdline contains \"delete\")) and (tgt.process.cmdline contains \"%carbon%\" or tgt.process.cmdline contains \"%cylance%\" or tgt.process.cmdline contains \"%endpoint%\" or tgt.process.cmdline contains \"%eset%\" or tgt.process.cmdline contains \"%malware%\" or tgt.process.cmdline contains \"%Sophos%\" or tgt.process.cmdline contains \"%symantec%\" or tgt.process.cmdline contains \"Antivirus\" or tgt.process.cmdline contains \"AVG \" or tgt.process.cmdline contains \"Carbon Black\" or tgt.process.cmdline contains \"CarbonBlack\" or tgt.process.cmdline contains \"Cb Defense Sensor 64-bit\" or tgt.process.cmdline contains \"Crowdstrike Sensor\" or tgt.process.cmdline contains \"Cylance \" or tgt.process.cmdline contains \"Dell Threat Defense\" or tgt.process.cmdline contains \"DLP Endpoint\" or tgt.process.cmdline contains \"Endpoint Detection\" or tgt.process.cmdline contains \"Endpoint Protection\" or tgt.process.cmdline contains \"Endpoint Security\" or tgt.process.cmdline contains \"Endpoint Sensor\" or tgt.process.cmdline contains \"ESET File Security\" or tgt.process.cmdline contains \"LogRhythm System Monitor Service\" or tgt.process.cmdline contains \"Malwarebytes\" or tgt.process.cmdline contains \"McAfee Agent\" or tgt.process.cmdline contains \"Microsoft Security Client\" or tgt.process.cmdline contains \"Sophos Anti-Virus\" or tgt.process.cmdline contains \"Sophos AutoUpdate\" or tgt.process.cmdline contains \"Sophos Credential Store\" or tgt.process.cmdline contains \"Sophos Management Console\" or tgt.process.cmdline contains \"Sophos Management Database\" or tgt.process.cmdline contains \"Sophos Management Server\" or tgt.process.cmdline contains \"Sophos Remote Management System\" or tgt.process.cmdline contains \"Sophos Update Manager\" or tgt.process.cmdline contains \"Threat Protection\" or tgt.process.cmdline contains \"VirusScan\" or tgt.process.cmdline contains \"Webroot SecureAnywhere\" or tgt.process.cmdline contains \"Windows Defender\")))",
-        "references": "",
-        "relevance": 1,
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2031
+    "pk": 980
 }

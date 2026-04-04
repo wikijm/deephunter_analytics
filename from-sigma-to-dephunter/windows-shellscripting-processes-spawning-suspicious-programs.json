@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects suspicious child processes of a Windows shell and scripting processes such as wscript, rundll32, powershell, mshta...etc.",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -14,12 +14,12 @@
             "t1218"
         ],
         "name": "Windows Shell/Scripting Processes Spawning Suspicious Programs",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((src.process.image.path contains \"\\\\mshta.exe\" or src.process.image.path contains \"\\\\powershell.exe\" or src.process.image.path contains \"\\\\pwsh.exe\" or src.process.image.path contains \"\\\\rundll32.exe\" or src.process.image.path contains \"\\\\cscript.exe\" or src.process.image.path contains \"\\\\wscript.exe\" or src.process.image.path contains \"\\\\wmiprvse.exe\" or src.process.image.path contains \"\\\\regsvr32.exe\") and (tgt.process.image.path contains \"\\\\schtasks.exe\" or tgt.process.image.path contains \"\\\\nslookup.exe\" or tgt.process.image.path contains \"\\\\certutil.exe\" or tgt.process.image.path contains \"\\\\bitsadmin.exe\" or tgt.process.image.path contains \"\\\\mshta.exe\")) and (not (tgt.process.image.path contains \"\\\\ccmcache\\\\\" or (src.process.cmdline contains \"\\\\Program Files\\\\Amazon\\\\WorkSpacesConfig\\\\Scripts\\\\setup-scheduledtask.ps1\" or src.process.cmdline contains \"\\\\Program Files\\\\Amazon\\\\WorkSpacesConfig\\\\Scripts\\\\set-selfhealing.ps1\" or src.process.cmdline contains \"\\\\Program Files\\\\Amazon\\\\WorkSpacesConfig\\\\Scripts\\\\check-workspacehealth.ps1\" or src.process.cmdline contains \"\\\\nessus_\") or tgt.process.cmdline contains \"\\\\nessus_\" or (src.process.image.path contains \"\\\\mshta.exe\" and tgt.process.image.path contains \"\\\\mshta.exe\" and (src.process.cmdline contains \"C:\\\\MEM_Configmgr_\" and src.process.cmdline contains \"\\\\splash.hta\" and src.process.cmdline contains \"{1E460BD7-F1C3-4B2E-88BF-4E770A288AF5}\") and (tgt.process.cmdline contains \"C:\\\\MEM_Configmgr_\" and tgt.process.cmdline contains \"\\\\SMSSETUP\\\\BIN\\\\\" and tgt.process.cmdline contains \"\\\\autorun.hta\" and tgt.process.cmdline contains \"{1E460BD7-F1C3-4B2E-88BF-4E770A288AF5}\"))))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((src.process.image.path contains \"\\mshta.exe\" or src.process.image.path contains \"\\powershell.exe\" or src.process.image.path contains \"\\pwsh.exe\" or src.process.image.path contains \"\\rundll32.exe\" or src.process.image.path contains \"\\cscript.exe\" or src.process.image.path contains \"\\wscript.exe\" or src.process.image.path contains \"\\wmiprvse.exe\" or src.process.image.path contains \"\\regsvr32.exe\") and (tgt.process.image.path contains \"\\schtasks.exe\" or tgt.process.image.path contains \"\\nslookup.exe\" or tgt.process.image.path contains \"\\certutil.exe\" or tgt.process.image.path contains \"\\bitsadmin.exe\" or tgt.process.image.path contains \"\\mshta.exe\")) and (not (tgt.process.image.path contains \"\\ccmcache\\\" or (src.process.cmdline contains \"\\Program Files\\Amazon\\WorkSpacesConfig\\Scripts\\setup-scheduledtask.ps1\" or src.process.cmdline contains \"\\Program Files\\Amazon\\WorkSpacesConfig\\Scripts\\set-selfhealing.ps1\" or src.process.cmdline contains \"\\Program Files\\Amazon\\WorkSpacesConfig\\Scripts\\check-workspacehealth.ps1\" or src.process.cmdline contains \"\\nessus_\") or tgt.process.cmdline contains \"\\nessus_\" or (src.process.image.path contains \"\\mshta.exe\" and tgt.process.image.path contains \"\\mshta.exe\" and (src.process.cmdline contains \"C:\\MEM_Configmgr_\" and src.process.cmdline contains \"\\splash.hta\" and src.process.cmdline contains \"{1E460BD7-F1C3-4B2E-88BF-4E770A288AF5}\") and (tgt.process.cmdline contains \"C:\\MEM_Configmgr_\" and tgt.process.cmdline contains \"\\SMSSETUP\\BIN\\\" and tgt.process.cmdline contains \"\\autorun.hta\" and tgt.process.cmdline contains \"{1E460BD7-F1C3-4B2E-88BF-4E770A288AF5}\")))))) | columns tgt.process.cmdline,src.process.cmdline,tgt.process.image.path,tgt.process.image.path,src.process.image.path",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -29,10 +29,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1587
+    "pk": 1206
 }

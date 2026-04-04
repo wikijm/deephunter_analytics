@@ -4,18 +4,18 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects whether the image specified in a process creation event doesn't refer to an \".exe\" (or other known executable extension) file. This can be caused by process ghosting or other unorthodox methods to start a process.\nThis rule might require some initial baselining to align with some third party tooling in the user environment.\n",
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [],
         "name": "Execution of Suspicious File Type Extension",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((not (tgt.process.image.path contains \".bin\" or tgt.process.image.path contains \".cgi\" or tgt.process.image.path contains \".com\" or tgt.process.image.path contains \".exe\" or tgt.process.image.path contains \".scr\" or tgt.process.image.path contains \".tmp\")) and (not ((tgt.process.image.path in (\"System\",\"Registry\",\"MemCompression\",\"vmmem\")) or tgt.process.image.path contains \":\\\\Windows\\\\Installer\\\\MSI\" or tgt.process.image.path contains \":\\\\Windows\\\\System32\\\\DriverStore\\\\FileRepository\\\\\" or (tgt.process.image.path contains \":\\\\Config.Msi\\\\\" and (tgt.process.image.path contains \".rbf\" or tgt.process.image.path contains \".rbs\")) or (src.process.image.path contains \":\\\\Windows\\\\Temp\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\Temp\\\\\") or tgt.process.image.path contains \":\\\\$Extend\\\\$Deleted\\\\\" or (tgt.process.image.path in (\"-\",\"\")) or not (tgt.process.image.path matches \"\\.*\"))) and (not (src.process.image.path contains \":\\\\ProgramData\\\\Avira\\\\\" or (tgt.process.image.path contains \"NVIDIA\\\\NvBackend\\\\\" and tgt.process.image.path contains \".dat\") or ((tgt.process.image.path contains \":\\\\Program Files (x86)\\\\WINPAKPRO\\\\\" or tgt.process.image.path contains \":\\\\Program Files\\\\WINPAKPRO\\\\\") and tgt.process.image.path contains \".ngn\") or (tgt.process.image.path contains \":\\\\Program Files (x86)\\\\MyQ\\\\Server\\\\pcltool.dll\" or tgt.process.image.path contains \":\\\\Program Files\\\\MyQ\\\\Server\\\\pcltool.dll\") or (tgt.process.image.path contains \"\\\\AppData\\\\Local\\\\Packages\\\\\" and tgt.process.image.path contains \"\\\\LocalState\\\\rootfs\\\\\") or tgt.process.image.path contains \"\\\\LZMA_EXE\" or tgt.process.image.path contains \":\\\\Program Files\\\\Mozilla Firefox\\\\\" or (src.process.image.path=\"C:\\\\Windows\\\\System32\\\\services.exe\" and tgt.process.image.path contains \"com.docker.service\")))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((not (tgt.process.image.path contains \".bin\" or tgt.process.image.path contains \".cgi\" or tgt.process.image.path contains \".com\" or tgt.process.image.path contains \".exe\" or tgt.process.image.path contains \".scr\" or tgt.process.image.path contains \".tmp\")) and (not ((tgt.process.image.path in (\"System\",\"Registry\",\"MemCompression\",\"vmmem\")) or tgt.process.image.path contains \":\\Windows\\Installer\\MSI\" or tgt.process.image.path contains \":\\Windows\\System32\\DriverStore\\FileRepository\\\" or (tgt.process.image.path contains \":\\Config.Msi\\\" and (tgt.process.image.path contains \".rbf\" or tgt.process.image.path contains \".rbs\")) or (src.process.image.path contains \":\\Windows\\Temp\\\" or tgt.process.image.path contains \":\\Windows\\Temp\\\") or tgt.process.image.path contains \":\\$Extend\\$Deleted\\\" or (tgt.process.image.path in (\"-\",\"\")) or not (tgt.process.image.path matches \"\\.*\"))) and (not (src.process.image.path contains \":\\ProgramData\\Avira\\\" or (tgt.process.image.path contains \"NVIDIA\\NvBackend\\\" and tgt.process.image.path contains \".dat\") or ((tgt.process.image.path contains \":\\Program Files (x86)\\WINPAKPRO\\\" or tgt.process.image.path contains \":\\Program Files\\WINPAKPRO\\\") and tgt.process.image.path contains \".ngn\") or (tgt.process.image.path contains \":\\Program Files (x86)\\MyQ\\Server\\pcltool.dll\" or tgt.process.image.path contains \":\\Program Files\\MyQ\\Server\\pcltool.dll\") or (tgt.process.image.path contains \"\\AppData\\Local\\Packages\\\" and tgt.process.image.path contains \"\\LocalState\\rootfs\\\") or tgt.process.image.path contains \"\\LZMA_EXE\" or tgt.process.image.path contains \":\\Program Files\\Mozilla Firefox\\\" or (src.process.image.path=\"C:\\Windows\\System32\\services.exe\" and tgt.process.image.path contains \"com.docker.service\")))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -25,10 +25,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1747
+    "pk": 1142
 }

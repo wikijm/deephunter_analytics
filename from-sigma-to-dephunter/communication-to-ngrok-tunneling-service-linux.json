@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects an executable accessing an ngrok tunneling endpoint, which could be a sign of forbidden exfiltration of data exfiltration by malicious actors",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -16,12 +16,12 @@
             "t1102"
         ],
         "name": "Communication To Ngrok Tunneling Service - Linux",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"linux\" and ((url.address contains \"tunnel.us.ngrok.com\" or url.address contains \"tunnel.eu.ngrok.com\" or url.address contains \"tunnel.ap.ngrok.com\" or url.address contains \"tunnel.au.ngrok.com\" or url.address contains \"tunnel.sa.ngrok.com\" or url.address contains \"tunnel.jp.ngrok.com\" or url.address contains \"tunnel.in.ngrok.com\") or (event.dns.request contains \"tunnel.us.ngrok.com\" or event.dns.request contains \"tunnel.eu.ngrok.com\" or event.dns.request contains \"tunnel.ap.ngrok.com\" or event.dns.request contains \"tunnel.au.ngrok.com\" or event.dns.request contains \"tunnel.sa.ngrok.com\" or event.dns.request contains \"tunnel.jp.ngrok.com\" or event.dns.request contains \"tunnel.in.ngrok.com\")))",
-        "references": "",
-        "relevance": 1,
+        "query": "(event.category in (\"DNS\",\"Url\",\"IP\")) and (endpoint.os=\"linux\" and ((url.address contains \"tunnel.us.ngrok.com\" or url.address contains \"tunnel.eu.ngrok.com\" or url.address contains \"tunnel.ap.ngrok.com\" or url.address contains \"tunnel.au.ngrok.com\" or url.address contains \"tunnel.sa.ngrok.com\" or url.address contains \"tunnel.jp.ngrok.com\" or url.address contains \"tunnel.in.ngrok.com\") or (event.dns.request contains \"tunnel.us.ngrok.com\" or event.dns.request contains \"tunnel.eu.ngrok.com\" or event.dns.request contains \"tunnel.ap.ngrok.com\" or event.dns.request contains \"tunnel.au.ngrok.com\" or event.dns.request contains \"tunnel.sa.ngrok.com\" or event.dns.request contains \"tunnel.jp.ngrok.com\" or event.dns.request contains \"tunnel.in.ngrok.com\")))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -31,10 +31,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 3383
+    "pk": 110
 }

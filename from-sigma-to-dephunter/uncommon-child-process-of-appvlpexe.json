@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects uncommon child processes of Appvlp.EXE\nAppvlp or the Application Virtualization Utility is included with Microsoft Office. Attackers are able to abuse \"AppVLP\" to execute shell commands.\nNormally, this binary is used for Application Virtualization, but it can also be abused to circumvent the ASR file path rule folder\nor to mark a file as a system file.\n",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1218"
         ],
         "name": "Uncommon Child Process Of Appvlp.EXE",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\\\appvlp.exe\" and (not (tgt.process.image.path contains \":\\\\Windows\\\\SysWOW64\\\\rundll32.exe\" or tgt.process.image.path contains \":\\\\Windows\\\\System32\\\\rundll32.exe\")) and (not ((tgt.process.image.path contains \":\\\\Program Files\\\\Microsoft Office\" and tgt.process.image.path contains \"\\\\msoasb.exe\") or ((tgt.process.image.path contains \":\\\\Program Files\\\\Microsoft Office\" and tgt.process.image.path contains \"\\\\SkypeSrv\\\\\") and tgt.process.image.path contains \"\\\\SKYPESERVER.EXE\") or (tgt.process.image.path contains \":\\\\Program Files\\\\Microsoft Office\" and tgt.process.image.path contains \"\\\\MSOUC.EXE\")))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\appvlp.exe\" and (not (tgt.process.image.path contains \":\\Windows\\SysWOW64\\rundll32.exe\" or tgt.process.image.path contains \":\\Windows\\System32\\rundll32.exe\")) and (not ((tgt.process.image.path contains \":\\Program Files\\Microsoft Office\" and tgt.process.image.path contains \"\\msoasb.exe\") or ((tgt.process.image.path contains \":\\Program Files\\Microsoft Office\" and tgt.process.image.path contains \"\\SkypeSrv\\\") and tgt.process.image.path contains \"\\SKYPESERVER.EXE\") or (tgt.process.image.path contains \":\\Program Files\\Microsoft Office\" and tgt.process.image.path contains \"\\MSOUC.EXE\")))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1636
+    "pk": 859
 }

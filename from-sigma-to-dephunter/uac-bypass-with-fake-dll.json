@@ -16,7 +16,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\\\dism.exe\" and module.path contains \"\\\\dismcore.dll\") and (not module.path=\"C:\\\\Windows\\\\System32\\\\Dism\\\\dismcore.dll\")))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \"\\dism.exe\" and module.path contains \"\\dismcore.dll\") and (not module.path=\"C:\\Windows\\System32\\Dism\\dismcore.dll\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -33,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2115
+    "pk": 3254
 }

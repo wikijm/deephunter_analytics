@@ -13,7 +13,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\comn.dll\" and (not (module.path=\"c:\\\\program files\\\\AOMEI\\\\AOMEI Backupper\\\\*\\\\*\" or module.path=\"c:\\\\program files (x86)\\\\AOMEI\\\\AOMEI Backupper\\\\*\\\\*\"))))",
+        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\comn.dll\" and (not (module.path in (\"c:\\\\program files\\\\AOMEI\\\\AOMEI Backupper\\*\\*\",\"c:\\\\program files (x86)\\\\AOMEI\\\\AOMEI Backupper\\*\\*\")))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -30,5 +30,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1455
+    "pk": 154
 }

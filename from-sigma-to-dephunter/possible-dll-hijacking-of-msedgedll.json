@@ -13,7 +13,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\msedge.dll\" and (not (module.path=\"c:\\\\program files\\\\Microsoft\\\\Edge\\\\Application\\\\*\\\\*\" or module.path=\"c:\\\\program files (x86)\\\\Microsoft\\\\Edge\\\\Application\\\\*\\\\*\" or module.path=\"c:\\\\program files\\\\Microsoft\\\\Edgewebview\\\\Application\\\\*\\\\*\" or module.path=\"c:\\\\program files (x86)\\\\Microsoft\\\\Edgewebview\\\\Application\\\\*\\\\*\" or module.path=\"c:\\\\program files\\\\Microsoft\\\\EdgeCore\\\\*\\\\*\" or module.path=\"c:\\\\program files (x86)\\\\Microsoft\\\\EdgeCore\\\\*\\\\*\"))))",
+        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\msedge.dll\" and (not (module.path in (\"c:\\\\program files\\\\Microsoft\\\\Edge\\\\Application\\*\\*\",\"c:\\\\program files (x86)\\\\Microsoft\\\\Edge\\\\Application\\*\\*\",\"c:\\\\program files\\\\Microsoft\\\\Edgewebview\\\\Application\\*\\*\",\"c:\\\\program files (x86)\\\\Microsoft\\\\Edgewebview\\\\Application\\*\\*\",\"c:\\\\program files\\\\Microsoft\\\\EdgeCore\\*\\*\",\"c:\\\\program files (x86)\\\\Microsoft\\\\EdgeCore\\*\\*\")))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -30,5 +30,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 961
+    "pk": 510
 }

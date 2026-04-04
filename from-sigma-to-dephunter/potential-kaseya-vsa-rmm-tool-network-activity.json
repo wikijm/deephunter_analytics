@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \"deploy01.kaseya.com\" or url.address contains \"managedsupport.kaseya.net\" or url.address contains \".kaseya.net\" or url.address contains \"kaseya.com\") or (event.dns.request contains \"deploy01.kaseya.com\" or event.dns.request contains \"managedsupport.kaseya.net\" or event.dns.request contains \".kaseya.net\" or event.dns.request contains \"kaseya.com\")))",
+        "query": "(event.category in (\"DNS\",\"Url\",\"IP\")) and (endpoint.os=\"windows\" and ((url.address contains \"deploy01.kaseya.com\" or url.address contains \"managedsupport.kaseya.net\" or url.address contains \".kaseya.net\" or url.address contains \"kaseya.com\") or (event.dns.request contains \"deploy01.kaseya.com\" or event.dns.request contains \"managedsupport.kaseya.net\" or event.dns.request contains \".kaseya.net\" or event.dns.request contains \"kaseya.com\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 3114
+    "pk": 1938
 }

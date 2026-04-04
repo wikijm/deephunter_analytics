@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects a potentially suspicious execution from an uncommon folder.",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1036"
         ],
         "name": "Process Execution From A Potentially Suspicious Folder",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \":\\\\Perflogs\\\\\" or tgt.process.image.path contains \":\\\\Users\\\\All Users\\\\\" or tgt.process.image.path contains \":\\\\Users\\\\Default\\\\\" or tgt.process.image.path contains \":\\\\Users\\\\NetworkService\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\addins\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\debug\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\Fonts\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\Help\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\IME\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\Media\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\repair\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\security\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\System32\\\\Tasks\\\\\" or tgt.process.image.path contains \":\\\\Windows\\\\Tasks\\\\\" or tgt.process.image.path contains \"$Recycle.bin\" or tgt.process.image.path contains \"\\\\config\\\\systemprofile\\\\\" or tgt.process.image.path contains \"\\\\Intel\\\\Logs\\\\\" or tgt.process.image.path contains \"\\\\RSA\\\\MachineKeys\\\\\") and (not (tgt.process.image.path contains \"C:\\\\Users\\\\Public\\\\IBM\\\\ClientSolutions\\\\Start_Programs\\\\\" or (tgt.process.image.path contains \"C:\\\\Windows\\\\SysWOW64\\\\config\\\\systemprofile\\\\Citrix\\\\UpdaterBinaries\\\\\" and tgt.process.image.path contains \"\\\\CitrixReceiverUpdater.exe\")))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \":\\Perflogs\\\" or tgt.process.image.path contains \":\\Users\\All Users\\\" or tgt.process.image.path contains \":\\Users\\Default\\\" or tgt.process.image.path contains \":\\Users\\NetworkService\\\" or tgt.process.image.path contains \":\\Windows\\addins\\\" or tgt.process.image.path contains \":\\Windows\\debug\\\" or tgt.process.image.path contains \":\\Windows\\Fonts\\\" or tgt.process.image.path contains \":\\Windows\\Help\\\" or tgt.process.image.path contains \":\\Windows\\IME\\\" or tgt.process.image.path contains \":\\Windows\\Media\\\" or tgt.process.image.path contains \":\\Windows\\repair\\\" or tgt.process.image.path contains \":\\Windows\\security\\\" or tgt.process.image.path contains \":\\Windows\\System32\\Tasks\\\" or tgt.process.image.path contains \":\\Windows\\Tasks\\\" or tgt.process.image.path contains \"$Recycle.bin\" or tgt.process.image.path contains \"\\config\\systemprofile\\\" or tgt.process.image.path contains \"\\Intel\\Logs\\\" or tgt.process.image.path contains \"\\RSA\\MachineKeys\\\") and (not (tgt.process.image.path contains \"C:\\Users\\Public\\IBM\\ClientSolutions\\Start_Programs\\\" or (tgt.process.image.path contains \"C:\\Windows\\SysWOW64\\config\\systemprofile\\Citrix\\UpdaterBinaries\\\" and tgt.process.image.path contains \"\\CitrixReceiverUpdater.exe\")))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1940
+    "pk": 1062
 }

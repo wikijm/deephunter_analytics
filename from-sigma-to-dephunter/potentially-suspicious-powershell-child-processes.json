@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects potentially suspicious child processes spawned by PowerShell.\nUse this rule to hunt for potential anomalies initiating from PowerShell scripts and commands.\n",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1059"
         ],
         "name": "Potentially Suspicious PowerShell Child Processes",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((src.process.image.path contains \"\\\\powershell_ise.exe\" or src.process.image.path contains \"\\\\powershell.exe\" or src.process.image.path contains \"\\\\pwsh.exe\") and (tgt.process.image.path contains \"\\\\bash.exe\" or tgt.process.image.path contains \"\\\\bitsadmin.exe\" or tgt.process.image.path contains \"\\\\certutil.exe\" or tgt.process.image.path contains \"\\\\cscript.exe\" or tgt.process.image.path contains \"\\\\forfiles.exe\" or tgt.process.image.path contains \"\\\\hh.exe\" or tgt.process.image.path contains \"\\\\mshta.exe\" or tgt.process.image.path contains \"\\\\regsvr32.exe\" or tgt.process.image.path contains \"\\\\rundll32.exe\" or tgt.process.image.path contains \"\\\\schtasks.exe\" or tgt.process.image.path contains \"\\\\scrcons.exe\" or tgt.process.image.path contains \"\\\\scriptrunner.exe\" or tgt.process.image.path contains \"\\\\sh.exe\" or tgt.process.image.path contains \"\\\\wmic.exe\" or tgt.process.image.path contains \"\\\\wscript.exe\")) and (not ((tgt.process.image.path contains \"\\\\certutil.exe\" and tgt.process.cmdline contains \"-verifystore \") or (tgt.process.image.path contains \"\\\\wmic.exe\" and (tgt.process.cmdline contains \"qfe list\" or tgt.process.cmdline contains \"diskdrive \" or tgt.process.cmdline contains \"csproduct \" or tgt.process.cmdline contains \"computersystem \" or tgt.process.cmdline contains \" os \" or tgt.process.cmdline contains \"\")))) and (not (src.process.cmdline contains \"\\\\Program Files\\\\Amazon\\\\WorkspacesConfig\\\\Scripts\\\\\" and tgt.process.cmdline contains \"\\\\Program Files\\\\Amazon\\\\WorkspacesConfig\\\\Scripts\\\\\"))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((src.process.image.path contains \"\\powershell_ise.exe\" or src.process.image.path contains \"\\powershell.exe\" or src.process.image.path contains \"\\pwsh.exe\") and (tgt.process.image.path contains \"\\bash.exe\" or tgt.process.image.path contains \"\\bitsadmin.exe\" or tgt.process.image.path contains \"\\certutil.exe\" or tgt.process.image.path contains \"\\cscript.exe\" or tgt.process.image.path contains \"\\forfiles.exe\" or tgt.process.image.path contains \"\\hh.exe\" or tgt.process.image.path contains \"\\mshta.exe\" or tgt.process.image.path contains \"\\regsvr32.exe\" or tgt.process.image.path contains \"\\rundll32.exe\" or tgt.process.image.path contains \"\\schtasks.exe\" or tgt.process.image.path contains \"\\scrcons.exe\" or tgt.process.image.path contains \"\\scriptrunner.exe\" or tgt.process.image.path contains \"\\sh.exe\" or tgt.process.image.path contains \"\\wmic.exe\" or tgt.process.image.path contains \"\\wscript.exe\")) and (not ((tgt.process.image.path contains \"\\certutil.exe\" and tgt.process.cmdline contains \"-verifystore \") or (tgt.process.image.path contains \"\\wmic.exe\" and (tgt.process.cmdline contains \"qfe list\" or tgt.process.cmdline contains \"diskdrive \" or tgt.process.cmdline contains \"csproduct \" or tgt.process.cmdline contains \"computersystem \" or tgt.process.cmdline contains \" os \" or tgt.process.cmdline contains \"\")))) and (not (src.process.cmdline contains \"\\Program Files\\Amazon\\WorkspacesConfig\\Scripts\\\" and tgt.process.cmdline contains \"\\Program Files\\Amazon\\WorkspacesConfig\\Scripts\\\"))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2227
+    "pk": 676
 }

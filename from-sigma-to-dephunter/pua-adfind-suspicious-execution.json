@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects AdFind execution with common flags seen used during attacks",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -15,12 +15,12 @@
             "t1069"
         ],
         "name": "PUA - AdFind Suspicious Execution",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (tgt.process.cmdline contains \"domainlist\" or tgt.process.cmdline contains \"trustdmp\" or tgt.process.cmdline contains \"dcmodes\" or tgt.process.cmdline contains \"adinfo\" or tgt.process.cmdline contains \"-sc dclist\" or tgt.process.cmdline contains \"computer_pwdnotreqd\" or tgt.process.cmdline contains \"objectcategory=\" or tgt.process.cmdline contains \"-subnets -f\" or tgt.process.cmdline contains \"name=\\\"Domain Admins\\\"\" or tgt.process.cmdline contains \"-sc u:\" or tgt.process.cmdline contains \"domainncs\" or tgt.process.cmdline contains \"dompol\" or tgt.process.cmdline contains \" oudmp \" or tgt.process.cmdline contains \"subnetdmp\" or tgt.process.cmdline contains \"gpodmp\" or tgt.process.cmdline contains \"fspdmp\" or tgt.process.cmdline contains \"users_noexpire\" or tgt.process.cmdline contains \"computers_active\" or tgt.process.cmdline contains \"computers_pwdnotreqd\"))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (tgt.process.cmdline contains \"domainlist\" or tgt.process.cmdline contains \"trustdmp\" or tgt.process.cmdline contains \"dcmodes\" or tgt.process.cmdline contains \"adinfo\" or tgt.process.cmdline contains \" dclist \" or tgt.process.cmdline contains \"computer_pwdnotreqd\" or tgt.process.cmdline contains \"objectcategory=\" or tgt.process.cmdline contains \"-subnets -f\" or tgt.process.cmdline contains \"name=\\\"Domain Admins\\\"\" or tgt.process.cmdline contains \"-sc u:\" or tgt.process.cmdline contains \"domainncs\" or tgt.process.cmdline contains \"dompol\" or tgt.process.cmdline contains \" oudmp \" or tgt.process.cmdline contains \"subnetdmp\" or tgt.process.cmdline contains \"gpodmp\" or tgt.process.cmdline contains \"fspdmp\" or tgt.process.cmdline contains \"users_noexpire\" or tgt.process.cmdline contains \"computers_active\" or tgt.process.cmdline contains \"computers_pwdnotreqd\"))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -30,10 +30,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2004
+    "pk": 942
 }

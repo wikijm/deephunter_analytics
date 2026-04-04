@@ -9,8 +9,7 @@
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
-            "t1136",
-            "t1059"
+            "t1136"
         ],
         "name": "ESXi Account Creation Via ESXCLI",
         "notes": "",
@@ -33,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2792
+    "pk": 4
 }

@@ -10,8 +10,7 @@
         "emulation_validation": "",
         "mitre_techniques": [
             "t1033",
-            "t1007",
-            "t1059"
+            "t1007"
         ],
         "name": "ESXi VSAN Information Discovery Via ESXCLI",
         "notes": "",
@@ -34,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2794
+    "pk": 57
 }

@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects suspicious use of an .exe extension after a non-executable file extension like .pdf.exe, a set of spaces or underlines to cloak the executable file in spear phishing campaigns",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1566"
         ],
         "name": "Suspicious Double Extension File Execution",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"      .exe\" or tgt.process.image.path contains \"______.exe\" or tgt.process.image.path contains \".doc.exe\" or tgt.process.image.path contains \".doc.js\" or tgt.process.image.path contains \".docx.exe\" or tgt.process.image.path contains \".docx.js\" or tgt.process.image.path contains \".gif.exe\" or tgt.process.image.path contains \".jpeg.exe\" or tgt.process.image.path contains \".jpg.exe\" or tgt.process.image.path contains \".mkv.exe\" or tgt.process.image.path contains \".mov.exe\" or tgt.process.image.path contains \".mp3.exe\" or tgt.process.image.path contains \".mp4.exe\" or tgt.process.image.path contains \".pdf.exe\" or tgt.process.image.path contains \".pdf.js\" or tgt.process.image.path contains \".png.exe\" or tgt.process.image.path contains \".ppt.exe\" or tgt.process.image.path contains \".ppt.js\" or tgt.process.image.path contains \".pptx.exe\" or tgt.process.image.path contains \".pptx.js\" or tgt.process.image.path contains \".rtf.exe\" or tgt.process.image.path contains \".rtf.js\" or tgt.process.image.path contains \".svg.exe\" or tgt.process.image.path contains \".txt.exe\" or tgt.process.image.path contains \".txt.js\" or tgt.process.image.path contains \".xls.exe\" or tgt.process.image.path contains \".xls.js\" or tgt.process.image.path contains \".xlsx.exe\" or tgt.process.image.path contains \".xlsx.js\" or tgt.process.image.path contains \"\u2800\u2800\u2800\u2800\u2800\u2800.exe\") and (tgt.process.cmdline contains \"      .exe\" or tgt.process.cmdline contains \"______.exe\" or tgt.process.cmdline contains \".doc.exe\" or tgt.process.cmdline contains \".doc.js\" or tgt.process.cmdline contains \".docx.exe\" or tgt.process.cmdline contains \".docx.js\" or tgt.process.cmdline contains \".gif.exe\" or tgt.process.cmdline contains \".jpeg.exe\" or tgt.process.cmdline contains \".jpg.exe\" or tgt.process.cmdline contains \".mkv.exe\" or tgt.process.cmdline contains \".mov.exe\" or tgt.process.cmdline contains \".mp3.exe\" or tgt.process.cmdline contains \".mp4.exe\" or tgt.process.cmdline contains \".pdf.exe\" or tgt.process.cmdline contains \".pdf.js\" or tgt.process.cmdline contains \".png.exe\" or tgt.process.cmdline contains \".ppt.exe\" or tgt.process.cmdline contains \".ppt.js\" or tgt.process.cmdline contains \".pptx.exe\" or tgt.process.cmdline contains \".pptx.js\" or tgt.process.cmdline contains \".rtf.exe\" or tgt.process.cmdline contains \".rtf.js\" or tgt.process.cmdline contains \".svg.exe\" or tgt.process.cmdline contains \".txt.exe\" or tgt.process.cmdline contains \".txt.js\" or tgt.process.cmdline contains \".xls.exe\" or tgt.process.cmdline contains \".xls.js\" or tgt.process.cmdline contains \".xlsx.exe\" or tgt.process.cmdline contains \".xlsx.js\" or tgt.process.cmdline contains \"\u2800\u2800\u2800\u2800\u2800\u2800.exe\")))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \".doc.exe\" or tgt.process.image.path contains \".docx.exe\" or tgt.process.image.path contains \".xls.exe\" or tgt.process.image.path contains \".xlsx.exe\" or tgt.process.image.path contains \".ppt.exe\" or tgt.process.image.path contains \".pptx.exe\" or tgt.process.image.path contains \".rtf.exe\" or tgt.process.image.path contains \".pdf.exe\" or tgt.process.image.path contains \".txt.exe\" or tgt.process.image.path contains \"      .exe\" or tgt.process.image.path contains \"______.exe\" or tgt.process.image.path contains \".doc.js\" or tgt.process.image.path contains \".docx.js\" or tgt.process.image.path contains \".xls.js\" or tgt.process.image.path contains \".xlsx.js\" or tgt.process.image.path contains \".ppt.js\" or tgt.process.image.path contains \".pptx.js\" or tgt.process.image.path contains \".rtf.js\" or tgt.process.image.path contains \".pdf.js\" or tgt.process.image.path contains \".txt.js\") and (tgt.process.cmdline contains \".doc.exe\" or tgt.process.cmdline contains \".docx.exe\" or tgt.process.cmdline contains \".xls.exe\" or tgt.process.cmdline contains \".xlsx.exe\" or tgt.process.cmdline contains \".ppt.exe\" or tgt.process.cmdline contains \".pptx.exe\" or tgt.process.cmdline contains \".rtf.exe\" or tgt.process.cmdline contains \".pdf.exe\" or tgt.process.cmdline contains \".txt.exe\" or tgt.process.cmdline contains \"      .exe\" or tgt.process.cmdline contains \"______.exe\" or tgt.process.cmdline contains \".doc.js\" or tgt.process.cmdline contains \".docx.js\" or tgt.process.cmdline contains \".xls.js\" or tgt.process.cmdline contains \".xlsx.js\" or tgt.process.cmdline contains \".ppt.js\" or tgt.process.cmdline contains \".pptx.js\" or tgt.process.cmdline contains \".rtf.js\" or tgt.process.cmdline contains \".pdf.js\" or tgt.process.cmdline contains \".txt.js\")))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1887
+    "pk": 945
 }

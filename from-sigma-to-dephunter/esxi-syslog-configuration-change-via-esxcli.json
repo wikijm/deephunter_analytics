@@ -10,8 +10,7 @@
         "emulation_validation": "",
         "mitre_techniques": [
             "t1562",
-            "t1562",
-            "t1059"
+            "t1562"
         ],
         "name": "ESXi Syslog Configuration Change Via ESXCLI",
         "notes": "",
@@ -34,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2851
+    "pk": 33
 }

@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "This is a threat-hunting query to collect information related to the interactive execution of a script from inside a compressed file (zip/rar). Windows will automatically run the script using scripting interpreters such as wscript and cscript binaries.\n\nFrom the query below, the child process is the script interpreter that will execute the script. The script extension is also a set of standard extensions that Windows OS recognizes. Selections 1-3 contain three different execution scenarios.\n    1. Compressed file opened using 7zip.\n    2. Compressed file opened using WinRar.\n    3. Compressed file opened using native windows File Explorer capabilities.\n\nWhen the malicious script is double-clicked, it will be extracted to the respected directories as signified by the CommandLine on each of the three Selections. It will then be executed using the relevant script interpreter.\"\n",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1059"
         ],
         "name": "Manual Execution of Script Inside of a Compressed File",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((src.process.image.path=\"*\\\\7z*.exe\" and tgt.process.cmdline=\"*\\\\AppData\\\\local\\\\temp\\\\7z*\\\\*\") or (src.process.image.path contains \"\\\\winrar.exe\" and tgt.process.cmdline=\"*\\\\AppData\\\\local\\\\temp\\\\rar*\\\\*\") or (src.process.image.path contains \"\\\\explorer.exe\" and (tgt.process.cmdline contains \"\\\\AppData\\\\local\\\\temp\\*.rar\\\\\" or tgt.process.cmdline contains \"\\\\AppData\\\\local\\\\temp\\*.zip\\\\\"))) and ((tgt.process.image.path contains \"\\\\cscript.exe\" or tgt.process.image.path contains \"\\\\mshta.exe\" or tgt.process.image.path contains \"\\\\powershell.exe\" or tgt.process.image.path contains \"\\\\pwsh.exe\" or tgt.process.image.path contains \"\\\\wscript.exe\") and (tgt.process.cmdline contains \".hta\" or tgt.process.cmdline contains \".js\" or tgt.process.cmdline contains \".jse\" or tgt.process.cmdline contains \".ps1\" or tgt.process.cmdline contains \".vbe\" or tgt.process.cmdline contains \".vbs\" or tgt.process.cmdline contains \".wsf\" or tgt.process.cmdline contains \".wsh\"))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (((src.process.image.path=\"*\\7z*.exe\" and tgt.process.cmdline=\"*\\AppData\\local\\temp\\7z*\\*\") or (src.process.image.path contains \"\\winrar.exe\" and tgt.process.cmdline=\"*\\AppData\\local\\temp\\rar*\\*\") or (src.process.image.path contains \"\\explorer.exe\" and (tgt.process.cmdline contains \"\\AppData\\local\\temp\\*.rar\\\" or tgt.process.cmdline contains \"\\AppData\\local\\temp\\*.zip\\\"))) and ((tgt.process.image.path contains \"\\cscript.exe\" or tgt.process.image.path contains \"\\mshta.exe\" or tgt.process.image.path contains \"\\powershell.exe\" or tgt.process.image.path contains \"\\pwsh.exe\" or tgt.process.image.path contains \"\\wscript.exe\") and (tgt.process.cmdline contains \".hta\" or tgt.process.cmdline contains \".js\" or tgt.process.cmdline contains \".jse\" or tgt.process.cmdline contains \".ps1\" or tgt.process.cmdline contains \".vbe\" or tgt.process.cmdline contains \".vbs\" or tgt.process.cmdline contains \".wsf\" or tgt.process.cmdline contains \".wsh\"))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2226
+    "pk": 690
 }

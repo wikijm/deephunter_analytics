@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\\\excel.exe\" and (module.path contains \"\\\\Desktop\\\\\" or module.path contains \"\\\\Downloads\\\\\" or module.path contains \"\\\\Perflogs\\\\\" or module.path contains \"\\\\Temp\\\\\" or module.path contains \"\\\\Users\\\\Public\\\\\" or module.path contains \"\\\\Windows\\\\Tasks\\\\\") and module.path contains \".xll\"))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\excel.exe\" and (module.path contains \"\\Desktop\\\" or module.path contains \"\\Downloads\\\" or module.path contains \"\\Perflogs\\\" or module.path contains \"\\Temp\\\" or module.path contains \"\\Users\\Public\\\" or module.path contains \"\\Windows\\Tasks\\\") and module.path contains \".xll\"))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2120
+    "pk": 3205
 }

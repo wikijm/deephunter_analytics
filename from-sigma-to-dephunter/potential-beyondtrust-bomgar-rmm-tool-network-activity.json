@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \".beyondtrustcloud.com\" or url.address contains \".bomgarcloud.com\" or url.address contains \"bomgarcloud.com\") or (event.dns.request contains \".beyondtrustcloud.com\" or event.dns.request contains \".bomgarcloud.com\" or event.dns.request contains \"bomgarcloud.com\")))",
+        "query": "(event.category in (\"DNS\",\"Url\",\"IP\")) and (endpoint.os=\"windows\" and ((url.address contains \".beyondtrustcloud.com\" or url.address contains \".bomgarcloud.com\" or url.address contains \"bomgarcloud.com\") or (event.dns.request contains \".beyondtrustcloud.com\" or event.dns.request contains \".bomgarcloud.com\" or event.dns.request contains \"bomgarcloud.com\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2955
+    "pk": 2069
 }

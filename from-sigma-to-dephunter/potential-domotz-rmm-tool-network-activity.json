@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \".domotz.co\" or url.address contains \"domotz.com\" or url.address contains \"cell-1.domotz.com\") or (event.dns.request contains \".domotz.co\" or event.dns.request contains \"domotz.com\" or event.dns.request contains \"cell-1.domotz.com\")))",
+        "query": "(event.category in (\"DNS\",\"Url\",\"IP\")) and (endpoint.os=\"windows\" and ((url.address contains \".domotz.co\" or url.address contains \"domotz.com\" or url.address contains \"cell-1.domotz.com\") or (event.dns.request contains \".domotz.co\" or event.dns.request contains \"domotz.com\" or event.dns.request contains \"cell-1.domotz.com\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2952
+    "pk": 2114
 }

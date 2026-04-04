@@ -4,18 +4,18 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects potentially suspicious child processes of \"GoogleUpdate.exe\"",
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [],
         "name": "Potentially Suspicious GoogleUpdate Child Process",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\\\GoogleUpdate.exe\" and (not ((tgt.process.image.path contains \"\\\\Google\" or (tgt.process.image.path contains \"\\\\setup.exe\" or tgt.process.image.path contains \"chrome_updater.exe\" or tgt.process.image.path contains \"chrome_installer.exe\")) or not (tgt.process.image.path matches \"\\.*\")))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\GoogleUpdate.exe\" and (not ((tgt.process.image.path contains \"\\Google\" or (tgt.process.image.path contains \"\\setup.exe\" or tgt.process.image.path contains \"chrome_updater.exe\" or tgt.process.image.path contains \"chrome_installer.exe\")) or not (tgt.process.image.path matches \"\\.*\")))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -25,10 +25,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1732
+    "pk": 1066
 }

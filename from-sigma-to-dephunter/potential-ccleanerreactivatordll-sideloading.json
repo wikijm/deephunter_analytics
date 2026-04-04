@@ -9,13 +9,14 @@
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
+            "t1574",
             "t1574"
         ],
         "name": "Potential CCleanerReactivator.DLL Sideloading",
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\CCleanerReactivator.dll\" and (not ((src.process.image.path contains \"C:\\\\Program Files\\\\CCleaner\\\\\" or src.process.image.path contains \"C:\\\\Program Files (x86)\\\\CCleaner\\\\\") and src.process.image.path contains \"\\\\CCleanerReactivator.exe\"))))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (module.path contains \"\\CCleanerReactivator.dll\" and (not ((src.process.image.path contains \"C:\\Program Files\\CCleaner\\\" or src.process.image.path contains \"C:\\Program Files (x86)\\CCleaner\\\") and src.process.image.path contains \"\\CCleanerReactivator.exe\"))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2121
+    "pk": 3252
 }

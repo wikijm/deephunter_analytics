@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.category=\"file\" and (endpoint.os=\"windows\" and tgt.file.path contains \"%AppData%\\\\GoTo\\\\Logs\\\\goto.log\")",
+        "query": "event.category=\"file\" and (endpoint.os=\"windows\" and tgt.file.path contains \"%AppData%\\GoTo\\Logs\\goto.log\")",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2918
+    "pk": 1842
 }

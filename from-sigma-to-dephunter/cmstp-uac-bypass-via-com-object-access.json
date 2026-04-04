@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects UAC Bypass Attempt Using Microsoft Connection Manager Profile Installer Autoelevate-capable COM Objects (e.g. UACMe ID of 41, 43, 58 or 65)",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -13,12 +13,12 @@
             "t1218"
         ],
         "name": "CMSTP UAC Bypass via COM Object Access",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\\\DllHost.exe\" and (src.process.cmdline contains \" /Processid:{3E5FC7F9-9A51-4367-9063-A120244FBEC7}\" or src.process.cmdline contains \" /Processid:{3E000D72-A845-4CD9-BD83-80C07C3B881F}\" or src.process.cmdline contains \" /Processid:{BD54C901-076B-434E-B6C7-17C531F4AB41}\" or src.process.cmdline contains \" /Processid:{D2E7041B-2927-42FB-8E9F-7CE93B6DC937}\" or src.process.cmdline contains \" /Processid:{E9495B87-D950-4AB5-87A5-FF6D70BF3E90}\") and (tgt.process.integrityLevel in (\"High\",\"System\",\"S-1-16-16384\",\"S-1-16-12288\"))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\DllHost.exe\" and (src.process.cmdline contains \" /Processid:{3E5FC7F9-9A51-4367-9063-A120244FBEC7}\" or src.process.cmdline contains \" /Processid:{3E000D72-A845-4CD9-BD83-80C07C3B881F}\" or src.process.cmdline contains \" /Processid:{BD54C901-076B-434E-B6C7-17C531F4AB41}\" or src.process.cmdline contains \" /Processid:{D2E7041B-2927-42FB-8E9F-7CE93B6DC937}\" or src.process.cmdline contains \" /Processid:{E9495B87-D950-4AB5-87A5-FF6D70BF3E90}\") and (tgt.process.integrityLevel in (\"High\",\"System\",\"S-1-16-16384\",\"S-1-16-12288\"))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -28,10 +28,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1581
+    "pk": 918
 }

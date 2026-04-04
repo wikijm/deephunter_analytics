@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detect execution of suspicious double extension files in ParentCommandLine",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1036"
         ],
         "name": "Suspicious Parent Double Extension File Execution",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
         "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((src.process.image.path contains \".doc.lnk\" or src.process.image.path contains \".docx.lnk\" or src.process.image.path contains \".xls.lnk\" or src.process.image.path contains \".xlsx.lnk\" or src.process.image.path contains \".ppt.lnk\" or src.process.image.path contains \".pptx.lnk\" or src.process.image.path contains \".rtf.lnk\" or src.process.image.path contains \".pdf.lnk\" or src.process.image.path contains \".txt.lnk\" or src.process.image.path contains \".doc.js\" or src.process.image.path contains \".docx.js\" or src.process.image.path contains \".xls.js\" or src.process.image.path contains \".xlsx.js\" or src.process.image.path contains \".ppt.js\" or src.process.image.path contains \".pptx.js\" or src.process.image.path contains \".rtf.js\" or src.process.image.path contains \".pdf.js\" or src.process.image.path contains \".txt.js\") or (src.process.cmdline contains \".doc.lnk\" or src.process.cmdline contains \".docx.lnk\" or src.process.cmdline contains \".xls.lnk\" or src.process.cmdline contains \".xlsx.lnk\" or src.process.cmdline contains \".ppt.lnk\" or src.process.cmdline contains \".pptx.lnk\" or src.process.cmdline contains \".rtf.lnk\" or src.process.cmdline contains \".pdf.lnk\" or src.process.cmdline contains \".txt.lnk\" or src.process.cmdline contains \".doc.js\" or src.process.cmdline contains \".docx.js\" or src.process.cmdline contains \".xls.js\" or src.process.cmdline contains \".xlsx.js\" or src.process.cmdline contains \".ppt.js\" or src.process.cmdline contains \".pptx.js\" or src.process.cmdline contains \".rtf.js\" or src.process.cmdline contains \".pdf.js\" or src.process.cmdline contains \".txt.js\")))",
-        "references": "",
-        "relevance": 1,
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1647
+    "pk": 1084
 }

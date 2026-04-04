@@ -13,7 +13,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and module.path contains \"\\\\x32bridge.dll\")",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and module.path contains \"\\x32bridge.dll\")",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -30,5 +30,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 646
+    "pk": 2592
 }

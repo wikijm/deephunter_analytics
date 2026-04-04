@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects usage of a base64 encoded \"IEX\" cmdlet in a process command line",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1059"
         ],
         "name": "PowerShell Base64 Encoded IEX Cmdlet",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
         "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.cmdline contains \"SUVYIChb\" or tgt.process.cmdline contains \"lFWCAoW\" or tgt.process.cmdline contains \"JRVggKF\" or tgt.process.cmdline contains \"aWV4IChb\" or tgt.process.cmdline contains \"lleCAoW\" or tgt.process.cmdline contains \"pZXggKF\" or tgt.process.cmdline contains \"aWV4IChOZX\" or tgt.process.cmdline contains \"lleCAoTmV3\" or tgt.process.cmdline contains \"pZXggKE5ld\" or tgt.process.cmdline contains \"SUVYIChOZX\" or tgt.process.cmdline contains \"lFWCAoTmV3\" or tgt.process.cmdline contains \"JRVggKE5ld\" or tgt.process.cmdline contains \"SUVYKF\" or tgt.process.cmdline contains \"lFWChb\" or tgt.process.cmdline contains \"JRVgoW\" or tgt.process.cmdline contains \"aWV4KF\" or tgt.process.cmdline contains \"lleChb\" or tgt.process.cmdline contains \"pZXgoW\" or tgt.process.cmdline contains \"aWV4KE5ld\" or tgt.process.cmdline contains \"lleChOZX\" or tgt.process.cmdline contains \"pZXgoTmV3\" or tgt.process.cmdline contains \"SUVYKE5ld\" or tgt.process.cmdline contains \"lFWChOZX\" or tgt.process.cmdline contains \"JRVgoTmV3\" or tgt.process.cmdline contains \"SUVYKCgn\" or tgt.process.cmdline contains \"lFWCgoJ\" or tgt.process.cmdline contains \"JRVgoKC\" or tgt.process.cmdline contains \"aWV4KCgn\" or tgt.process.cmdline contains \"lleCgoJ\" or tgt.process.cmdline contains \"pZXgoKC\") or (tgt.process.cmdline contains \"SQBFAFgAIAAoAFsA\" or tgt.process.cmdline contains \"kARQBYACAAKABbA\" or tgt.process.cmdline contains \"JAEUAWAAgACgAWw\" or tgt.process.cmdline contains \"aQBlAHgAIAAoAFsA\" or tgt.process.cmdline contains \"kAZQB4ACAAKABbA\" or tgt.process.cmdline contains \"pAGUAeAAgACgAWw\" or tgt.process.cmdline contains \"aQBlAHgAIAAoAE4AZQB3A\" or tgt.process.cmdline contains \"kAZQB4ACAAKABOAGUAdw\" or tgt.process.cmdline contains \"pAGUAeAAgACgATgBlAHcA\" or tgt.process.cmdline contains \"SQBFAFgAIAAoAE4AZQB3A\" or tgt.process.cmdline contains \"kARQBYACAAKABOAGUAdw\" or tgt.process.cmdline contains \"JAEUAWAAgACgATgBlAHcA\")))",
-        "references": "",
-        "relevance": 1,
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1579
+    "pk": 1126
 }

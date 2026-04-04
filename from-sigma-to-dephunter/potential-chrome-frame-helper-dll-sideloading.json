@@ -9,13 +9,14 @@
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
+            "t1574",
             "t1574"
         ],
         "name": "Potential Chrome Frame Helper DLL Sideloading",
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\chrome_frame_helper.dll\" and (not (module.path contains \"C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\\" or module.path contains \"C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\\")) and (not module.path contains \"\\\\AppData\\\\local\\\\Google\\\\Chrome\\\\Application\\\\\")))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (module.path contains \"\\chrome_frame_helper.dll\" and (not (module.path contains \"C:\\Program Files\\Google\\Chrome\\Application\\\" or module.path contains \"C:\\Program Files (x86)\\Google\\Chrome\\Application\\\")) and (not module.path contains \"\\AppData\\local\\Google\\Chrome\\Application\\\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2177
+    "pk": 3238
 }

@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and src.process.image.path contains \"\\\\AirLiveDrive.exe\")",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and src.process.image.path contains \"\\AirLiveDrive.exe\")",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 3148
+    "pk": 2102
 }

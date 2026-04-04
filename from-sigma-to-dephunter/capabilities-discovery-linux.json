@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (tgt.process.image.path contains \"/getcap\" and tgt.process.cmdline contains \" -r \"))",
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"linux\" and (tgt.process.image.path contains \"/getcap\" and (tgt.process.cmdline contains \" -r \" or tgt.process.cmdline contains \" /r \" or tgt.process.cmdline contains \" \u2013r \" or tgt.process.cmdline contains \" \u2014r \" or tgt.process.cmdline contains \" \u2015r \")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2831
+    "pk": 44
 }

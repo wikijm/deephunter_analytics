@@ -9,13 +9,14 @@
         "dynamic_query": false,
         "emulation_validation": "",
         "mitre_techniques": [
+            "t1574",
             "t1574"
         ],
         "name": "Potential Edputil.DLL Sideloading",
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (module.path contains \"\\\\edputil.dll\" and (not (module.path contains \"C:\\\\Windows\\\\System32\\\\\" or module.path contains \"C:\\\\Windows\\\\SysWOW64\\\\\" or module.path contains \"C\\\\Windows\\\\WinSxS\\\\\"))))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (module.path contains \"\\edputil.dll\" and (not (module.path contains \"C:\\Windows\\System32\\\" or module.path contains \"C:\\Windows\\SysWOW64\\\" or module.path contains \"C\\Windows\\WinSxS\\\"))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2139
+    "pk": 3227
 }

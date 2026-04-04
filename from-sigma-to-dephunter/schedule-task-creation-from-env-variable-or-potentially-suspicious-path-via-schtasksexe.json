@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects Schtask creations that point to a suspicious folder or an environment variable often used by malware",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1053"
         ],
         "name": "Schedule Task Creation From Env Variable Or Potentially Suspicious Path Via Schtasks.EXE",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((((tgt.process.image.path contains \"\\\\schtasks.exe\" and (tgt.process.cmdline contains \" -create \" or tgt.process.cmdline contains \" /create \" or tgt.process.cmdline contains \" \u2013create \" or tgt.process.cmdline contains \" \u2014create \" or tgt.process.cmdline contains \" \u2015create \")) and (tgt.process.cmdline contains \":\\\\Perflogs\" or tgt.process.cmdline contains \":\\\\Users\\\\All Users\\\\\" or tgt.process.cmdline contains \":\\\\Users\\\\Default\\\\\" or tgt.process.cmdline contains \":\\\\Users\\\\Public\" or tgt.process.cmdline contains \":\\\\Windows\\\\Temp\" or tgt.process.cmdline contains \"\\\\AppData\\\\Local\\\\\" or tgt.process.cmdline contains \"\\\\AppData\\\\Roaming\\\\\" or tgt.process.cmdline contains \"%AppData%\" or tgt.process.cmdline contains \"%Public%\")) or (src.process.cmdline contains \"\\\\svchost.exe -k netsvcs -p -s Schedule\" and (tgt.process.cmdline contains \":\\\\Perflogs\" or tgt.process.cmdline contains \":\\\\Windows\\\\Temp\" or tgt.process.cmdline contains \"\\\\Users\\\\Public\" or tgt.process.cmdline contains \"%Public%\"))) and (not ((src.process.cmdline contains \"unattended.ini\" or tgt.process.cmdline contains \"update_task.xml\") or tgt.process.cmdline contains \"/Create /TN TVInstallRestore /TR\" or (tgt.process.cmdline contains \"/Create /Xml \" and tgt.process.cmdline contains \"\\\\Temp\\\\.CR.\" and tgt.process.cmdline contains \"\\\\Avira_Security_Installation.xml\") or ((tgt.process.cmdline contains \"/Create /F /TN\" and tgt.process.cmdline contains \"/Xml \" and tgt.process.cmdline contains \"\\\\Temp\\\\\" and tgt.process.cmdline contains \"Avira_\") and (tgt.process.cmdline contains \".tmp\\\\UpdateFallbackTask.xml\" or tgt.process.cmdline contains \".tmp\\\\WatchdogServiceControlManagerTimeout.xml\" or tgt.process.cmdline contains \".tmp\\\\SystrayAutostart.xml\" or tgt.process.cmdline contains \".tmp\\\\MaintenanceTask.xml\")) or (tgt.process.cmdline contains \"\\\\Temp\\\\\" and tgt.process.cmdline contains \"/Create /TN \\\"klcp_update\\\" /XML \" and tgt.process.cmdline contains \"\\\\klcp_update_task.xml\")))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((((tgt.process.image.path contains \"\\schtasks.exe\" and tgt.process.cmdline contains \" /create \") and (tgt.process.cmdline contains \":\\Perflogs\" or tgt.process.cmdline contains \":\\Users\\All Users\\\" or tgt.process.cmdline contains \":\\Users\\Default\\\" or tgt.process.cmdline contains \":\\Users\\Public\" or tgt.process.cmdline contains \":\\Windows\\Temp\" or tgt.process.cmdline contains \"\\AppData\\Local\\\" or tgt.process.cmdline contains \"\\AppData\\Roaming\\\" or tgt.process.cmdline contains \"%AppData%\" or tgt.process.cmdline contains \"%Public%\")) or (src.process.cmdline contains \"\\svchost.exe -k netsvcs -p -s Schedule\" and (tgt.process.cmdline contains \":\\Perflogs\" or tgt.process.cmdline contains \":\\Windows\\Temp\" or tgt.process.cmdline contains \"\\Users\\Public\" or tgt.process.cmdline contains \"%Public%\"))) and (not ((src.process.cmdline contains \"unattended.ini\" or tgt.process.cmdline contains \"update_task.xml\") or tgt.process.cmdline contains \"/Create /TN TVInstallRestore /TR\" or (tgt.process.cmdline contains \"/Create /Xml \\\"C:\\Users\\\" and tgt.process.cmdline contains \"\\AppData\\Local\\Temp\\.CR.\" and tgt.process.cmdline contains \"Avira_Security_Installation.xml\") or ((tgt.process.cmdline contains \"/Create /F /TN\" and tgt.process.cmdline contains \"/Xml \" and tgt.process.cmdline contains \"\\AppData\\Local\\Temp\\is-\" and tgt.process.cmdline contains \"Avira_\") and (tgt.process.cmdline contains \".tmp\\UpdateFallbackTask.xml\" or tgt.process.cmdline contains \".tmp\\WatchdogServiceControlManagerTimeout.xml\" or tgt.process.cmdline contains \".tmp\\SystrayAutostart.xml\" or tgt.process.cmdline contains \".tmp\\MaintenanceTask.xml\")) or (tgt.process.cmdline contains \"\\AppData\\Local\\Temp\\\" and tgt.process.cmdline contains \"/Create /TN \\\"klcp_update\\\" /XML \" and tgt.process.cmdline contains \"\\klcp_update_task.xml\")))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1697
+    "pk": 776
 }

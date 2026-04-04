@@ -15,7 +15,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "(event.category in (\"dns\",\"url\",\"ip\")) and (endpoint.os=\"windows\" and ((url.address contains \".fixme.it\" or url.address contains \".techinline.net\" or url.address contains \"fixme.it\" or url.address contains \"set.me\" or url.address contains \"setme.net\") or (event.dns.request contains \".fixme.it\" or event.dns.request contains \".techinline.net\" or event.dns.request contains \"fixme.it\" or event.dns.request contains \"set.me\" or event.dns.request contains \"setme.net\")))",
+        "query": "(event.category in (\"DNS\",\"Url\",\"IP\")) and (endpoint.os=\"windows\" and ((url.address contains \".fixme.it\" or url.address contains \".techinline.net\" or url.address contains \"fixme.it\" or url.address contains \"set.me\" or url.address contains \"setme.net\") or (event.dns.request contains \".fixme.it\" or event.dns.request contains \".techinline.net\" or event.dns.request contains \"fixme.it\" or event.dns.request contains \"set.me\" or event.dns.request contains \"setme.net\")))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -32,5 +32,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2993
+    "pk": 1896
 }

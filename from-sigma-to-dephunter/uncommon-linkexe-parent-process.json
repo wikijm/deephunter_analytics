@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects an uncommon parent process of \"LINK.EXE\".\nLink.EXE in Microsoft incremental linker. Its a utility usually bundled with Visual Studio installation.\nMultiple utilities often found in the same folder (editbin.exe, dumpbin.exe, lib.exe, etc) have a hardcode call to the \"LINK.EXE\" binary without checking its validity.\nThis would allow an attacker to sideload any binary with the name \"link.exe\" if one of the aforementioned tools get executed from a different location.\nBy filtering the known locations of such utilities we can spot uncommon parent process of LINK.EXE that might be suspicious or malicious.\n",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1218"
         ],
         "name": "Uncommon Link.EXE Parent Process",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
-        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\\\link.exe\" and tgt.process.cmdline contains \"LINK /\") and (not ((src.process.image.path contains \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\\" or src.process.image.path contains \"C:\\\\Program Files (x86)\\\\Microsoft Visual Studio\\\\\") and (src.process.image.path contains \"\\\\VC\\\\bin\\\\\" or src.process.image.path contains \"\\\\VC\\\\Tools\\\\\")))))",
-        "references": "",
-        "relevance": 1,
+        "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.image.path contains \"\\link.exe\" and tgt.process.cmdline contains \"LINK /\") and (not ((src.process.image.path contains \"C:\\Program Files\\Microsoft Visual Studio\\\" or src.process.image.path contains \"C:\\Program Files (x86)\\Microsoft Visual Studio\\\") and (src.process.image.path contains \"\\VC\\bin\\\" or src.process.image.path contains \"\\VC\\Tools\\\")))))",
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1920
+    "pk": 709
 }

@@ -4,7 +4,7 @@
         "anomaly_threshold_count": 2,
         "anomaly_threshold_endpoints": 2,
         "columns": "| columns event.time, event.type, site.name, agent.uuid, src.process.storyline.id, src.process.user, src.process.uid, src.process.cmdline, src.ip.address, src.port.number, dst.ip.address, dst.port.number, src.process.parent.cmdline, tgt.process.cmdline",
-        "confidence": 1,
+        "confidence": 2,
         "description": "Detects base64 encoded \"MpPreference\" PowerShell cmdlet code that tries to modifies or tamper with Windows Defender AV",
         "dynamic_query": false,
         "emulation_validation": "",
@@ -12,12 +12,12 @@
             "t1562"
         ],
         "name": "Powershell Base64 Encoded MpPreference Cmdlet",
-        "notes": "",
-        "pub_date": "",
+        "notes": "- To move around freely without attracting too much attention, attackers often use reliable software (one of the favorites is psexec) that looks normal in an enterprise environment.\r\n- Use the following aggregate to easily group by endpoint: `| group array_agg_distinct(dst.ip.address) by endpoint.name, src.process.cmdline`",
+        "pub_date": "2023-03-16T08:02:46.204Z",
         "pub_status": "DIST",
         "query": "event.type=\"Process Creation\" and (endpoint.os=\"windows\" and ((tgt.process.cmdline contains \"QWRkLU1wUHJlZmVyZW5jZS\" or tgt.process.cmdline contains \"FkZC1NcFByZWZlcmVuY2Ug\" or tgt.process.cmdline contains \"BZGQtTXBQcmVmZXJlbmNlI\" or tgt.process.cmdline contains \"U2V0LU1wUHJlZmVyZW5jZS\" or tgt.process.cmdline contains \"NldC1NcFByZWZlcmVuY2Ug\" or tgt.process.cmdline contains \"TZXQtTXBQcmVmZXJlbmNlI\" or tgt.process.cmdline contains \"YWRkLW1wcHJlZmVyZW5jZS\" or tgt.process.cmdline contains \"FkZC1tcHByZWZlcmVuY2Ug\" or tgt.process.cmdline contains \"hZGQtbXBwcmVmZXJlbmNlI\" or tgt.process.cmdline contains \"c2V0LW1wcHJlZmVyZW5jZS\" or tgt.process.cmdline contains \"NldC1tcHByZWZlcmVuY2Ug\" or tgt.process.cmdline contains \"zZXQtbXBwcmVmZXJlbmNlI\") or (tgt.process.cmdline contains \"QQBkAGQALQBNAHAAUAByAGUAZgBlAHIAZQBuAGMAZQAgA\" or tgt.process.cmdline contains \"EAZABkAC0ATQBwAFAAcgBlAGYAZQByAGUAbgBjAGUAIA\" or tgt.process.cmdline contains \"BAGQAZAAtAE0AcABQAHIAZQBmAGUAcgBlAG4AYwBlACAA\" or tgt.process.cmdline contains \"UwBlAHQALQBNAHAAUAByAGUAZgBlAHIAZQBuAGMAZQAgA\" or tgt.process.cmdline contains \"MAZQB0AC0ATQBwAFAAcgBlAGYAZQByAGUAbgBjAGUAIA\" or tgt.process.cmdline contains \"TAGUAdAAtAE0AcABQAHIAZQBmAGUAcgBlAG4AYwBlACAA\" or tgt.process.cmdline contains \"YQBkAGQALQBtAHAAcAByAGUAZgBlAHIAZQBuAGMAZQAgA\" or tgt.process.cmdline contains \"EAZABkAC0AbQBwAHAAcgBlAGYAZQByAGUAbgBjAGUAIA\" or tgt.process.cmdline contains \"hAGQAZAAtAG0AcABwAHIAZQBmAGUAcgBlAG4AYwBlACAA\" or tgt.process.cmdline contains \"cwBlAHQALQBtAHAAcAByAGUAZgBlAHIAZQBuAGMAZQAgA\" or tgt.process.cmdline contains \"MAZQB0AC0AbQBwAHAAcgBlAGYAZQByAGUAbgBjAGUAIA\" or tgt.process.cmdline contains \"zAGUAdAAtAG0AcABwAHIAZQBmAGUAcgBlAG4AYwBlACAA\")))",
-        "references": "",
-        "relevance": 1,
+        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+        "relevance": 3,
         "run_daily": true,
         "star_rule": false,
         "tags": [
@@ -27,10 +27,10 @@
             1
         ],
         "threats": [],
-        "update_date": "",
+        "update_date": "2024-11-26T08:03:25.622Z",
         "vulnerabilities": [],
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 1624
+    "pk": 963
 }

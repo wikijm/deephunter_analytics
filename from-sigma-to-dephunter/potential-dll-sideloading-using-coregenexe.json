@@ -16,7 +16,7 @@
         "notes": "",
         "pub_date": "",
         "pub_status": "DIST",
-        "query": "event.type=\"Module Load\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\\\coregen.exe\" and (not (module.path contains \"C:\\\\Program Files (x86)\\\\Microsoft Silverlight\\\\\" or module.path contains \"C:\\\\Program Files\\\\Microsoft Silverlight\\\\\" or module.path contains \"C:\\\\Windows\\\\System32\\\\\" or module.path contains \"C:\\\\Windows\\\\SysWOW64\\\\\"))))",
+        "query": "event.type=\"ModuleLoad\" and (endpoint.os=\"windows\" and (src.process.image.path contains \"\\coregen.exe\" and (not (module.path contains \"C:\\Program Files (x86)\\Microsoft Silverlight\\\" or module.path contains \"C:\\Program Files\\Microsoft Silverlight\\\" or module.path contains \"C:\\Windows\\System32\\\" or module.path contains \"C:\\Windows\\SysWOW64\\\"))))",
         "references": "",
         "relevance": 1,
         "run_daily": true,
@@ -33,5 +33,5 @@
         "weighted_relevance": 1.5
     },
     "model": "qm.query",
-    "pk": 2148
+    "pk": 3237
 }
