@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download query.json
-        run: curl -sL https://raw.githubusercontent.com/wikijm/from-sigma-to-deephunter/main/query.json -o query.json
+        run: curl -sL https://raw.githubusercontent.com/Cyber-Threat-Hunting-Playground/from-sigma-to-deephunter/main/query.json -o query.json
 
       - name: Set up Python
         uses: actions/setup-python@v5
