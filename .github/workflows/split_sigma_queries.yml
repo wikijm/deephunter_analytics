@@ -5,12 +5,15 @@ on:
   schedule:
     - cron: '0 0 * * *'
 
+permissions:
+  contents: write
+
 jobs:
   split_and_commit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download query.json
         run: curl -sL https://raw.githubusercontent.com/Cyber-Threat-Hunting-Playground/from-sigma-to-deephunter/main/query.json -o query.json
@@ -30,7 +33,6 @@ jobs:
               value = re.sub(r"[^\w\s-]", "", value)
               return re.sub(r"[-\s]+", "-", value).strip("-")
           
-          # Folder name fixed the typo from dephunter to deephunter
           output_dir = "from-sigma-to-dephunter"
           os.makedirs(output_dir, exist_ok=True)
           
@@ -44,7 +46,7 @@ jobs:
                       name = item["fields"]["name"]
                   elif "name" in item:
                       name = item["name"]
-                  
+              
               if not name:
                   pk = item.get("pk", "unknown") if isinstance(item, dict) else "unknown"
                   name = f"unnamed_{pk}"
@@ -54,7 +56,7 @@ jobs:
               with open(filepath, "w", encoding="utf-8") as out:
                   json.dump(item, out, indent=4)
           '
-          
+
       - name: Commit and Push changes
         run: |
           git config --global user.name "github-actions[bot]"
